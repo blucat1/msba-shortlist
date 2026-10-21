@@ -33,11 +33,11 @@ Opening an application link **never** counts as Applied. The user must explicitl
 
 ## Experience focus
 
-This revision defaults discovery to **New grad & 0–1 years**: explicit graduate/entry-level hiring or a supported 0–1-year required minimum. A one-year requirement is labeled honestly and remains an experience stretch for someone with zero years. Missing years never mean zero; Associate/APM, Junior and generic Early Career titles alone do not verify graduate eligibility. Conditional degree/experience paths remain **Experience unverified**.
+Live discovery defaults to **New grad & 0–1 years**: explicit graduate/entry-level hiring or a supported 0–1-year required minimum. A one-year requirement is labeled honestly and remains an experience stretch for someone with zero years. Missing years never mean zero; Associate/APM, Junior and generic Early Career titles alone do not verify graduate eligibility. Conditional degree/experience paths remain **Experience unverified**.
 
 Choose **Early career · 0–3 years** to include 2–3-year requirements, **Experienced · 4+ / senior** for experienced individual-contributor roles, or **Experience unverified** to review missing/conditional evidence. Senior, Staff, Principal and Lead titles override low or missing numeric requirements; people-leadership roles remain excluded. These discovery controls never remove saved roles, applications, notes, tasks or history from My Search.
 
-The repository registry now contains 29 officially verified employer identities, adding Veeva Systems, Databricks and Roblox. The full 29-source audit rerun is pending. This experience-policy revision and source expansion are working changes; their production deployment and new live counts are not yet claimed. See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for rollout evidence.
+The live audit on October 21, 2026 at **03:19:17 PDT / 10:19:17 UTC** verified 29 successful sources and 365 relevant catalog records: 168 in-scope and 197 needing details checked, all on classifier `2026-10-21.2`. The strict default showed **6 listings: 4 Veeva graduate-program listings and 2 roles requiring one year**. One additional Databricks US APM listing meets the experience focus but appears only with **Needs details checked** enabled. This remains narrow employer coverage, not the whole graduate job market. See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for deployment and ingestion evidence.
 
 ## Live setup
 
