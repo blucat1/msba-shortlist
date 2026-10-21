@@ -2,6 +2,16 @@
 
 Recorded October 21, 2026, America/Los_Angeles, including successful GitHub CI and hosted Supabase/Cloudflare checks. The Google provider and outbound request were verified automatically; the owner subsequently reported successful Google sign-in and a saved job surviving refresh, corroborated by server aggregates. Wider two-account/browser/device acceptance remains separate.
 
+## Experience correction — October 21, 2026
+
+The owner found that the shortlist included experienced roles. A public-catalog audit of the 48 formerly default-visible listings found 37 with unparsed required years. Manual review established 38 numeric requirements and 10 unknowns; the corrected extractor matches those 38 floors, including Linear 8 years, Benchling/Figma 6 years, Notion 5 years and Ramp 2 years. This is a relevance defect in the earlier default, despite the postings being real employer listings.
+
+Discovery now defaults to explicit graduate/entry-level hiring or an unconditional 0–1-year minimum. One-year requirements remain labeled; 2–3-year roles, experienced/senior ICs, and unverified requirements have separate Experience focus views. Ambiguous Associate/APM/Junior/Early Career titles alone do not qualify. Independent high requirements, graduate exclusions, qualitative advanced requirements and conditional education paths cannot be overridden by a low parsed number or positive title. Missing years remain unknown and cannot earn Strong alignment. My Search and its saved snapshots/history remain independent of discovery filtering.
+
+Observed local validation for this revision: **155 unit tests in 11 files**, ESLint, strict TypeScript and production build passed. **Seven browser workflows** passed against the built bundle, including switching experience views, refresh persistence and retaining an experienced saved role in My Search. Mobile controls and evidence cards were visually inspected; the existing responsive browser checks still pass at 390/768/1440 px. Additional regressions cover long domain phrases, required/preferred headings and comma lists, company/team history, explicit versus product-specific zero experience, numeric ranges, degree alternatives, qualitative requirements, and negated graduate eligibility.
+
+The registry expands from 26 to 29 verified employer identities, adding Veeva, Databricks and Roblox through official-careers evidence and complete validated public snapshots. Graduate-program descriptions were manually reviewed, including their degree, work-authorization, location and July 2027 start constraints. Graduate cohort counts and broad role-family counts are now reported separately by `sources:verify`; source verification does not itself establish a production import. Rollout evidence is recorded below once observed.
+
 ## Environment and reproducibility
 
 - macOS arm64; Node **24.22.0**, npm **11.19.1**. Node was downloaded from nodejs.org and its archive checksum compared with the official SHA-256 manifest. The checkout-local runtime under ignored `.tools/` makes the supplied Mac launcher usable without changing the owner's shell configuration.
@@ -9,7 +19,7 @@ Recorded October 21, 2026, America/Los_Angeles, including successful GitHub CI a
 - Initial Mac browser tests used the installed Google Chrome executable through Playwright. Follow-up Linux GitHub Actions installed Playwright Chromium and passed the six browser workflows; the original lack of a remote repository was resolved by creating and pushing `blucat1/msba-shortlist`.
 - Docker and `psql` were not installed on the Mac. The follow-up GitHub runner had Docker and successfully started the disposable Supabase stack for real pgTAP tests. No hosted Google OAuth or production two-account/deletion acceptance was completed by those CI checks.
 
-## Results
+## Initial implementation results (historical)
 
 | Check actually run | Result |
 | --- | --- |

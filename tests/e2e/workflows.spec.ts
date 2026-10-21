@@ -154,3 +154,32 @@ test('corrupt demo storage has an honest recovery path', async ({ page }) => {
   await page.getByRole('button', { name: 'Reset demo', exact: true }).click();
   await expect(page.getByRole('heading', { name: /Find your kind/ })).toBeVisible();
 });
+
+test('new-grad discovery separates experienced and unverified jobs while preserving a saved role', async ({ page }) => {
+  const focus = page.getByLabel('Experience focus', { exact: true });
+  await expect(focus).toHaveValue('new-grad');
+  await expect(page.locator('.job-card').first()).toBeVisible();
+  await expect(page.locator('.job-card .experience-evidence.experienced')).toHaveCount(0);
+  await expect(page.locator('.job-card .experience-evidence.early-career')).toHaveCount(0);
+  await expect(page.locator('.job-card .experience-evidence.unverified')).toHaveCount(0);
+
+  await focus.selectOption('experienced');
+  await expect(page.locator('.job-card')).toHaveCount(2);
+  const card = page.locator('.job-card').first();
+  const title = await card.locator('h3').innerText();
+  await expect(card.locator('.experience-evidence')).toContainText('Experienced');
+  await card.getByRole('button', { name: `Save ${title}`, exact: true }).click();
+  await expect(page.getByRole('status')).toContainText('Saved to My Search');
+  await page.reload();
+  await expect(focus).toHaveValue('experienced');
+
+  await focus.selectOption('unverified');
+  await expect(page.locator('.job-card .experience-evidence.unverified').first()).toBeVisible();
+  await expect(page.locator('.job-card .alignment-label').filter({ hasText: 'Strong alignment' })).toHaveCount(0);
+  await focus.selectOption('new-grad');
+  await expect(page.locator('.job-card').filter({ hasText: title })).toHaveCount(0);
+  await page.goto('/demo/my-search');
+  await expect(page.locator('.tracker-role').filter({ hasText: title })).toBeVisible();
+  await page.reload();
+  await expect(page.locator('.tracker-role').filter({ hasText: title })).toBeVisible();
+});

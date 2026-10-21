@@ -91,7 +91,7 @@ describe('deterministic recommendation evidence', () => {
     expect(results.some(r => r.job.id === snapshot.jobs[14].id)).toBe(false);
     expect(results.some(r => r.job.classification.scope === 'needs-details' || r.job.classification.seniority === 'senior')).toBe(false);
     expect(results.some(r => r.job.id === snapshot.jobs[25].id)).toBe(false);
-    expect(rankJobs(snapshot.jobs, snapshot.preferences, { ...options, includeTracked: true, includeNeedsDetails: true, includeLargerStretches: true, includeStale: true })).toHaveLength(30);
+    expect(rankJobs(snapshot.jobs, snapshot.preferences, { ...options, experienceView: 'all', includeTracked: true, includeNeedsDetails: true, includeStale: true })).toHaveLength(30);
   });
   it('uses stable evidence/freshness/discovery tie breakers rather than source edits', () => {
     const a = fixture().jobs[0], b = structuredClone(a); b.id = 'other'; b.firstSeenAt = '2026-10-01T00:00:00Z'; b.sourceUpdatedAt = now.toISOString();

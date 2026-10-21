@@ -31,6 +31,14 @@ The demo includes 30 fictional jobs, 12 tracked opportunities, varied applicatio
 
 Opening an application link **never** counts as Applied. The user must explicitly confirm a submission. Assessment events are not interviews. Unknown salaries, dates, country, employment, and eligibility remain unknown. Missing configuration or failed feeds never enable sample data in live mode.
 
+## Experience focus
+
+This revision defaults discovery to **New grad & 0–1 years**: explicit graduate/entry-level hiring or a supported 0–1-year required minimum. A one-year requirement is labeled honestly and remains an experience stretch for someone with zero years. Missing years never mean zero; Associate/APM, Junior and generic Early Career titles alone do not verify graduate eligibility. Conditional degree/experience paths remain **Experience unverified**.
+
+Choose **Early career · 0–3 years** to include 2–3-year requirements, **Experienced · 4+ / senior** for experienced individual-contributor roles, or **Experience unverified** to review missing/conditional evidence. Senior, Staff, Principal and Lead titles override low or missing numeric requirements; people-leadership roles remain excluded. These discovery controls never remove saved roles, applications, notes, tasks or history from My Search.
+
+The repository registry now contains 29 officially verified employer identities, adding Veeva Systems, Databricks and Roblox. The full 29-source audit rerun is pending. This experience-policy revision and source expansion are working changes; their production deployment and new live counts are not yet claimed. See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for rollout evidence.
+
 ## Live setup
 
 The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All three hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
