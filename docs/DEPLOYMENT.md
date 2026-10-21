@@ -1,6 +1,6 @@
 # Deploy MSBA Shortlist
 
-This repository contains a working browser demo and the real Supabase implementation. No public deployment, Supabase project, Google OAuth client, GitHub repository, or production import was created during this build. The steps below are owner actions. A public demo on `/demo` still uses fictional browser-local data; a working live site requires the database, authentication, function, and import setup below.
+This repository contains a working browser demo and the real Supabase implementation. The public code repository has now been created at https://github.com/blucat1/msba-shortlist and the application pushed to main. Supabase, Google OAuth, Cloudflare hosting, and production ingestion are still being configured. The steps below are owner actions. A public demo on `/demo` still uses fictional browser-local data; a working live site requires the database, authentication, function, and import setup below.
 
 Reference pages and free-plan limits were checked October 21, 2026. Recheck them when deploying. The tested application runtime is Node **24.22.0**, pinned in `.nvmrc`; `package-lock.json` records installed package versions. Docker was unavailable during this build. Supabase CLI 2.121.0 is pinned and its version command was verified; local database and remote deployment commands below have not been executed here. See [TEST_REPORT.md](TEST_REPORT.md) for observed checks.
 

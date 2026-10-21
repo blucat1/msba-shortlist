@@ -1,6 +1,6 @@
 # Database and authentication handoff
 
-The live adapter uses Supabase Postgres/Auth through the browser publishable key. Demo localStorage never enters this database. No database, OAuth provider, Edge Function, GitHub secret, or hosted site was configured in the implementation environment.
+The live adapter uses Supabase Postgres/Auth through the browser publishable key. Demo localStorage never enters this database. The initial Mac build had no Docker-based database. A follow-up GitHub Actions run started a disposable Supabase stack and passed the real SQL suites; hosted Google OAuth, cloud persistence and deployed deletion still require owner setup and acceptance checks.
 
 ## Apply and verify
 
@@ -95,9 +95,15 @@ No Storage objects are created by this product. Downloaded exports remain under 
 
 ## Observed validation and limits
 
-On October 21, 2026 (America/Los_Angeles), the implementation environment had no Docker or `psql`. Supabase CLI 2.121.0 was installed and its version command verified. `npm run test:db` was attempted and correctly exited nonzero with **NOT EXECUTED**, identifying Docker as missing. Real Supabase migrations/pgTAP/API/OAuth/deployed deletion checks remain unexecuted.
+During the initial October 21, 2026 Mac build, Docker and `psql` were absent. Supabase CLI 2.121.0 was installed and its version command verified. That local `npm run test:db` attempt correctly exited nonzero with **NOT EXECUTED**, identifying Docker as missing. This remains an accurate record of the Mac attempt; the later CI result below supersedes the unexecuted SQL acceptance status.
 
 `npm run test:db:smoke` runs a supplementary PGlite 0.5.10 PostgreSQL WASM harness. It applied all three migrations and ran 93 assertions from both SQL suites successfully using a minimal Auth fixture and replacement assertion functions. This validates SQL and RLS behavior in PostgreSQL, but does not validate the real Supabase Auth schema, pgTAP installation, API gateway, Edge runtime, or live credentials. Thirteen Vitest tests passed across the deletion handler, browser credential configuration, StrictMode callback retry behavior and temporary guest preferences. Refer to `TEST_REPORT.md` for the final full-suite result.
+
+### Follow-up real Supabase verification — October 21, 2026
+
+[GitHub Actions run 39568999347](https://github.com/blucat1/msba-shortlist/actions/runs/39568999347) completed successfully at **01:27:08 PDT** (**08:27:08 UTC**) for commit `1df3e1590346616c40b65f75b7dadd8553e946d1`. Its [supabase-authorization job](https://github.com/blucat1/msba-shortlist/actions/runs/39568999347/job/119118184024) successfully ran `npx --yes supabase start`, applied the repository migrations to the disposable Docker-based Supabase stack, and executed `npm run test:db` with the real pgTAP extension. Both `authorization.test.sql` and `ingestion.test.sql` passed: **2 files, 93 tests, Result: PASS**, recorded at **01:26:50 PDT** (**08:26:50 UTC**). The job stopped the stack afterward with `supabase stop --no-backup`.
+
+The real local/test Supabase SQL gate is now **passed** on the GitHub runner, in addition to the supplementary WASM checks. This verifies the migration/constraint/RLS/RPC/ingestion/retention behavior covered by those SQL suites against Supabase's actual database/Auth schema. The suites simulate two authenticated database roles and an anonymous role; they do not complete Google OAuth or exercise a deployed browser-to-PostgREST or Edge Function flow. Hosted migrations, two independent Google accounts through real REST/RPC requests, account switching across devices, and deployed account deletion remain **not executed** as of this follow-up. See [TEST_REPORT.md](TEST_REPORT.md) for the acceptance boundary.
 
 The adapter fetches catalog summaries in pages of 500 and explicitly exposes truncation after 5,000 eligible catalog summaries; it never implies the capped catalog has been completely ranked. Private reads/exports paginate rather than silently stopping at the API's row cap. Larger deployments need server filter/index work and measured database/egress capacity.
 

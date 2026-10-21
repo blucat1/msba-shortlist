@@ -1,5 +1,7 @@
 # MSBA Shortlist
 
+Repository: https://github.com/blucat1/msba-shortlist
+
 Find worthwhile US full-time analytics, product, strategy, and data opportunities, understand their fit, then keep the next step moving. Independent of Cal Poly; no university affiliation or endorsement. The working product name is configurable in `src/config.ts`.
 
 ## Run the demo
