@@ -1,6 +1,6 @@
 # Observed implementation checks
 
-Recorded October 21, 2026, America/Los_Angeles, including successful GitHub CI and the hosted Supabase/Cloudflare follow-up below. Completed hosted API checks are distinguished from Google OAuth and real-user browser acceptance, which remain pending.
+Recorded October 21, 2026, America/Los_Angeles, including successful GitHub CI and hosted Supabase/Cloudflare checks. The Google provider and outbound request were verified automatically; the owner subsequently reported successful Google sign-in and a saved job surviving refresh, corroborated by server aggregates. Wider two-account/browser/device acceptance remains separate.
 
 ## Environment and reproducibility
 
@@ -33,12 +33,13 @@ Recorded October 21, 2026, America/Los_Angeles, including successful GitHub CI a
 | Local preview HTTP | PASS; `/demo/opportunities` returned 200 |
 | Hosted Cloudflare demo browser workflows | PASS: all **6** against `https://msba-shortlist.pages.dev` before the production configuration rollout |
 | Hosted Supabase migrations | PASS: all **3** applied to new `xglakzqorbjvganpbilu`; local and remote migration versions match |
-| Hosted Auth return configuration | PASS: production Site URL and exact `/auth/callback` redirect verified; Google provider is a separate pending step |
+| Hosted Auth return configuration | PASS: production Site URL and exact `/auth/callback` redirect verified; Google provider subsequently verified enabled, as recorded below |
 | Deployed Edge Function | PASS: `delete-account` ACTIVE v1, `verify_jwt=true`, exact production origin |
 | Hosted Auth/REST/RPC/deletion acceptance | PASS: **23** checks, **0** skipped, **0** failed, **0** cleanup failures; two disposable password-authenticated users removed |
 | First production import and retention | PASS: [run 39573049834](https://github.com/blucat1/msba-shortlist/actions/runs/39573049834), **26/26** real sources finalized; retention completed |
 | Compensation crash repair checks | PASS: **79 unit tests in 9 files**, lint, typecheck, build and **6** browser workflows against the built demo bundle |
 | Production hosted anonymous browser checks | PASS: **7 check groups**, including actual catalog/details, anonymous save guard, coverage/contact, responsive routes and demo isolation |
+| Google sign-in and saved-job refresh | PASS: owner reported successful live Google sign-in and a saved job surviving refresh; server aggregates corroborated one Google account, one profile and one saved opportunity |
 
 Source payloads are time-specific and can change. The final source audit at **2026-10-21T07:53:39.620Z** observed **2,225 raw/listed jobs, 72 explicitly US/full-time in-scope jobs, and 128 relevant jobs needing details checked**. Counts include senior individual-contributor stretches, which are optional in default presentation. The all-source ingestion dry-run completed before the final taxonomy expansion; its older relevance counts are not substituted for the final audit counts. See [SOURCE_AUDIT.md](SOURCE_AUDIT.md) for per-source results and evidence.
 
@@ -86,9 +87,9 @@ Checks covered anonymous catalog/coverage reads and private/diagnostic/write den
 
 This is real hosted API/Auth/deletion evidence, **not Google OAuth acceptance**. It does not establish actual Google consent/callback behavior, browser CORS enforcement, browser cache isolation after account switching, second-device behavior or real-user feedback.
 
-After the disposable users were removed, the unused email/password provider was disabled to match the Google-only product. A minimal production `config diff` showed only `auth.email.enable_signup: true → false`; `config push` applied that one change while preserving Google provider settings. Top-level account signup stays enabled for Google. The password-session checks above preceded this provider restriction and are not a claim that password login remains available in the pilot. Google enablement and real OAuth acceptance are still pending.
+After the disposable users were removed, the unused email/password provider was disabled to match the Google-only product. A minimal production `config diff` showed only `auth.email.enable_signup: true → false`; `config push` applied that one change while preserving Google provider settings. Top-level account signup stays enabled for Google. The password-session checks above preceded this provider restriction and are not a claim that password login remains available in the pilot. Google was still awaiting setup at that stage; the provider follow-up below records its later enablement.
 
-The Git-integrated Cloudflare project has the correct build command/output and Node runtime. Before switching production configuration, all six browser workflows passed against its publicly hosted demo. Production build variables now contain only the browser-safe Supabase key, project URL, site URL, mode and approved contact; server secrets were sent directly to GitHub Actions Secrets. Preview remains demo mode. Google provider enablement remains pending.
+The Git-integrated Cloudflare project has the correct build command/output and Node runtime. Before switching production configuration, all six browser workflows passed against its publicly hosted demo. Production build variables now contain only the browser-safe Supabase key, project URL, site URL, mode and approved contact; server secrets were sent directly to GitHub Actions Secrets. Preview remains demo mode.
 
 The first real production [feed import and maintenance run 39573049834](https://github.com/blucat1/msba-shortlist/actions/runs/39573049834) completed successfully at **01:56:42 PDT / 08:56:42 UTC**. All **26/26** employer sources finalized with success; maintenance deleted zero obsolete source-run records and zero unreferenced details, as expected for a fresh database. The committed schedule remains twice daily at 06:23 and 18:23 UTC. A manually dispatched successful workflow proves its production path, not that a future scheduled trigger has already occurred.
 
@@ -110,12 +111,22 @@ Commit [`8f11c4c`](https://github.com/blucat1/msba-shortlist/commit/8f11c4cfb505
 
 The same real-catalog smoke passed locally before deployment. These checks do not establish Google consent/callback, authenticated browser saves or browser account switching. The source-change [CI run 39574373758](https://github.com/blucat1/msba-shortlist/actions/runs/39574373758) also **passed both jobs**, completing at **02:08:38 PDT / 09:08:38 UTC**. Its application job passed installation, lint, typecheck, unit tests, WASM SQL assertions, build and six Chromium workflows; its separate Supabase job passed the real Docker-backed SQL suites and cleanup.
 
+## Google provider and sign-in entry verification
+
+After the owner reported completing Google setup on October 21, the public Supabase Auth settings were verified: **Google enabled**, **email/password disabled**, and **top-level signup enabled**. The final authentication-config [CI run 39575577116](https://github.com/blucat1/msba-shortlist/actions/runs/39575577116) passed both jobs for `caf3eee`; its Git-integrated production deployment `86c2891e-d257-46f8-8711-5a47f32ca542` also succeeded.
+
+At **02:31 PDT / 09:31 UTC**, an anonymous Playwright browser loaded the actual live catalog and clicked **Sign in with Google**. It reached `accounts.google.com` with a Google web client, the exact provider callback `https://xglakzqorbjvganpbilu.supabase.co/auth/v1/callback`, and only basic identity scopes. No visible Google client/redirect configuration error appeared. OAuth state, PKCE material and credentials were not logged.
+
+This automated check verifies provider enablement and the browser's outbound sign-in path; the automated browser did not enter Google credentials or complete login. In a separate check, the owner was asked to sign in at the live site, save a job and refresh My Search, then explicitly reported **“Signed in; saved job remains after refresh.”** This is owner-reported successful callback/session and save-refresh behavior, rather than a claim that the automated browser completed Google login.
+
+At **02:34 PDT / 09:34 UTC**, an independent server aggregate check corroborated **one Google account with a recorded sign-in, one profile and one saved opportunity**. The saved-job and profile checks requested counts only; job details, notes, tokens and user identifiers were not logged or copied into this report. These observations establish a working Google-to-live-tracker path for the tested owner account. They do not establish the consent audience's availability to every intended user, two independent Google browser accounts, same-browser private-cache switching, second-device persistence or signed-in browser deletion.
+
 ## Failures found and repaired
 
 Browser checks initially found filter state being overwritten by rapid URL changes, checkbox timing, and labels that included hint text or textarea content. Explicit label associations and stable filter updates repaired these; all final workflows passed. Independent review also repaired manual company keys, notes initialization, save retries, application idempotency keys, sample salary ranges, source-disable visibility, snapshot health ordering, StrictMode OAuth exchange retries, and demo backup provenance. Tests assert the relevant behaviors rather than counting those earlier failures as passes.
 
 ## Human acceptance still required
 
-The public repository, hosted Free project/migrations, exact frontend callbacks, function, server Actions secrets, approved contact and first production import are completed. Real hosted REST/RPC authorization, persistence and disposable deletion passed separately from the successful CI SQL gate. The remaining acceptance is Google client/provider setup and consent audience, actual Google callback, two independent Google browser accounts and same-browser sign-out/account switching, and second-device persistence. Re-run SQL authorization for later schema changes. Source usage terms and service limits still need operator review before inviting users.
+The public repository, hosted Free project/migrations, exact frontend callbacks, function, server Actions secrets, approved contact, first production import and Google provider setup are completed. The outbound sign-in request was verified automatically; the owner reported successful Google sign-in and save-refresh persistence, corroborated by server aggregates. Real hosted REST/RPC authorization and disposable deletion passed separately from the successful CI SQL gate. Wider pilot acceptance still includes audience availability to intended users, two independent Google browser accounts, same-browser sign-out/account switching, second-device persistence and signed-in browser deletion. Re-run SQL authorization for later schema changes. Source usage terms and service limits still need operator review before inviting users.
 
 No participants, feedback or Google OAuth approval are invented. Public URLs and hosted API results above are observed, with their boundaries stated. Record real teammate observations in [DEMO_SCRIPT.md](DEMO_SCRIPT.md).

@@ -33,7 +33,11 @@ Opening an application link **never** counts as Applied. The user must explicitl
 
 ## Live setup
 
-The public GitHub repository, Git-integrated Cloudflare Pages project, and a separate Free Supabase project have been created and connected. All three hosted migrations, exact production callback configuration, deployed account deletion, server-only Actions secrets, and the first production import are complete. The hosted database/API/deletion acceptance passed 23 checks using two disposable password-authenticated users; both were removed afterward. Google OAuth setup and real Google browser acceptance are still pending. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for current deployment evidence and remaining owner steps. Frontend hosting uses `npm run build`, output `dist`, and the free `pages.dev` subdomain.
+The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All three hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
+
+Google sign-in is enabled with basic identity permissions. The owner confirmed that signing in, saving a job and refreshing My Search worked; server counts corroborated a Google account and saved opportunity. Hosted backend authorization/deletion passed 23 checks with two disposable users, both removed afterward. Two independent Google accounts, same-browser account switching, second-device persistence and wider audience availability still need pilot acceptance.
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for setup and evidence. Frontend hosting builds with `npm run build`, serves `dist`, and uses the free `pages.dev` subdomain.
 
 `.env.example` contains placeholders only. Browser keys use `VITE_`; the ingestion secret and Edge Function privileges stay on servers. Do not commit real env files or personal exports. `VITE_APP_MODE=production` selects live by default; `/demo/*` always remains isolated.
 
@@ -56,7 +60,7 @@ npx supabase start
 npm run test:db
 ```
 
-Docker was unavailable on the initial Mac checkout. The real Supabase SQL gate subsequently passed in GitHub Actions: two suites and 93 pgTAP tests. Hosted REST/RPC/deletion checks also passed separately; Google OAuth and browser account-switch acceptance remain separate. Observed results and verification limits are recorded in [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
+Docker was unavailable on the initial Mac checkout. The real Supabase SQL gate subsequently passed in GitHub Actions: two suites and 93 pgTAP tests. Hosted REST/RPC/deletion checks also passed separately; the owner-reported Google sign-in/save/refresh result is separate from automated backend and outbound-redirect checks. Wider account-switch and second-device acceptance remain pending. Observed results and verification limits are recorded in [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
 
 ```sh
 npm run setup:check
@@ -82,4 +86,4 @@ CSV requires `company,title`. Optional columns: `location,stage,priority,applica
 - [Architecture](docs/ARCHITECTURE.md), [data dictionary](docs/DATA_DICTIONARY.md), [security](docs/SECURITY.md), and [database checks](docs/DATABASE.md)
 - [Known limitations](docs/KNOWN_LIMITATIONS.md) and [actual source coverage](docs/SOURCE_AUDIT.md)
 
-This is a bounded $0 pilot target, subject to provider limits and source-usage review. The owner approved a public contact. Complete Google sign-in and remaining real-browser acceptance before inviting users.
+This is a bounded $0 pilot target, subject to provider limits and source-usage review. The owner approved a public contact. Complete the remaining two-account, browser-switching, second-device and audience-availability checks before inviting a wider pilot.
