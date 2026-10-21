@@ -101,6 +101,8 @@ Compare the live schema to migrations and run the two-browser checks in step 9. 
 
 ## 4. Configure Google identity-only OAuth
 
+The hosted project is configured for Google-only authentication: `[auth] enable_signup=true` keeps new Google accounts possible, while `[auth.email] enable_signup=false` disables the unused email/password provider. Production config was previewed and pushed with only that declared provider change; Google settings were omitted to preserve dashboard-entered credentials. Keep these controls distinct. Supabase CLI 2.121.0 maps the email-specific setting to `external_email_enabled`.
+
 In Google Cloud / Google Auth Platform:
 
 1. Create/select a project; configure branding and a real monitored owner contact. Choose an **External** audience so personal Google accounts can participate. During Testing, add each tester explicitly; publish the consent configuration when ready for the wider pilot and follow Google's requirements.

@@ -26,6 +26,10 @@ additional_redirect_urls = ["http://localhost:5173/auth/callback"]
 jwt_expiry = 3600
 enable_signup = true
 
+[auth.email]
+# Google is the product sign-in method; do not expose email/password auth.
+enable_signup = false
+
 [auth.external.google]
 enabled = false
 client_id = "env(SUPABASE_AUTH_EXTERNAL_GOOGLE_CLIENT_ID)"
