@@ -38,7 +38,15 @@ const results = await mapConcurrent(sources, 3, async source => {
     const relevant = jobs.filter(j => j.classification.scope === 'included').length; const needsDetails = jobs.filter(j => j.classification.scope === 'needs-details').length;
     let status = 'dry-run';
     if (client) {
-      const payload = jobs.map(job => { const { description, ...summary } = job; return { external_id: job.externalId, title: job.title, posting_url: job.postingUrl, application_url: job.applicationUrl, summary, description: description || '', content_hash: job.contentHash, source_published_at: job.sourcePublishedAt, source_updated_at: job.sourceUpdatedAt }; });
+      const payload = jobs.map(job => {
+        const { description, ...summary } = job;
+        // Keep every source identity for complete-snapshot reconciliation. The
+        // finalizer only stores detail text for relevant jobs; omitted excluded
+        // descriptions avoid repeatedly decoding megabytes of unused content.
+        return { external_id: job.externalId, title: job.title, posting_url: job.postingUrl, application_url: job.applicationUrl,
+          summary, description: job.classification.scope === 'excluded' ? '' : description || '', content_hash: job.contentHash,
+          source_published_at: job.sourcePublishedAt, source_updated_at: job.sourceUpdatedAt };
+      });
       const { data, error } = await client.rpc('finalize_source_run', { p_source_id: source.id, p_run_key: runKey, p_jobs: payload, p_complete: true, p_raw_count: snapshot.rawCount, p_warning: null, p_checked_at: checkedAt });
       if (error) throw new Error(`Atomic finalization failed (${error.code}).`); status = JSON.stringify(data);
     }
