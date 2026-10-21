@@ -2,6 +2,8 @@
 
 Repository: https://github.com/blucat1/msba-shortlist
 
+Hosted site: https://msba-shortlist.pages.dev · Isolated sample demo: https://msba-shortlist.pages.dev/demo
+
 Find worthwhile US full-time analytics, product, strategy, and data opportunities, understand their fit, then keep the next step moving. Independent of Cal Poly; no university affiliation or endorsement. The working product name is configurable in `src/config.ts`.
 
 ## Run the demo
@@ -31,7 +33,7 @@ Opening an application link **never** counts as Applied. The user must explicitl
 
 ## Live setup
 
-No cloud account or public deployment has been created for you. Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) to create Supabase, apply migrations, configure Google, deploy to Cloudflare Pages, deploy account deletion, add server-only Actions secrets, run ingestion, and complete two-account privacy checks. Frontend hosting uses `npm run build`, output `dist`, and a free `pages.dev` subdomain.
+The public GitHub repository, Git-integrated Cloudflare Pages project, and a separate Free Supabase project have been created and connected. All three hosted migrations, exact production callback configuration, deployed account deletion, server-only Actions secrets, and the first production import are complete. The hosted database/API/deletion acceptance passed 23 checks using two disposable password-authenticated users; both were removed afterward. Google OAuth setup and real Google browser acceptance are still pending. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for current deployment evidence and remaining owner steps. Frontend hosting uses `npm run build`, output `dist`, and the free `pages.dev` subdomain.
 
 `.env.example` contains placeholders only. Browser keys use `VITE_`; the ingestion secret and Edge Function privileges stay on servers. Do not commit real env files or personal exports. `VITE_APP_MODE=production` selects live by default; `/demo/*` always remains isolated.
 
@@ -54,7 +56,7 @@ npx supabase start
 npm run test:db
 ```
 
-Docker was unavailable during implementation. That full-stack gate remains unexecuted. Observed results and verification limits are recorded in [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
+Docker was unavailable on the initial Mac checkout. The real Supabase SQL gate subsequently passed in GitHub Actions: two suites and 93 pgTAP tests. Hosted REST/RPC/deletion checks also passed separately; Google OAuth and browser account-switch acceptance remain separate. Observed results and verification limits are recorded in [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
 
 ```sh
 npm run setup:check
@@ -80,4 +82,4 @@ CSV requires `company,title`. Optional columns: `location,stage,priority,applica
 - [Architecture](docs/ARCHITECTURE.md), [data dictionary](docs/DATA_DICTIONARY.md), [security](docs/SECURITY.md), and [database checks](docs/DATABASE.md)
 - [Known limitations](docs/KNOWN_LIMITATIONS.md) and [actual source coverage](docs/SOURCE_AUDIT.md)
 
-This is a bounded $0 pilot target, subject to provider limits and source-usage review. The owner must configure a real contact and verify live authentication, persistence, authorization, ingestion, and deletion before inviting users.
+This is a bounded $0 pilot target, subject to provider limits and source-usage review. The owner approved a public contact. Complete Google sign-in and remaining real-browser acceptance before inviting users.

@@ -1,6 +1,8 @@
 # Two-minute MSBA Shortlist demo
 
-Preparation: run `npm ci`, then `npm run dev`, and open the `/demo` route printed by Vite (normally `http://127.0.0.1:5173/demo`). No cloud credentials are needed. For a clean sample, open Settings & preferences → Data & account → Reset demo and confirm. Close Settings. The sample has 30 fictional jobs, 12 tracked opportunities, and simulated dates generated relative to the first demo visit. Browser storage preserves those dates and edits across refreshes.
+Preparation: open the [hosted demo](https://msba-shortlist.pages.dev/demo), or run `npm ci`, then `npm run dev`, and open the local `/demo` route printed by Vite (normally `http://127.0.0.1:5173/demo`). No cloud credentials are needed. For a clean sample, open Settings & preferences → Data & account → Reset demo and confirm. Close Settings. The sample has 30 fictional jobs, 12 tracked opportunities, and simulated dates generated relative to the first demo visit. Browser storage preserves those dates and edits across refreshes; the hosted and local origins have separate demo storage.
+
+The [public root](https://msba-shortlist.pages.dev) now opens the live catalog. Use the explicit `/demo` link above for this fictional-data walkthrough. The first production import succeeded for all 26 sources; anonymous reads verified 72 in-scope and 128 needs-details jobs among 2,225 catalog records. Google sign-in still requires owner setup and acceptance.
 
 | Time | Show and say |
 | --- | --- |
@@ -24,4 +26,4 @@ No participant or feedback is claimed by this repository. The team should fill t
 - Concrete change made after that observation: _not recorded_
 - Verification after the change: _not recorded_
 
-Use `docs/TEST_REPORT.md` for executed automated checks and explicit checks that still require external setup. This walkthrough is a presentation guide, not evidence that OAuth, deployment, or database isolation has been tested.
+Use `docs/TEST_REPORT.md` for executed checks: earlier GitHub CI runs passed both jobs, including 93 SQL tests; hosted backend acceptance passed 23 checks with no skips, failures or cleanup failures and both disposable users cleaned up. After the salary formatter fix, 79 unit tests, lint/typecheck/build and six built-bundle browser workflows passed. Seven hosted anonymous smoke groups passed against production, including live routes/details, sign-in guards, coverage/contact, responsive refreshes, demo isolation and zero runtime errors. These checks do not establish the still-pending real Google consent/callback, signed-in browser cache switching or two-device acceptance. Keep participant feedback above blank until an actual session occurs.

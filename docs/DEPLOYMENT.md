@@ -1,8 +1,27 @@
 # Deploy MSBA Shortlist
 
-This repository contains a working browser demo and the real Supabase implementation. The public code repository has now been created at https://github.com/blucat1/msba-shortlist and the application pushed to main. Supabase, Google OAuth, Cloudflare hosting, and production ingestion are still being configured. The steps below are owner actions. A public demo on `/demo` still uses fictional browser-local data; a working live site requires the database, authentication, function, and import setup below.
+The public repository is [blucat1/msba-shortlist](https://github.com/blucat1/msba-shortlist), with Git-integrated hosting at [msba-shortlist.pages.dev](https://msba-shortlist.pages.dev). A separate Free Supabase project, all hosted migrations, production Auth return URLs, deployed account deletion, GitHub Actions secrets, and the first production import have been configured. Production frontend variables and the owner-approved contact are set; preview builds remain demo mode. Google OAuth client/provider setup and actual Google browser acceptance are still pending. The runbook below documents the setup for the operator; completed steps do not need repeating. `/demo` always uses clearly labeled fictional browser-local data.
 
-Reference pages and free-plan limits were checked October 21, 2026. Recheck them when deploying. The tested application runtime is Node **24.22.0**, pinned in `.nvmrc`; `package-lock.json` records installed package versions. Docker was unavailable during this build. Supabase CLI 2.121.0 is pinned and its version command was verified; local database and remote deployment commands below have not been executed here. See [TEST_REPORT.md](TEST_REPORT.md) for observed checks.
+### Current connected resources — October 21, 2026
+
+| Resource | Observed setup |
+| --- | --- |
+| GitHub | Public `blucat1/msba-shortlist`, default branch `main`; application and actual Supabase SQL CI passed |
+| Cloudflare Pages | GitHub integration; `npm run build`; `dist`; Node 24.22.0; live catalog deployed and browser-checked, preview `VITE_APP_MODE=demo` |
+| Supabase | `MSBA Shortlist`, reference `xglakzqorbjvganpbilu`, `us-west-1`; organization confirmed Free by owner; existing projects left untouched |
+| Hosted database | All three committed migrations applied and remote migration history verified |
+| Auth return addresses | Site URL `https://msba-shortlist.pages.dev`; exact redirect `https://msba-shortlist.pages.dev/auth/callback` |
+| Google client redirect | Use `https://xglakzqorbjvganpbilu.supabase.co/auth/v1/callback` in the Google Web application client; provider setup pending |
+| Account deletion | Hosted `delete-account` ACTIVE version 1, `verify_jwt=true`; exact production `ALLOWED_ORIGINS` set; disposable self-deletion/cascades verified |
+| Refresh automation | Server-only `SUPABASE_URL` and `SUPABASE_SECRET_KEY` set in GitHub Actions; [first production import and maintenance succeeded](https://github.com/blucat1/msba-shortlist/actions/runs/39573049834) |
+| Hosted authorization acceptance | 23 passed, 0 skipped, 0 failed, 0 cleanup failures; two disposable password-authenticated users removed; does not establish Google OAuth |
+| Live frontend acceptance | Production Git deployment `af2c9759-c9f8-4786-82a9-af2849d001d7`, source `8f11c4c`, completed 09:06:53 UTC; seven anonymous browser check groups passed, including real catalog/details and all three routes at mobile/tablet/desktop widths |
+
+The first production import populated 2,225 catalog listings: 72 explicitly in scope and 128 relevant listings needing details checked. Those are time-specific source classifications, including optional senior IC stretches; they are not a promise that every listing fits a new graduate. The public catalog works now. Google sign-in and personal saving still require the pending Google client/provider setup and acceptance below.
+
+The database password was generated and entered privately during project creation, then used through process environment for linking and migrations. It was never committed or printed. Use the Supabase dashboard's database-password reset if the operator later needs a new database connection password; application keys and Google credentials are separate.
+
+Reference pages and free-plan limits were checked October 21, 2026. Recheck them when deploying. The tested runtime is Node **24.22.0**, pinned in `.nvmrc`; `package-lock.json` records installed versions. Supabase CLI 2.121.0 is pinned. Docker was unavailable on the Mac, but the real Docker-based Supabase SQL suites subsequently passed in GitHub Actions, and the hosted provisioning/migrations/function/API checks above were actually executed. See [TEST_REPORT.md](TEST_REPORT.md) for observed checks and boundaries.
 
 ## 1. Prepare the code and public repository
 
@@ -200,4 +219,4 @@ These are dated allowances, not capacity or uptime guarantees. Review dashboards
 - **Rollback:** use Cloudflare Pages' Deployments rollback to a known-good frontend. For database problems, stop scheduled ingestion, export/protect user data and apply a reviewed forward-fix migration; do not reset or drop a populated cloud database. Re-test both users before resuming.
 - **New employer:** start disabled/candidate, visit its official careers page, record a direct ATS link or exact posting URL cross-match, verify the public payload with the adapter, review usage terms, then set the verified timestamp/evidence and enable it. Re-run the source audit and unit checks. A provider/board/region migration requires a new source ID and disabling the old entry; the importer refuses to repoint an existing source identity. Disabled entries are synchronized even when there are no enabled feeds, so public database policies immediately hide their catalog/detail records. Unsupported ATS sites can remain external/manual opportunities.
 
-Owner actions still required: create/select the public repository and free service projects; install/run database tooling; apply and test migrations; configure Google and both callback destinations; publish Pages with real public values/contact; deploy the deletion function; add server GitHub Secrets and run the first real import; review employer terms; complete two-user/mobile/deletion checks; and appoint an operator. This build does not claim any of those external actions have happened.
+Owner actions still required: finish the Google Web application client and enable its Supabase provider; confirm the consent audience/test-user or publishing settings; complete actual Google callback, two-browser account-switch and second-device acceptance; review employer usage terms and provider quotas; and appoint an operator. The repository, Free project, migrations, exact frontend return URL, function, contact configuration, Actions secrets and first production import above are completed. Hosted API authorization and disposable deletion passed; they are not a substitute for the remaining Google browser checks.
