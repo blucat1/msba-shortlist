@@ -17,9 +17,13 @@ The [official public API and fair-use terms](https://jobicy.com/jobs-rss-feed) p
 
 The USA query also returns Anywhere listings. These keep country unknown, rather than treating remote as US eligibility. Each card and its details retain Jobicy credit and the supplied source link; an application may continue through Jobicy's own flow. Its publication date describes publication on Jobicy, not the employer's original posting date. Provider seniority tags can be inconsistent, so required years and graduate evidence come from the actual title and requirements text.
 
+The source's database employer ID identifies the publisher. Private tracker company grouping instead uses a stable identity from the actual normalized hiring-company name, so different employers do not share notes or company counts. Validated saved snapshots and backups retain publisher attribution and that company identity.
+
 This feed is remote-only, delayed by approximately three hours, and limited to its recent discovery window. A job aging out of seven days is not closed. The importer checks older known IDs in batches: active retains an open listing, unknown becomes unconfirmed and leaves recommendations, and only explicit closed closes it. These are Jobicy listing states, not independent live probes of every employer's application system. Existing private saved snapshots and history remain intact.
 
 The twice-daily schedule is below the source's maximum hourly synchronization cadence. Development tests replay mock or captured public data rather than repeatedly polling the API. Do not run source verification and ingestion as repeated independent Jobicy polls within the same hour.
+
+Production ingestion also checks persisted `job_sources.last_check_at` before making any Jobicy window or status request. A recorded attempt, including failure, less than 60 minutes old skips Jobicy without finalization or advancing source health; future/invalid timestamps also skip. Exactly 60 minutes elapsed permits the next attempt. This prevents a manual run shortly before the scheduled run from immediately polling again, while other employer feeds continue normally. GitHub's shared ingestion concurrency group serializes scheduled/manual production runs. Credential-free source verification and dry-runs cannot read this production guard, so operators must still coordinate those checks and any unrecorded failed attempt.
 
 ## What remains outside automatic coverage
 
