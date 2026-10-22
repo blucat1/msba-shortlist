@@ -55,7 +55,7 @@ Public source code is not public user data. Supabase stores private records unde
 | Destination | Variables | Visibility |
 | --- | --- | --- |
 | Vite / Cloudflare build | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`, `VITE_APP_MODE=production`, `VITE_SITE_URL`, `VITE_OWNER_CONTACT` | Public: compiled into browser assets |
-| GitHub Actions Secrets | `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | Server only |
+| GitHub environment `production-ingestion`, restricted to branch `main` | `SUPABASE_URL`, `SUPABASE_SECRET_KEY` | Server only; never repository-level secrets when writers have branch access |
 | Hosted Edge Function | Supabase supplies its URL and secret-key environment; set `ALLOWED_ORIGINS` | Server environment |
 
 Prefer current `sb_publishable_…` and `sb_secret_…` keys. The documented legacy equivalents are an `anon` key for the browser and `service_role` key for the server. The browser code rejects privileged keys. Never prefix a privileged key with `VITE_`; a public key's safety depends on the RLS policies you apply next. [Supabase key guide](https://supabase.com/docs/guides/getting-started/api-keys).
@@ -181,7 +181,7 @@ npm run ingest -- --dry-run --source ashby-ramp
 
 The first command writes timestamped `docs/SOURCE_AUDIT.md` and `docs/source-results.json`. A failed check exits nonzero and records a real failure. Zero relevant openings is a valid result, not a reason to add demo jobs.
 
-In GitHub repository Settings → Secrets and variables → Actions → Repository secrets, add **`SUPABASE_URL`** and **`SUPABASE_SECRET_KEY`** from step 2. Do not add these to Cloudflare's frontend build or any `VITE_` name. Then:
+In GitHub repository Settings → Environments, create **`production-ingestion`**. Under deployment branches/tags, allow only the **branch** `main`, with no tag policies. Add **`SUPABASE_URL`** and **`SUPABASE_SECRET_KEY`** from step 2 as environment secrets. Remove their repository-level copies before granting teammates Write access; otherwise a branch workflow can use those copies. The committed ingestion job references this environment. Do not add credentials to Cloudflare's frontend build or any `VITE_` name. Keep the existing schedule automatic, with owner-only manual dispatch and reruns. See [COLLABORATION.md](COLLABORATION.md). Then:
 
 1. Merge the reviewed workflow onto the trusted default branch.
 2. Open Actions → **Public employer feed import** → **Run workflow**, select that default branch, and run it.

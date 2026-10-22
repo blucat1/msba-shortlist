@@ -1,9 +1,14 @@
 name: Application checks
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 permissions:
   contents: read
+concurrency:
+  group: application-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -32,7 +37,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      # Full local-stack gate; this job is authored but was not run in the build environment.
+      # Exercise actual Supabase/PostgreSQL authorization in a disposable stack.
       - run: npx --yes supabase start
       - run: npm run test:db
       - if: always()

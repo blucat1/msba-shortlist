@@ -10,7 +10,16 @@ concurrency:
   cancel-in-progress: false
 jobs:
   ingest:
-    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    # First scheduled attempts stay automatic. Only the owner may dispatch or
+    # rerun production work; reruns retain the original actor, so also check the
+    # triggering actor. The environment independently permits only branch main.
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+      ((github.event_name == 'schedule' && github.run_attempt == 1) ||
+       (github.event_name == 'workflow_dispatch' && github.actor == 'blucat1' && github.triggering_actor == 'blucat1') ||
+       (github.run_attempt > 1 && github.triggering_actor == 'blucat1'))
+    environment: production-ingestion
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

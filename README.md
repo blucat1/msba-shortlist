@@ -89,6 +89,8 @@ CSV requires `company,title`. Optional columns: `location,stage,priority,applica
 
 ## Team and operator references
 
+- [Teammate contribution quickstart](CONTRIBUTING.md)
+- [Owner controls and collaboration runbook](docs/COLLABORATION.md)
 - [Two-minute demo script](docs/DEMO_SCRIPT.md)
 - [Four-person review handoff](docs/TEAM_HANDOFF.md)
 - [Architecture](docs/ARCHITECTURE.md), [data dictionary](docs/DATA_DICTIONARY.md), [security](docs/SECURITY.md), and [database checks](docs/DATABASE.md)
