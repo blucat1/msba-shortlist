@@ -1,4 +1,5 @@
 import * as Dialog from '@radix-ui/react-dialog';
+import { StudioGlass } from './glass/StudioGlass';
 import { X, LoaderCircle } from 'lucide-react';
 import { cloneElement, createContext, isValidElement, useContext, useId, useRef, type ReactElement, type ReactNode } from 'react';
 export const NoticeContext = createContext('');
@@ -8,7 +9,7 @@ export function Modal({ open, onClose, title, description, children, wide = fals
   return <Dialog.Root open={open} onOpenChange={v => !v && onClose()}><Dialog.Portal><Dialog.Overlay className="modal-overlay" /><Dialog.Content className={`modal ${wide ? 'modal-wide' : ''} ${drawer ? 'drawer' : ''}`}
     onOpenAutoFocus={() => { returnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; }}
     onCloseAutoFocus={event => { if (returnFocus.current?.isConnected && returnFocus.current !== document.body) { event.preventDefault(); returnFocus.current.focus(); } }}>
-    <div className="modal-heading"><div><Dialog.Title>{title}</Dialog.Title>{description && <Dialog.Description>{description}</Dialog.Description>}</div><Dialog.Close className="icon-button" aria-label="Close dialog"><X size={20} /></Dialog.Close></div>
+    <div className="modal-heading studio-surface studio-panel"><StudioGlass tone="panel" /><div><Dialog.Title>{title}</Dialog.Title>{description && <Dialog.Description>{description}</Dialog.Description>}</div><Dialog.Close className="icon-button" aria-label="Close dialog"><X size={20} /></Dialog.Close></div>
     {!description && <Dialog.Description className="sr-only">View and update your job search details.</Dialog.Description>}
     <div className="modal-body">{children}{notice && <p className="dialog-feedback" role="status">{notice}</p>}</div>
   </Dialog.Content></Dialog.Portal></Dialog.Root>;

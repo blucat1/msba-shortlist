@@ -14,6 +14,7 @@ import { addDays, dateOnlyInTimezone } from '../domain/dates';
 import type { Job, Opportunity } from '../domain/types';
 import type { Repository } from '../repositories/types';
 import { appConfig } from '../config';
+import { StudioGlass } from '../components/glass/StudioGlass';
 
 export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   const cache = useQueryClient();
@@ -84,7 +85,8 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
     <a className="skip-link" href="#main-content">Skip to content</a>
     <div className="workspace-body">
       {mode === 'demo' && <div className="demo-banner"><span><span className="demo-dot" /> <strong>Demo</strong> — sample jobs; changes stay in this browser.</span><Link to="/opportunities">View live mode <ArrowUpRight size={13} /></Link></div>}
-      <header className="topbar glass-header">
+      <header className="topbar glass-header studio-surface">
+        <StudioGlass tone="chrome" />
         <Link to={`${base}/opportunities`} className="brand shell-brand" aria-label={appConfig.name}>
           <span className="brand-mark"><Layers2 size={22} strokeWidth={1.7} aria-hidden="true" /></span>
           <span className="brand-wordmark mobile-brand">{appConfig.name.split(' ').at(-1)}<small className="brand-caption">{appConfig.name.split(' ').slice(0, -1).join(' ')}</small></span>
@@ -104,9 +106,9 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
           <OpportunityForm open={manual !== null} opportunity={manual && manual !== 'new' ? manual : undefined} onClose={() => setManual(null)} />
         </WorkspaceContext.Provider>}
       </main>
-      <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
+      <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><a href="/licenses/liquid-glass-studio.txt" target="_blank" rel="noopener noreferrer">Credits</a><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
     </div>
-    <nav className="mobile-nav" aria-label="Mobile navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} /><span>{label}</span></NavLink>)}<button onClick={openSettings} aria-label="Settings"><Settings2 size={21} aria-hidden="true" /><span>Settings</span></button></nav>
+    <nav className="mobile-nav studio-surface" aria-label="Mobile navigation"><StudioGlass tone="chrome" />{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} /><span>{label}</span></NavLink>)}<button onClick={openSettings} aria-label="Settings"><Settings2 size={21} aria-hidden="true" /><span>Settings</span></button></nav>
     <InformationDialog kind={information} sources={snapshot?.sources ?? []} snapshot={snapshot} onClose={() => setInformation(null)} />
     <Modal open={application !== null} onClose={() => setApplication(null)} title="Did you submit this application?" description={mode === 'demo' ? 'Demo interaction — no real vacancy was opened. Opening an application never counts as a submission.' : 'The employer page opened in a new tab. Only confirm after you have submitted your application.'}>
       <div className="application-confirm"><span className="confirmation-icon"><Check size={24} /></span><h3>{application?.title}</h3><p>{application?.company}</p></div><label className="field"><span>Application date</span><input type="date" value={applicationDate} max={dateOnlyInTimezone(new Date(), snapshot?.preferences.timezone)} onChange={e => setApplicationDate(e.target.value)} /></label><p className="hint">Confirmation adds an application event to your private search. You can correct the date later.</p><div className="dialog-actions"><button className="button button-quiet" onClick={() => setApplication(null)}>Not yet</button><button className="button button-primary" disabled={applying || !applicationDate} onClick={() => void confirmApplied()}>{applying ? 'Saving…' : 'Yes, I applied'}<ArrowRight size={16} /></button></div><button className="dismiss-link" onClick={() => setApplication(null)}>Dismiss</button>
