@@ -1,14 +1,19 @@
-import { freshness } from './dates';
+import { dateOnlyInTimezone, freshness } from './dates';
+import { assessEligibility, type EligibilityAssessment } from './eligibility';
 import { canonicalSkill } from './skills';
 import { assessExperience, isLeadershipTitle, matchesExperienceView, type ExperienceView } from './experience';
 import { ROLE_LABELS, type Job, type Preferences } from './types';
 
 export interface MatchReason { code: string; text: string; evidence: string | null; dimension: string; }
-export interface RankedJob { job: Job; score: number; coverage: number; label: 'Strong alignment' | 'Worth reviewing' | 'Experience stretch' | 'Check details'; reasons: MatchReason[]; caveats: string[]; missing: string[]; }
+export interface RankedJob { job: Job; score: number; coverage: number; label: 'Preference overlap' | 'Worth reviewing' | 'Experience stretch' | 'Check details' | 'Known conflict'; eligibility: EligibilityAssessment[]; conflicts: string[]; reasons: MatchReason[]; caveats: string[]; missing: string[]; }
 const normalize = (text: string) => text.trim().toLowerCase();
 export function rankJob(job: Job, preferences: Preferences, now = new Date()): RankedJob {
   const experienceAssessment = assessExperience(job);
-  let total = 0, weighted = 0, known = 0, stretch = false, timingMismatch = false;
+  const eligibility = assessEligibility(preferences, job);
+  const conflicts = eligibility.filter(item => item.status === 'conflict').map(item => item.reason);
+  if (job.sourceReview) conflicts.push(job.sourceReview.reason);
+  if (job.timing.deadlineVerified && job.timing.deadline && job.timing.deadline < dateOnlyInTimezone(now, preferences.timezone)) conflicts.push('The source application deadline has passed; confirm any extension with the employer.');
+  let total = 0, weighted = 0, known = 0, stretch = false;
   const reasons: MatchReason[] = [], caveats: string[] = [], missing: string[] = [];
   const dimension = (name: string, weight: number, value: number, evidence: boolean, text?: string, excerpt?: string | null) => {
     total += weight; weighted += weight * value; if (evidence) known += weight; else missing.push(name);
@@ -66,16 +71,10 @@ export function rankJob(job: Job, preferences: Preferences, now = new Date()): R
     dimension('compensation', 10, score, evidence, evidence ? score >= .95 ? 'Published base minimum meets your target' : score >= .6 ? 'Published base range overlaps your target; offer is not guaranteed' : undefined : undefined, bands.map(b => b.sourceText).join('; '));
     if (evidence && score < .5) caveats.push('Published annual base range is below your target.');
   }
-  if (preferences.graduationMonth || preferences.earliestStart) {
-    const checks: boolean[] = [];
-    if (preferences.graduationMonth && (job.timing.graduationStart || job.timing.graduationEnd)) {
-      checks.push((!job.timing.graduationStart || preferences.graduationMonth >= job.timing.graduationStart.slice(0, 7)) && (!job.timing.graduationEnd || preferences.graduationMonth <= job.timing.graduationEnd.slice(0, 7)));
-    }
-    if (preferences.earliestStart && job.timing.latestStart) checks.push(preferences.earliestStart <= job.timing.latestStart);
-    timingMismatch = checks.includes(false);
-    dimension('timing', 10, checks.length ? timingMismatch ? .1 : 1 : .5, checks.length > 0, checks.length && !timingMismatch ? 'Known graduation/start timing aligns' : undefined, job.timing.evidence.join('; '));
-    if (timingMismatch) caveats.push('Known graduation or start timing conflicts with your preferences.');
-  }
+  const timing = eligibility.filter(item => item.criterion === 'graduation' || item.criterion === 'start');
+  if (timing.some(item => item.status === 'conflict')) caveats.push('Known graduation or start timing conflicts with your preferences.');
+  for (const item of timing.filter(item => item.status === 'pass')) reasons.push({ code: `eligibility_${item.criterion}`, dimension: 'eligibility', text: item.reason, evidence: item.evidence.join('; ') || null });
+  caveats.push(...conflicts);
   const score = total ? Math.round(weighted / total * 100) : 50;
   const coverage = total ? Math.round(known / total * 100) : 0;
   if (freshness(job.lastVerifiedAt, now) !== 'fresh') caveats.push('Source verification is stale; check the employer page.');
@@ -85,15 +84,15 @@ export function rankJob(job: Job, preferences: Preferences, now = new Date()): R
   if (job.experience.preferredYears !== null) caveats.push(`${job.experience.preferredYears} years preferred by the employer; this is not treated as a required minimum.`);
   if (experienceAssessment.tier === 'experienced') caveats.push('This experienced role is outside the default graduate shortlist.');
   const experienced = experienceAssessment.tier === 'experienced';
-  const label = experienced ? 'Experience stretch' : experienceAssessment.requiredYears === null || experienceAssessment.tier === 'unverified' || job.classification.scope === 'needs-details' || coverage < 30 ? 'Check details' : stretch ? 'Experience stretch' : score >= 80 && coverage >= 60 && !timingMismatch ? 'Strong alignment' : 'Worth reviewing';
-  return { job, score, coverage, label, reasons, caveats, missing };
+  const label = conflicts.length ? 'Known conflict' : experienced ? 'Experience stretch' : experienceAssessment.requiredYears === null || experienceAssessment.tier === 'unverified' || job.classification.scope === 'needs-details' || coverage < 30 ? 'Check details' : stretch ? 'Experience stretch' : score >= 80 && coverage >= 60 ? 'Preference overlap' : 'Worth reviewing';
+  return { job, score, coverage, label, eligibility, conflicts, reasons, caveats, missing };
 }
-export interface RankOptions { now?: Date; trackedJobIds?: string[]; dismissedJobIds?: string[]; includeTracked?: boolean; includeNeedsDetails?: boolean; includeStale?: boolean; experienceView?: ExperienceView; }
+export interface RankOptions { now?: Date; trackedJobIds?: string[]; dismissedJobIds?: string[]; includeTracked?: boolean; includeNeedsDetails?: boolean; includeStale?: boolean; includeEligibilityConflicts?: boolean; experienceView?: ExperienceView; }
 export function rankJobs(jobs: Job[], preferences: Preferences, options: RankOptions = {}): RankedJob[] {
   const now = options.now ?? new Date(), hidden = new Set(options.includeTracked ? [] : [...options.trackedJobIds ?? [], ...options.dismissedJobIds ?? []]);
   const view = options.experienceView ?? 'new-grad';
   return jobs.filter(j => !hidden.has(j.id) && j.classification.scope !== 'excluded' && j.classification.seniority !== 'leadership' && !isLeadershipTitle(j.title) && j.availability !== 'closed' && !(j.publisher?.kind === 'aggregator' && j.availability === 'availability_unconfirmed')
     && matchesExperienceView(assessExperience(j), view) && (options.includeNeedsDetails || j.classification.scope !== 'needs-details')
-    && (options.includeStale || freshness(j.lastVerifiedAt, now) !== 'expired')).map(job => rankJob(job, preferences, now))
-    .sort((a, b) => b.score - a.score || b.coverage - a.coverage || Number(b.job.availability === 'open') - Number(a.job.availability === 'open') || b.job.firstSeenAt.localeCompare(a.job.firstSeenAt) || a.job.id.localeCompare(b.job.id));
+    && (options.includeStale || freshness(j.lastVerifiedAt, now) !== 'expired')).map(job => rankJob(job, preferences, now)).filter(row => options.includeEligibilityConflicts || row.conflicts.length === 0)
+    .sort((a, b) => a.conflicts.length - b.conflicts.length || b.score - a.score || b.coverage - a.coverage || Number(b.job.availability === 'open') - Number(a.job.availability === 'open') || b.job.firstSeenAt.localeCompare(a.job.firstSeenAt) || a.job.id.localeCompare(b.job.id));
 }

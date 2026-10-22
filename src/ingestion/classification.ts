@@ -1,19 +1,31 @@
 import type { EmploymentType, Evidence, Experience, Job, JobLocation, RoleFamily, SalaryBand, WorkArrangement } from '../domain/types';
 import { explicitGraduateTitle, isLeadershipTitle } from '../domain/experience';
 
-export const CLASSIFIER_VERSION = '2026-10-21.2';
+export const CLASSIFIER_VERSION = '2026-10-22.1';
+const QUANTITATIVE_CONSULTING = /\b(?:econometric|economic|statistical|quantitative|financial|data) (?:analysis|research|model(?:ing|s)?)|\b(?:Python|Stata|SAS|R programming|regression|econometrics|data analytics|statistical programs)\b/i;
 export const TAXONOMY: { family: RoleFamily; titles: RegExp; context?: RegExp }[] = [
   { family: 'product-management', titles: /\b(?:associate product manager|apm|product manager|technical product manager|product operations|product rotational)\b/i },
+  { family: 'data-engineering', titles: /\bimplementation engineer\b/i, context: /\b(?:data pipelines?|data ingest|ETL|data engineer(?:ing)?)\b/i },
   { family: 'analytics-engineering', titles: /\banalytics engineer(?:ing)?\b/i },
   { family: 'data-engineering', titles: /\bdata engineer(?:ing)?\b|\b(?:software engineer|engineer),? (?:[-–] )?data (?:platform|infrastructure|pipelines)\b/i, context: /\b(?:data engineer(?:ing)?|pipelines|etl|elt|data platform|data infrastructure|warehouse|spark|airflow)\b/i },
   { family: 'machine-learning', titles: /\b(?:machine learning|ml|applied ai|applied machine learning) (?:engineer|scientist)|\b(?:software engineer|engineer),? (?:[-–] )?(?:machine learning|ml)\b|\bresearch engineer\b/i, context: /\b(?:machine learning|models|statistical|deep learning|pytorch|tensorflow)\b/i },
   { family: 'data-science', titles: /\b(?:data scien(?:tist|ce)|applied scien(?:tist|ce)|statistician|statistical analyst|decision scien(?:tist|ce))\b/i },
   { family: 'product-analytics', titles: /\b(?:product|growth|experimentation|decision) (?:data )?analy(?:st|tics)|\bexperimentation scien/i },
+  { family: 'business-intelligence', titles: /\banalyst,? reporting\b/i },
   { family: 'business-intelligence', titles: /\b(?:business intelligence|bi analyst|bi engineer|reporting analyst|reporting analytics)\b/i },
   { family: 'marketing-analytics', titles: /\b(?:marketing|customer|commercial|sales|consumer) (?:data )?analy(?:st|tics)|\bmarketing scien/i },
   { family: 'operations-analytics', titles: /\b(?:operations|logistics|supply chain|supply-chain|inventory) (?:data )?analy(?:st|tics)/i },
+  { family: 'financial-analytics', titles: /\b(?:treasury|capital markets|credit portfolio|CMBS|RMBS)\b[^\n]{0,45}\banalyst\b|\b(?:project finance|funds ratings)\b[^\n]{0,45}\banalyst\b|\bfraud risk management[^\n]{0,45}\banalyst\b/i },
+  { family: 'financial-analytics', titles: /\b(?:senior )?associate,? (?:market fundamentals|risk and structuring analytics|energy management)\b/i, context: /\b(?:power trading|quantitative|modeling|analysis|analytical)\b/i },
+  { family: 'operations-analytics', titles: /\boperations (?:sr\.?|senior) analyst\b/i },
+  { family: 'financial-analytics', titles: /\banalyst,? market optimization (?:and|&) trading\b/i },
+  { family: 'financial-analytics', titles: /\beconomic consulting senior associate\b|\bsenior associate \(finance practice\)/i, context: /\b(?:economic|economics|finance|accounting|quantitative|analysis)\b/i },
+  { family: 'financial-analytics', titles: /\b(?:(?:economics? consulting|(?:accounting\/)?business\/finance consulting|energy) (?:analyst|associate)|research analyst)\b/i, context: QUANTITATIVE_CONSULTING },
+  { family: 'strategy-operations', titles: /\bmanagement advisory (?:analyst|associate)\b/i, context: QUANTITATIVE_CONSULTING },
   { family: 'financial-analytics', titles: /\b(?:financial|finance|credit|risk|pricing|revenue|fraud) (?:data )?analy(?:st|tics)/i },
   { family: 'strategy-operations', titles: /\b(?:business operations|strategy (?:and|&) operations|strategic operations|business strategy|strategy analyst|strategy associate|analytics consultant|business consultant)\b/i },
+  { family: 'business-analytics', titles: /\bbusiness systems analyst\b/i, context: /\b(?:requirements|analysis|analytics|SQL|Python)\b/i },
+  { family: 'business-analytics', titles: /\bAI solutions analyst\b/i, context: /\b(?:Python|SQL|machine learning|data analytics|analysis|AI)\b/i },
   { family: 'business-analytics', titles: /\b(?:data analyst|business analyst|business analytics|decision analyst|analytics associate)\b/i },
 ];
 
@@ -52,7 +64,9 @@ export function employment(value?: string | null, title = '', description = ''):
   if (/\b(?:contract(?:or)?|temporary|freelance)\b/i.test(text)) return { type: 'contract', evidence: value || title };
   if (/part[ -]?time/i.test(text)) return { type: 'part-time', evidence: value || title };
   if (/full[ -]?time/i.test(text)) return { type: 'full-time', evidence: value || title };
-  const explicit = description.match(/\b(?:this (?:is|position is|role is) (?:a )?|employment(?: type)?[: ]+)(full[ -]?time|part[ -]?time|contract|internship)\b/i);
+  const roleType = description.match(/\b(full[ -]?time|part[ -]?time|contract|internship)[,\s]+(?:[a-z]+\s+){0,2}(?:position|role|opportunity)\b/i);
+  if (roleType) return { type: employment(roleType[1]).type, evidence: roleType[0] };
+  const explicit = description.match(/\b(?:this (?:is|position is|role is) (?:a )?|(?:employment|role)(?: type)?[: ]+)(full[ -]?time|part[ -]?time|contract|internship)\b/i);
   return explicit ? employment(explicit[1]) : { type: 'unknown', evidence: null };
 }
 
@@ -64,7 +78,7 @@ export function workArrangement(value?: string | null, label = ''): WorkArrangem
 export function extractExperience(text: string): Experience {
   const numberWords: Record<string, number> = { zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12, fifteen: 15, twenty: 20 };
   const number = String.raw`(?:\d{1,2}(?:\.\d)?|${Object.keys(numberWords).join('|')})`;
-  const quantity = new RegExp(String.raw`\b(${number})(?:\s*\(\s*${number}\s*\))?(?:\s*(?:[-–—]|to)\s*(${number}))?(\+|\s+or\s+(?:more|less|fewer))?\s*\)?\s*(years?|yrs?\.?|yoe)\b`, 'gi');
+  const quantity = new RegExp(String.raw`\b(${number})(?:\s*\(\s*${number}\s*\))?(?:\s*(?:[-–—]|to)\s*(${number}))?(\+|\s+or\s+(?:more|less|fewer))?\s*\)?\s*(years?|yrs?\.?|yoe|months?|mos?\.?)\b`, 'gi');
   const degree = /\b(?:bachelor(?:['’]s)?|master(?:['’]s)?|ph\.?d\.?|doctorate|doctoral|b\.?s\.?|m\.?s\.?|b\.?a\.?|m\.?a\.?)\b/gi;
   const parseNumber = (value: string) => numberWords[value.toLowerCase()] ?? Number(value);
   type Constraint = { min: number | null; max: number | null };
@@ -152,11 +166,13 @@ export function extractExperience(text: string): Experience {
         const experienceLanguage = /^\s*(?:['’]\s*)?(?:of\s+)?[^.!?;]{0,160}\b(?:experience|professional work)\b/i.test(following)
           || /^\s*(?:['’]\s*)?(?:of\s+)?(?:in|as|working|work\b|building|developing|designing|leading|managing|analyzing|supporting|delivering|performing|applying|using|focused|at the intersection|with)\b/i.test(following)
           || /\byoe\b/i.test(match[4])
-          || /\bexperience\s*[:(]?\s*$/i.test(prefix);
+          || /\bexperience(?:\s+required)?\s*[:(]?\s*$/i.test(prefix);
         if (!experienceLanguage || /\d+\s*\/\s*$/.test(prefix)) continue;
         const between = prefix.match(new RegExp(String.raw`\bbetween\s+(${number})\s+and\s*$`, 'i'));
-        const low = parseNumber(between?.[1] ?? match[1]);
-        const high = between ? parseNumber(match[1]) : match[2] ? parseNumber(match[2]) : null;
+        const unitScale = /^(?:months?|mos?)/i.test(match[4]) ? 1 / 12 : 1;
+        const low = Number((parseNumber(between?.[1] ?? match[1]) * unitScale).toFixed(4));
+        const highRaw = between ? parseNumber(match[1]) : match[2] ? parseNumber(match[2]) : null;
+        const high = highRaw === null ? null : Number((highRaw * unitScale).toFixed(4));
         if (!Number.isFinite(low) || high !== null && (!Number.isFinite(high) || high < low)) continue;
         const upperOnly = /^\s+(?:or\s+(?:less|fewer)|max(?:imum)?)\b/i.test(following) || /\b(?:less than|fewer than|under|at most|up to|no more than|maximum(?: of)?)\s*$/i.test(prefix) || /or\s+(?:less|fewer)/i.test(match[3] || '');
         add(start, end, upperOnly ? { min: null, max: high ?? low } : { min: low, max: match[3] ? null : high });

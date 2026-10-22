@@ -1,0 +1,943 @@
+{
+  "evaluatedAt": "2026-10-22T07:24:38.289Z",
+  "dataset": "data/quality-benchmark-v1.json",
+  "reviewedAt": "2026-10-22T07:23:37.735885Z",
+  "reviewMethod": "assistant-manual-source-review",
+  "classifierVersion": "2026-10-22.1",
+  "baselineCommit": null,
+  "reviewedCount": 101,
+  "minimumSample": 80,
+  "policy": "At least 80 reviewed records. No strict-default false positives or missed positives; all reviewed scope, experience and confirmed-zero labels must agree.",
+  "matrix": {
+    "truePositive": 10,
+    "falsePositive": 0,
+    "falseNegative": 0,
+    "trueNegative": 91
+  },
+  "precision": 1,
+  "recall": 1,
+  "scopeCorrect": 101,
+  "experienceCorrect": 50,
+  "experienceReviewed": 50,
+  "zeroCorrect": 101,
+  "zeroReviewed": 101,
+  "passed": true,
+  "mismatches": [],
+  "results": [
+    {
+      "id": "lever:glsllc:f9b3c57e-7e60-4f99-bd2e-6ffd92ee66b5",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:glsllc:d81bfc16-2ba1-41ca-ab21-7d8cffac9e07",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:glsllc:c0e144a9-2b3e-49c1-bf6e-1e5cb084428a",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:lake-partners-account:b3d26b77-e601-4a83-b344-a7f1abb051fc",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:recidiviz:4717510006",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": 0.5,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:77ca492c-4142-4931-beeb-e85d9d0ac443",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:ee8ee239-ad20-4c1e-868d-3357799589ea",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7986505003",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7986694003",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8054054",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:7894191",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8053996",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8053945",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4720810005",
+      "scope": "needs-details",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4720840005",
+      "scope": "needs-details",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4720834005",
+      "scope": "needs-details",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:certik:7d25f5e8-2fed-412c-b182-6568a491483e",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": 1,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:recidiviz:4657637006",
+      "scope": "included",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:recidiviz:4716167006",
+      "scope": "included",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:recidiviz:4714745006",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:glsllc:cef1e805-8d32-4e35-ae71-0dc21cc2b2ef",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:glsllc:46903487-3ef8-47db-b142-2df89ed44d90",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:glsllc:01de0a21-86d8-498b-bed5-8f40dc2c0ee0",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:recidiviz:4677327006",
+      "scope": "included",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:9dc2497a-d836-4331-9040-3d9108be8563",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:dd42085e-6323-4ac9-bb6f-f8a4eeb79c04",
+      "scope": "included",
+      "experienceTier": "early-career",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:bbdb1020-2900-4d63-908a-20cea79a65cd",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:db008474-d93e-41a7-939e-8d5825eb0d0f",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:52947110-9763-4382-a1ed-9b87564cc30d",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:b40d0085-1d67-4a27-aaa1-54225f3b5762",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:53873f85-01d7-43b3-aab3-871cdef17258",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "ashby:solace:0d1da2fe-36f4-4927-902d-b6abdb03ab7f",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7986696003",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7980382003",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7986697003",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7986695003",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:idmeuniversityrecruiting:7980429003",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8064581",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8212081",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8186465",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": 1,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8186469",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8160288",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8128811",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8120300",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8243522",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8110110",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8164609",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:charlesriverassociates:8311746",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:erg:9a3377d5-a4bc-431c-80ee-0a538a0dc13e",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 1,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:erg:26fdd838-c4ba-4538-825c-c16b36d18fe1",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": true,
+      "zeroExperienceDefault": true,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:erg:e1c34ead-a5f9-4d6d-b686-7d347f2051ae",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:erg:a43d3070-1dda-4e92-894c-cb2ae7bd7c64",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:erg:a3a475aa-be18-440c-9bc8-000200aeb963",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:wisdomtree:621718c3-779f-4e9c-9681-be75dafc427e",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": 1,
+      "strictDefault": true,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:wisdomtree:bc16f38e-8613-43b6-bb9b-33d24f2da299",
+      "scope": "included",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "lever:wisdomtree:220e4082-4102-4989-8dac-4d8a2172f04a",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:barkleyokrp:6184401004",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:barkleyokrp:5766256004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 7,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:barkleyokrp:5836396004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:barkleyokrp:6148173004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 4,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:barkleyokrp:6114198004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 10,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6181106004",
+      "scope": "needs-details",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6221167004",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 8,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6181533004",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6181520004",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6186507004",
+      "scope": "needs-details",
+      "experienceTier": "early-career",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6208426004",
+      "scope": "excluded",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6208539004",
+      "scope": "excluded",
+      "experienceTier": "early-career",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6208549004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 5,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6185752004",
+      "scope": "needs-details",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6221882004",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 8,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6221712004",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6167361004",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 5,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6182599004",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6225699004",
+      "scope": "excluded",
+      "experienceTier": "early-career",
+      "requiredYears": 2,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:pathward:6194763004",
+      "scope": "excluded",
+      "experienceTier": "early-career",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:7297159002",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:8694024002",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:8886101002",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:8444423002",
+      "scope": "included",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:8881549002",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:7910707002",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:7910969002",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:krollbondratingagency:8393108002",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5242740007",
+      "scope": "needs-details",
+      "experienceTier": "new-grad",
+      "requiredYears": 0,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5167771007",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5257688007",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 4,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5259697007",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5257624007",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 3,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5190357007",
+      "scope": "excluded",
+      "experienceTier": "experienced",
+      "requiredYears": 5,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:clearwayjobs:5243832007",
+      "scope": "needs-details",
+      "experienceTier": "experienced",
+      "requiredYears": 4,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4744131005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4744137005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4732401005",
+      "scope": "excluded",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4735999005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4735519005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4726407005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4738128005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4744186005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "greenhouse:thebrattlegroup:4744199005",
+      "scope": "excluded",
+      "experienceTier": "unverified",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": false
+    },
+    {
+      "id": "jobicy:usa:153373",
+      "scope": "included",
+      "experienceTier": "new-grad",
+      "requiredYears": null,
+      "strictDefault": false,
+      "zeroExperienceDefault": false,
+      "sourceConflict": true
+    }
+  ],
+  "limitations": [
+    "Source-reviewed by an assistant; no independent human adjudication or student pilot yet.",
+    "Purposive bounded excerpts, not a random or exhaustive market sample; results do not estimate whole-market recall or hiring outcomes.",
+    "Strict policy is measured before individual cohort, degree, GPA and authorization checks; separate regression tests cover those criteria.",
+    "Baseline evaluates frozen code against the same current reviewed evidence; it is not a historical production count."
+  ]
+}

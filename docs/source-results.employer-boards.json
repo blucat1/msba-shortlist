@@ -1,0 +1,1563 @@
+{
+  "checkedAt": "2026-10-22T07:24:38.264Z",
+  "classifierVersion": "2026-10-22.1",
+  "totals": {
+    "raw": 4563,
+    "listed": 4563,
+    "inScope": 188,
+    "needsDetails": 224,
+    "strictNewGrad": 14,
+    "strictNewGradNeedsDetails": 5
+  },
+  "results": [
+    {
+      "sourceId": "greenhouse-robinhood",
+      "company": "Robinhood",
+      "provider": "greenhouse",
+      "board": "robinhood",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.robinhood.com/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/robinhood/jobs?content=true",
+      "status": "passed",
+      "raw": 153,
+      "listed": 153,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 14,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-ramp",
+      "company": "Ramp",
+      "provider": "ashby",
+      "board": "ramp",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://ramp.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/ramp?includeCompensation=true",
+      "status": "passed",
+      "raw": 170,
+      "listed": 170,
+      "employersInWindow": 1,
+      "inScope": 14,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-duolingo",
+      "company": "Duolingo",
+      "provider": "greenhouse",
+      "board": "duolingo",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.duolingo.com/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/duolingo/jobs?content=true",
+      "status": "passed",
+      "raw": 61,
+      "listed": 61,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 9,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-figma",
+      "company": "Figma",
+      "provider": "greenhouse",
+      "board": "figma",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.figma.com/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/figma/jobs?content=true",
+      "status": "passed",
+      "raw": 139,
+      "listed": 139,
+      "employersInWindow": 1,
+      "inScope": 7,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-palantir",
+      "company": "Palantir",
+      "provider": "lever",
+      "board": "palantir",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.palantir.com/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/palantir",
+      "status": "passed",
+      "raw": 304,
+      "listed": 304,
+      "employersInWindow": 1,
+      "inScope": 8,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "1b690123-1766-4e75-a0ef-0f58afa864b4",
+          "company": "Palantir",
+          "title": "Data Engineer - Talent Acquisition Operations",
+          "postingUrl": "https://jobs.lever.co/palantir/1b690123-1766-4e75-a0ef-0f58afa864b4",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-notion",
+      "company": "Notion",
+      "provider": "ashby",
+      "board": "notion",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.notion.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/notion?includeCompensation=true",
+      "status": "passed",
+      "raw": 137,
+      "listed": 137,
+      "employersInWindow": 1,
+      "inScope": 5,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-amplitude",
+      "company": "Amplitude",
+      "provider": "ashby",
+      "board": "amplitude",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://amplitude.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/amplitude?includeCompensation=true",
+      "status": "passed",
+      "raw": 41,
+      "listed": 41,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-reddit",
+      "company": "Reddit",
+      "provider": "greenhouse",
+      "board": "reddit",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://redditinc.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/reddit/jobs?content=true",
+      "status": "passed",
+      "raw": 156,
+      "listed": 156,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 34,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-webflow",
+      "company": "Webflow",
+      "provider": "ashby",
+      "board": "webflow",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://webflow.com/company/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/webflow?includeCompensation=true",
+      "status": "passed",
+      "raw": 17,
+      "listed": 17,
+      "employersInWindow": 1,
+      "inScope": 3,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-benchling",
+      "company": "Benchling",
+      "provider": "ashby",
+      "board": "benchling",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.benchling.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/benchling?includeCompensation=true",
+      "status": "passed",
+      "raw": 53,
+      "listed": 53,
+      "employersInWindow": 1,
+      "inScope": 10,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-vanta",
+      "company": "Vanta",
+      "provider": "ashby",
+      "board": "vanta",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.vanta.com/company/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/vanta?includeCompensation=true",
+      "status": "passed",
+      "raw": 84,
+      "listed": 84,
+      "employersInWindow": 1,
+      "inScope": 8,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-asana",
+      "company": "Asana",
+      "provider": "greenhouse",
+      "board": "asana",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://asana.com/jobs/all",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/asana/jobs?content=true",
+      "status": "passed",
+      "raw": 105,
+      "listed": 105,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 3,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-mercury",
+      "company": "Mercury",
+      "provider": "greenhouse",
+      "board": "mercury",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://mercury.com/jobs",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/mercury/jobs?content=true",
+      "status": "passed",
+      "raw": 73,
+      "listed": 73,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 11,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-mural",
+      "company": "Mural",
+      "provider": "ashby",
+      "board": "mural",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.mural.co/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/mural?includeCompensation=true",
+      "status": "passed",
+      "raw": 14,
+      "listed": 14,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-flexport",
+      "company": "Flexport",
+      "provider": "greenhouse",
+      "board": "flexport",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.flexport.com/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/flexport/jobs?content=true",
+      "status": "passed",
+      "raw": 196,
+      "listed": 196,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 11,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "8231696",
+          "company": "Flexport",
+          "title": "Treasury & Payment Analyst",
+          "postingUrl": "https://job-boards.greenhouse.io/flexport/jobs/8231696",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "finance",
+                  "accounting",
+                  "business"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor's degree in Finance, Accounting, Business, or a related field.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-thumbtack",
+      "company": "Thumbtack",
+      "provider": "ashby",
+      "board": "thumbtack",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.thumbtack.com/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/thumbtack?includeCompensation=true",
+      "status": "passed",
+      "raw": 53,
+      "listed": 53,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-ro",
+      "company": "Ro",
+      "provider": "lever",
+      "board": "ro",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://ro.co/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/ro",
+      "status": "passed",
+      "raw": 50,
+      "listed": 50,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-calendly",
+      "company": "Calendly",
+      "provider": "greenhouse",
+      "board": "calendly",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://calendly.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/calendly/jobs?content=true",
+      "status": "passed",
+      "raw": 9,
+      "listed": 9,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-lattice",
+      "company": "Lattice",
+      "provider": "greenhouse",
+      "board": "lattice",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://lattice.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/lattice/jobs?content=true",
+      "status": "passed",
+      "raw": 8,
+      "listed": 8,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-linear",
+      "company": "Linear",
+      "provider": "ashby",
+      "board": "Linear",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://linear.app/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Linear?includeCompensation=true",
+      "status": "passed",
+      "raw": 34,
+      "listed": 34,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-brex",
+      "company": "Brex",
+      "provider": "greenhouse",
+      "board": "brex",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.brex.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/brex/jobs?content=true",
+      "status": "passed",
+      "raw": 265,
+      "listed": 265,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 35,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-ironclad",
+      "company": "Ironclad",
+      "provider": "ashby",
+      "board": "ironcladhq",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://ironcladapp.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/ironcladhq?includeCompensation=true",
+      "status": "passed",
+      "raw": 33,
+      "listed": 33,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-betterup",
+      "company": "BetterUp",
+      "provider": "ashby",
+      "board": "betterup",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.betterup.com/about-us/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/betterup?includeCompensation=true",
+      "status": "passed",
+      "raw": 6,
+      "listed": 6,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-teachable",
+      "company": "Teachable",
+      "provider": "greenhouse",
+      "board": "teachablecareers",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.teachable.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/teachablecareers/jobs?content=true",
+      "status": "passed",
+      "raw": 5,
+      "listed": 5,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-wealthfront",
+      "company": "Wealthfront",
+      "provider": "lever",
+      "board": "wealthfront",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.wealthfront.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/wealthfront",
+      "status": "passed",
+      "raw": 23,
+      "listed": 23,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-upgrade",
+      "company": "Upgrade",
+      "provider": "greenhouse",
+      "board": "upgrade",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.upgrade.com/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/upgrade/jobs?content=true",
+      "status": "passed",
+      "raw": 26,
+      "listed": 26,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-veeva",
+      "company": "Veeva Systems",
+      "provider": "lever",
+      "board": "veeva",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.veeva.com/job-search-results/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/veeva",
+      "status": "passed",
+      "raw": 919,
+      "listed": 919,
+      "employersInWindow": 1,
+      "inScope": 98,
+      "needsDetails": 0,
+      "strictNewGrad": 5,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
+          "company": "Veeva Systems",
+          "title": "Associate Business Consultant - Life Sciences Consulting",
+          "postingUrl": "https://jobs.lever.co/veeva/c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "The anticipated start date is July 2027.",
+              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "e2f879c3-cfdd-4d1b-b866-7f0987576865",
+          "company": "Veeva Systems",
+          "title": "Associate Business Consultant - Life Sciences Consulting",
+          "postingUrl": "https://jobs.lever.co/veeva/e2f879c3-cfdd-4d1b-b866-7f0987576865",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "The anticipated start date is July 2027.",
+              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
+          "company": "Veeva Systems",
+          "title": "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
+          "postingUrl": "https://jobs.lever.co/veeva/2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
+              "The anticipated start date is July 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0,
+          "explicitGraduate": true,
+          "experienceLabel": "No prior experience required"
+        },
+        {
+          "externalId": "28c47d34-3ad6-4485-85a9-686b4239b9ea",
+          "company": "Veeva Systems",
+          "title": "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
+          "postingUrl": "https://jobs.lever.co/veeva/28c47d34-3ad6-4485-85a9-686b4239b9ea",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
+              "The anticipated start date is July 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0,
+          "explicitGraduate": true,
+          "experienceLabel": "No prior experience required"
+        },
+        {
+          "externalId": "e91100ea-a47e-436c-be31-c26503d0fa29",
+          "company": "Veeva Systems",
+          "title": "Strategy Associate - Veeva Link",
+          "postingUrl": "https://jobs.lever.co/veeva/e91100ea-a47e-436c-be31-c26503d0fa29",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor’s degree required",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-databricks",
+      "company": "Databricks",
+      "provider": "greenhouse",
+      "board": "databricks",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.databricks.com/company/careers/open-positions",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs?content=true",
+      "status": "passed",
+      "raw": 897,
+      "listed": 897,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 37,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "7586263002",
+          "company": "Databricks",
+          "title": "Associate Product Manager, New Grad (2027 Start)",
+          "postingUrl": "https://databricks.com/company/careers/open-positions/job?gh_jid=7586263002",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "You will graduate in Fall 2026 or Spring 2027 with a bachelors or masters degree in computer science or related engineering practice"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-roblox",
+      "company": "Roblox",
+      "provider": "greenhouse",
+      "board": "roblox",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.roblox.com/jobs/8143976?gh_jid=8143976",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/roblox/jobs?content=true",
+      "status": "passed",
+      "raw": 267,
+      "listed": 267,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 32,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-glsllc",
+      "company": "Global Lending Services",
+      "provider": "lever",
+      "board": "glsllc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://glsauto.com/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/glsllc",
+      "status": "passed",
+      "raw": 49,
+      "listed": 49,
+      "employersInWindow": 1,
+      "inScope": 6,
+      "needsDetails": 0,
+      "strictNewGrad": 3,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "f9b3c57e-7e60-4f99-bd2e-6ffd92ee66b5",
+          "company": "Global Lending Services",
+          "title": "Business Analyst - December 2026 - May 2027 Grads",
+          "postingUrl": "https://jobs.lever.co/glsllc/f9b3c57e-7e60-4f99-bd2e-6ffd92ee66b5",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-05-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Business Analyst - December 2026 - May 2027 Grads"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "d81bfc16-2ba1-41ca-ab21-7d8cffac9e07",
+          "company": "Global Lending Services",
+          "title": "Data Scientist - December 2026 - May 2027 Grads",
+          "postingUrl": "https://jobs.lever.co/glsllc/d81bfc16-2ba1-41ca-ab21-7d8cffac9e07",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-05-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Data Scientist - December 2026 - May 2027 Grads"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "c0e144a9-2b3e-49c1-bf6e-1e5cb084428a",
+          "company": "Global Lending Services",
+          "title": "Financial Analyst - December 2026 - May 2027 Grads",
+          "postingUrl": "https://jobs.lever.co/glsllc/c0e144a9-2b3e-49c1-bf6e-1e5cb084428a",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-05-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Financial Analyst - December 2026 - May 2027 Grads"
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "finance",
+                  "accounting",
+                  "economics",
+                  "mathematics",
+                  "statistics"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Minimum of bachelor’s degree in Finance, Accounting, Economics, Mathematics, Statistics, or a related field required",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "lever-lake-partners-account",
+      "company": "Lake Partners",
+      "provider": "lever",
+      "board": "lake-partners-account",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.lakepartners.com/careers/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/lake-partners-account",
+      "status": "passed",
+      "raw": 1,
+      "listed": 1,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "b3d26b77-e601-4a83-b344-a7f1abb051fc",
+          "company": "Lake Partners",
+          "title": "Entry Level Strategy Analyst",
+          "postingUrl": "https://jobs.lever.co/lake-partners-account/b3d26b77-e601-4a83-b344-a7f1abb051fc",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Minimum BA/BS degree- incoming grads welcome to apply for post-graduation!",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "our firm does not sponsor visas of any kind.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-recidiviz",
+      "company": "Recidiviz",
+      "provider": "greenhouse",
+      "board": "recidiviz",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.recidiviz.org/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/recidiviz/jobs?content=true",
+      "status": "passed",
+      "raw": 7,
+      "listed": 7,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "4717510006",
+          "company": "Recidiviz",
+          "title": "Data Analyst (Entry-Level)",
+          "postingUrl": "https://job-boards.greenhouse.io/recidiviz/jobs/4717510006",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Visa sponsorship: Not available",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0.5,
+          "explicitGraduate": true,
+          "experienceLabel": "0.5 years required · check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-charlesriverassociates",
+      "company": "Charles River Associates",
+      "provider": "greenhouse",
+      "board": "charlesriverassociates",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.crai.com/cra-careers/jobs/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/charlesriverassociates/jobs?content=true",
+      "status": "passed",
+      "raw": 90,
+      "listed": 90,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 3,
+      "graduateListings": [
+        {
+          "externalId": "8054054",
+          "company": "Charles River Associates",
+          "title": "(2027 Bachelor's/Master's graduates) Accounting/Business/Finance Consulting Analyst/Associate",
+          "postingUrl": "https://job-boards.greenhouse.io/charlesriverassociates/jobs/8054054",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "(2027 Bachelor's/Master's graduates) Accounting/Business/Finance Consulting Analyst/Associate",
+              "Preferred; not a required constraint: Bachelor’s or Master’s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field"
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor’s or Master’s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field",
+                "strength": "preferred"
+              },
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Note: you must be graduating from a bachelor's or master's degree program for this role.",
+                "strength": "required"
+              },
+              {
+                "levels": [
+                  "doctorate"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "If you are graduating from an MBA/PhD program or have work experience, please visit our Careers site to see current open roles.",
+                "strength": "preferred"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "7894191",
+          "company": "Charles River Associates",
+          "title": "(2027 Bachelor's/Master's graduates) Economics Consulting Analyst/Associate",
+          "postingUrl": "https://job-boards.greenhouse.io/charlesriverassociates/jobs/7894191",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "(2027 Bachelor's/Master's graduates) Economics Consulting Analyst/Associate",
+              "Preferred; not a required constraint: Bachelor’s or Master’s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)"
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor’s or Master’s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)",
+                "strength": "preferred"
+              },
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Note: you must be graduating from a bachelor's or master's degree program for this role.",
+                "strength": "required"
+              },
+              {
+                "levels": [
+                  "doctorate"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "If you are graduating from an MBA/PhD program or have work experience, please visit our Careers site to see current open roles",
+                "strength": "preferred"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "8053996",
+          "company": "Charles River Associates",
+          "title": "(2027 Bachelor's/Master's graduates) Management Advisory Analyst/Associate",
+          "postingUrl": "https://job-boards.greenhouse.io/charlesriverassociates/jobs/8053996",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "(2027 Bachelor's/Master's graduates) Management Advisory Analyst/Associate"
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor's or Master's degree with strong academic performance",
+                "strength": "preferred"
+              },
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Note: you must be graduating from a bachelor's or master's degree program for this role.",
+                "strength": "required"
+              },
+              {
+                "levels": [
+                  "doctorate"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "If you are graduating from an MBA/PhD program or have work experience, please visit our Careers site to see current open roles.",
+                "strength": "preferred"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-thebrattlegroup",
+      "company": "The Brattle Group",
+      "provider": "greenhouse",
+      "board": "thebrattlegroup",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.brattle.com/careers/current-openings/",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/thebrattlegroup/jobs?content=true",
+      "status": "passed",
+      "raw": 59,
+      "listed": 59,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 12,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-solace",
+      "company": "Solace",
+      "provider": "ashby",
+      "board": "solace",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.solace.health/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/solace?includeCompensation=true",
+      "status": "passed",
+      "raw": 28,
+      "listed": 28,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 2,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "77ca492c-4142-4931-beeb-e85d9d0ac443",
+          "company": "Solace",
+          "title": "Associate Data Scientist (College Grad 2027)",
+          "postingUrl": "https://jobs.ashbyhq.com/solace/77ca492c-4142-4931-beeb-e85d9d0ac443",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-06-30",
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Start date: July 2027.",
+              "- A bachelor's or master's degree in Statistics, Data Science, Computer Science, Applied Math, or a related quantitative field (or equivalent practical experience), graduating between December 2026 and June 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [
+                  "statistics",
+                  "data science",
+                  "computer science",
+                  "applied math"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "- A bachelor's or master's degree in Statistics, Data Science, Computer Science, Applied Math, or a related quantitative field (or equivalent practical experience), graduating between December 2026 and June 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "ee8ee239-ad20-4c1e-868d-3357799589ea",
+          "company": "Solace",
+          "title": "Associate Product Manager (College Grad 2027)",
+          "postingUrl": "https://jobs.ashbyhq.com/solace/ee8ee239-ad20-4c1e-868d-3357799589ea",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Start date: July 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "lever-certik",
+      "company": "CertiK",
+      "provider": "lever",
+      "board": "certik",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.certik.com/company/careers",
+      "checkedAt": "2026-10-22T07:24:38.264Z",
+      "endpoint": "https://api.lever.co/v0/postings/certik",
+      "status": "passed",
+      "raw": 31,
+      "listed": 31,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "7d25f5e8-2fed-412c-b182-6568a491483e",
+          "company": "CertiK",
+          "title": "Financial Analyst",
+          "postingUrl": "https://jobs.lever.co/certik/7d25f5e8-2fed-412c-b182-6568a491483e",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [
+                  "finance",
+                  "accounting"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor’s or Master’s degree in finance, accounting, or a related field, with 1-2 years of relevant professional experience.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3.6,
+                  "scale": null
+                },
+                "evidence": "Minimum GPA of 3.6.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

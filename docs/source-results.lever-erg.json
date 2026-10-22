@@ -1,0 +1,100 @@
+{
+  "checkedAt": "2026-10-22T07:29:14.683Z",
+  "classifierVersion": "2026-10-22.1",
+  "totals": {
+    "raw": 38,
+    "listed": 38,
+    "inScope": 1,
+    "needsDetails": 1,
+    "strictNewGrad": 1,
+    "strictNewGradNeedsDetails": 1
+  },
+  "results": [
+    {
+      "sourceId": "lever-erg",
+      "company": "ERG (Eastern Research Group)",
+      "provider": "lever",
+      "board": "erg",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.erg.com/jobs",
+      "checkedAt": "2026-10-22T07:29:14.683Z",
+      "endpoint": "https://api.lever.co/v0/postings/erg",
+      "status": "passed",
+      "raw": 38,
+      "listed": 38,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 1,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "9a3377d5-a4bc-431c-80ee-0a538a0dc13e",
+          "company": "ERG (Eastern Research Group)",
+          "title": "Business Analyst",
+          "postingUrl": "https://jobs.lever.co/erg/9a3377d5-a4bc-431c-80ee-0a538a0dc13e",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        },
+        {
+          "externalId": "26fdd838-c4ba-4538-825c-c16b36d18fe1",
+          "company": "ERG (Eastern Research Group)",
+          "title": "Entry-Level Occupational Safety and Health Data Analyst",
+          "postingUrl": "https://jobs.lever.co/erg/26fdd838-c4ba-4538-825c-c16b36d18fe1",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 0,
+          "explicitGraduate": true,
+          "experienceLabel": "No prior experience required"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

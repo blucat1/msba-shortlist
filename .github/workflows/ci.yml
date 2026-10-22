@@ -23,6 +23,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run test:unit
+      - run: npm run quality:check
       - run: npm run test:db:smoke
       - run: npm run build
       - run: npx playwright install --with-deps chromium
@@ -38,7 +39,13 @@ jobs:
           cache: npm
       - run: npm ci
       # Exercise actual Supabase/PostgreSQL authorization in a disposable stack.
+      # Local password sessions only; NEVER config push this transient Auth copy.
+      - run: node scripts/prepare-local-integration.mjs
       - run: npx --yes supabase start
       - run: npm run test:db
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:integration
       - if: always()
         run: npx --yes supabase stop --no-backup
+      - if: always()
+        run: node scripts/prepare-local-integration.mjs --restore

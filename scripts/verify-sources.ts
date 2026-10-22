@@ -1,4 +1,6 @@
 import { writeFile, mkdir } from 'node:fs/promises';
+import { rankJobs } from '../src/domain/ranking';
+import { DEFAULT_PREFERENCES } from '../src/domain/types';
 import { assessExperience } from '../src/domain/experience';
 import { fetchBoard } from '../src/ingestion/adapters';
 import { CLASSIFIER_VERSION } from '../src/ingestion/classification';
@@ -8,7 +10,8 @@ import { loadRegistry } from '../src/ingestion/registry';
 
 const args = process.argv.slice(2);
 const selected = args.includes('--source') ? args[args.indexOf('--source') + 1] : null;
-const sources = (await loadRegistry()).filter(s => s.enabled && s.state === 'verified' && (!selected || s.id === selected));
+const employerOnly = args.includes('--employer-only');
+const sources = (await loadRegistry()).filter(s => s.enabled && s.state === 'verified' && (!selected || s.id === selected) && (!employerOnly || s.provider !== 'jobicy'));
 if (!sources.length) throw new Error('No enabled verified source matches request.');
 const checkedAt = new Date().toISOString();
 
@@ -19,9 +22,11 @@ const results = await mapConcurrent(sources, 3, async source => {
     const jobs = snapshot.postings.map(p => normalizePosting(p, source, checkedAt));
     const graduateJobs = jobs.map(job => ({ job, experience: assessExperience(job) }))
       .filter(({ job, experience }) => job.classification.scope !== 'excluded' && experience.tier === 'new-grad');
+    const cohortIds = new Set(rankJobs(jobs, DEFAULT_PREFERENCES, { now: new Date(checkedAt), includeTracked: true }).map(row => row.job.id));
+    const zeroIds = new Set(rankJobs(jobs, DEFAULT_PREFERENCES, { now: new Date(checkedAt), includeTracked: true, experienceView: 'zero-experience' }).map(row => row.job.id));
     const graduateListings = graduateJobs.map(({ job, experience }) => ({
       externalId: job.externalId, company: job.company, title: job.title, postingUrl: job.postingUrl,
-      scope: job.classification.scope, requiredYears: experience.requiredYears,
+      scope: job.classification.scope, cohortDefault: cohortIds.has(job.id), confirmedZero: zeroIds.has(job.id), sourceReview: job.sourceReview || null, timing: job.timing, eligibility: job.eligibility, requiredYears: experience.requiredYears,
       explicitGraduate: experience.explicitGraduate, experienceLabel: experience.label,
     }));
     const result = {
@@ -50,10 +55,12 @@ const totals = results.reduce((sum, r) => ({
   strictNewGradNeedsDetails: sum.strictNewGradNeedsDetails + (r.strictNewGradNeedsDetails || 0),
 }), { raw: 0, listed: 0, inScope: 0, needsDetails: 0, strictNewGrad: 0, strictNewGradNeedsDetails: 0 });
 const table = results.map(r => `| ${r.company} | ${r.provider}/${r.board} | ${r.status} | ${r.raw ?? '—'} | ${r.listed ?? '—'} | ${r.inScope ?? '—'} | ${r.needsDetails ?? '—'} | ${r.strictNewGrad ?? '—'} | ${r.strictNewGradNeedsDetails ?? '—'} | [Official source evidence](${r.evidenceUrl}) |`).join('\n');
-const graduateRows = results.flatMap(r => r.graduateListings.map(j => `| ${j.company.replaceAll('|', ' / ')} | [${j.title.replaceAll('|', ' / ')}](${j.postingUrl}) | ${j.scope === 'included' ? 'Strict default' : 'Needs details checked'} | ${j.requiredYears === null ? 'Not stated; explicit graduate evidence' : `${j.requiredYears}${j.requiredYears === 1 ? ' · experience requirement applies' : ''}`} |`)).join('\n');
+const cohortCount = results.flatMap(r => r.graduateListings).filter(row => row.cohortDefault).length;
+const zeroCount = results.flatMap(r => r.graduateListings).filter(row => row.confirmedZero).length;
+const graduateRows = results.flatMap(r => r.graduateListings.map(j => `| ${j.company.replaceAll('|', ' / ')} | [${j.title.replaceAll('|', ' / ')}](${j.postingUrl}) | ${j.scope === 'included' ? (j.cohortDefault ? 'Cohort default' : 'Withheld: eligibility/source conflict') : 'Needs details checked'} | ${j.requiredYears === null ? 'Not stated; explicit graduate evidence' : `${j.requiredYears}${j.requiredYears === 1 ? ' · experience requirement applies' : ''}`} |`)).join('\n');
 
 await mkdir('docs', { recursive: true });
-const pathSuffix = selected ? `.${selected}` : '';
+const pathSuffix = selected ? `.${selected}` : employerOnly ? '.employer-boards' : '';
 await writeFile(`docs/source-results${pathSuffix}.json`, JSON.stringify({ checkedAt, classifierVersion: CLASSIFIER_VERSION, totals, results }, null, 2) + '\n');
 await writeFile(`docs/SOURCE_AUDIT${pathSuffix}.md`, `# Source audit
 
@@ -61,9 +68,11 @@ Actual public-feed verification at **${checkedAt}** using \`npm run sources:veri
 
 Totals across successful sources:
 
+- **${cohortCount} actual May 15, 2027 cohort-default listings**, including **${zeroCount} confirmed zero-year listings**, after known timing/eligibility/source-review conflicts are withheld. Other unspecified requirements remain unknown.
+
 - **${totals.raw} raw / ${totals.listed} publicly listed** postings across all roles and countries.
 - **${totals.inScope} all-experience in scope / ${totals.needsDetails} all-experience needing details**: broad MSBA role-family coverage, including experienced individual contributors. These are **not new-grad counts**.
-- **${totals.strictNewGrad} strict New grad & 0–1 years / ${totals.strictNewGradNeedsDetails} additional strict-tier listings needing details**: uses the same \`assessExperience\` function as the app. The second group has unknown US eligibility or employment type and is excluded from the strict default.
+- **${totals.strictNewGrad} strict New grad & 0–1 years / ${totals.strictNewGradNeedsDetails} additional strict-tier listings needing details**: uses the same \`assessExperience\` function as the app, before individual eligibility/source-review filtering. The per-listing table distinguishes the actual cohort default. The second group has unknown US eligibility or employment type and is excluded from the strict default.
 
 | Employer/source | Provider/board | Result | Raw | Public listed | All-experience in scope | All-experience needs details | Strict new-grad / 0–1 | Strict tier needs details | Identity evidence |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |

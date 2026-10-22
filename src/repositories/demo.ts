@@ -1,3 +1,4 @@
+import { withCohortDefaults } from '../domain/cohort';
 import { createDemoSnapshot } from '../domain/fixtures';
 import { dateOnlyInTimezone } from '../domain/dates';
 import { newId } from '../domain/records';
@@ -53,7 +54,7 @@ export function createDemoRepository(options: DemoRepositoryOptions = {}): Repos
   }
   return {
     mode: 'demo',
-    async getSnapshot() { const next = load(); return structuredClone({ ...createDemoSnapshot(reference), ...next }); },
+    async getSnapshot() { const next = load(); return structuredClone({ ...createDemoSnapshot(reference), ...next, preferences: withCohortDefaults(next.preferences) }); },
     async getJobDetails(id) { load(); return structuredClone(createDemoSnapshot(reference).jobs.find(j => j.id === id) ?? null); },
     async saveOpportunity(input) {
       const opportunity = opportunitySchema.parse({ ...input, userId: 'demo-user', updatedAt: now().toISOString() });
@@ -108,7 +109,7 @@ export function createDemoRepository(options: DemoRepositoryOptions = {}): Repos
     async savePreferences(input: Preferences) { const next = load(); next.preferences = preferencesSchema.parse(input); write(next); },
     async saveCompanyNote(input: CompanyNote) { const next = load(), note = companyNoteSchema.parse({ ...input, userId: 'demo-user', updatedAt: now().toISOString() }); next.companyNotes = [...next.companyNotes.filter(n => n.companyKey !== note.companyKey), note]; write(next); },
     async setJobPreference(input: JobPreference) { const next = load(), preference = jobPreferenceSchema.parse({ ...input, userId: 'demo-user' }); next.jobPreferences = [...next.jobPreferences.filter(p => p.jobId !== preference.jobId), preference]; write(next); },
-    async exportBackup() { return backupFromState(load(), now()); },
+    async exportBackup() { const next = load(); return backupFromState({ ...next, preferences: withCohortDefaults(next.preferences) }, now()); },
     async importBackup(backup: Backup): Promise<ImportResult> { const merged = mergeBackup(load(), backup, 'demo-user'); write(merged.state); return merged.result; },
     async resetDemo() { reference = options.referenceDate ?? now(); write(privateState(createDemoSnapshot(reference))); },
   };
