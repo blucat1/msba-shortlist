@@ -24,6 +24,25 @@ The first 30-source [production attempt 39732493274](https://github.com/blucat1/
 
 The failed attempt recorded controlled warning `Source check failed or incomplete`, check time **06:13:01.647 UTC** and source-run ID `dab6a031-68aa-4e1e-9a65-0e0f208056bf`. A recovery may rearm only this pre-network attempt's cooldown after the repaired release, conditional on the exact failed row/time, one total run, no successful check and no Jobicy catalog records. It must preserve the failed audit row and warning/status. This is not permission to reset a real provider-poll cooldown. Actual repaired import evidence remains pending below.
 
+**Recovery completed.** [PR #3 CI 39733069280](https://github.com/blucat1/msba-shortlist/actions/runs/39733069280) passed both jobs with **225 units, eight browser workflows, 183 WASM assertions and 183 real Supabase pgTAP tests**. Main `76240be` passed [CI 39733430395](https://github.com/blucat1/msba-shortlist/actions/runs/39733430395) and deployed successfully at **06:22:09.730 UTC**, Cloudflare `c03ecb65-181f-488f-9547-735e3e61d7e1`. While ingestion was briefly disabled, the narrowly conditional rearm returned exactly one source, setting only `last_check_at` to null and preserving the failed run/status/warning. The ingestion workflow was then re-enabled and independently read back **active**; its original twice-daily cron remains unchanged.
+
+The normal protected-main [production refresh 39733482284](https://github.com/blucat1/msba-shortlist/actions/runs/39733482284) succeeded for **30/30 sources**. Across current snapshots it imported **4,845 raw/listed records**, with **203 all-experience included / 206 needing details**. Jobicy completed at **06:22:49 UTC** with **548 all-level listings / 36 supported roles / zero closures**. Maintenance succeeded at **06:22:53 UTC**, deleting zero source runs and zero unreferenced details. The first actual Jobicy poll followed the earlier research poll by more than one hour; the blocked attempt had made no provider request. A source-only production cooldown check at **06:24:41.885 UTC** then reported a skip and verified source health fields were unchanged, without another provider poll. No future scheduled trigger is claimed as observed.
+
+An anonymous hosted audit at **06:24:13.706 UTC** found **30 healthy sources, 414 retained supported catalog rows and no truncation**. Stored catalog totals can retain older unconfirmed/closed rows and therefore differ from the latest snapshot input counts. Jobicy's full stored window had **213 distinct company names and 213 company-grouping keys across 548 credited listings**. Its 36 supported roles span 26 companies; all retained canonical publisher attribution, bounded grouping identities and unknown employer-original posting dates.
+
+| Anonymous discovery view | US/full-time evidence required | With Needs details checked |
+| --- | ---: | ---: |
+| New grad & 0–1 years | 7 | 8 |
+| Early career · 0–3 years | 48 | 68 |
+| Experienced · 4+ / senior | 137 | 322 |
+| Experience unverified | 22 | 24 |
+
+Early career includes the strict tier, so these rows are not additive. The seven strict-default listings comprise four Veeva graduate-program requisitions, two listings explicitly requiring one year and CertiK's Financial Analyst (Entry-Level) from Jobicy. The additional strict-tier Needs-details listing is the Databricks US APM role. Graduate evidence is not a waiver of degree, GPA, timing, skills or work-authorization requirements. These are dated source observations, not a hiring guarantee or an exhaustive market index.
+
+All **nine anonymous hosted browser groups** passed again after the complete refresh. A separate publisher check verified the actual CertiK card and detail, canonical Jobicy credit/application link, loaded graduate-requirements text and 390 px layout without runtime errors. An initial test assertion used case-sensitive `Finance` while the posting said `finance`; correcting the assertion to case-insensitive source text passed without a product change. No owner notes, saved-job details or authenticated sessions were accessed.
+
+Supplementary offline validation replayed the captured **548 actual public rows** through three pages (200/200/148), the real HTTP client with native transport mocked, normalization, the exact 1,698,706-byte ingestion payload and all four migrations in fresh PGlite. Service-role finalization succeeded, preserving all 548 credits/company identities, 36 details and 213 company groups. This is a captured-data PostgreSQL/WASM check, separate from the real Supabase CI and hosted import above.
+
 ## Experience correction — October 21, 2026
 
 The owner found that the shortlist included experienced roles. A public-catalog audit of the 48 formerly default-visible listings found 37 with unparsed required years. Manual review established 38 numeric requirements and 10 unknowns; the corrected extractor matches those 38 floors, including Linear 8 years, Benchling/Figma 6 years, Notion 5 years and Ramp 2 years. This is a relevance defect in the earlier default, despite the postings being real employer listings.
