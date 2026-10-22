@@ -14,3 +14,6 @@ private-exports/
 *.pem
 *.key
 .DS_Store
+
+# Local reference attachment; selected licensed source is vendored separately.
+/liquid-glass-studio-main/

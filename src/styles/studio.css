@@ -1,0 +1,84 @@
+/* Liquid Glass Studio supplies the optical surface; HTML remains the control layer. */
+:root {
+  --studio-rim: rgba(255, 255, 255, .96);
+  --studio-shadow: 0 12px 36px rgba(45, 61, 91, .11), 0 2px 6px rgba(45, 61, 91, .045), inset 0 1px 0 rgba(255, 255, 255, .95);
+}
+
+body {
+  background-color: #f3f5f8;
+  background-image: radial-gradient(ellipse 85% 420px at 12% -100px, rgba(135, 177, 226, .15), transparent 80%), radial-gradient(ellipse 70% 380px at 100% 0, rgba(224, 211, 239, .12), transparent 78%);
+  background-attachment: fixed;
+}
+
+.studio-surface { isolation: isolate; }
+.studio-surface > :not(.studio-glass-canvas) { position: relative; z-index: 1; }
+.studio-glass-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .18s ease;
+  contain: strict;
+}
+.studio-glass-canvas[data-studio-state="ready"] { opacity: 1; }
+
+.glass-header.studio-surface, .mobile-nav.studio-surface {
+  border-color: var(--studio-rim);
+  box-shadow: var(--studio-shadow);
+}
+.glass-header.studio-surface { border-radius: 30px; }
+.brand-caption, .subtle-count, .view-tabs > button > span,
+.tracker-table-header, .tracker-field-label, .page-footer > div > span,
+.tracker-toolbar .view-tabs button > span { font-size: .875rem; }
+.desktop-navigation { border: 1px solid rgba(91, 111, 143, .065); background: rgba(210, 218, 231, .28); }
+.desktop-nav-link.active, .mobile-nav > a.active {
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 2px 7px rgba(47, 62, 88, .1), inset 0 1px 0 #fff, inset 0 -1px 0 rgba(90, 109, 140, .1);
+}
+.desktop-nav-link, .mobile-nav > a, .mobile-nav > button { transition: background .18s ease, box-shadow .18s ease, color .18s ease; }
+.header-settings, .modal-heading .icon-button {
+  border: 1px solid rgba(255, 255, 255, .9);
+  background: rgba(233, 238, 246, .64);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 2px 5px rgba(45, 61, 91, .05);
+}
+.button-primary {
+  background-color: #0066cc;
+  background-image: linear-gradient(180deg, #0071df, #0065ce);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .38), inset 0 -1px 0 rgba(0, 42, 111, .15), 0 3px 8px rgba(0, 92, 191, .12);
+}
+.button-primary:hover { background-color: #005dbc; background-image: linear-gradient(180deg, #0068d3, #005dbc); }
+.button-secondary { box-shadow: inset 0 1px 0 #fff, 0 1px 3px rgba(32, 45, 66, .025); }
+
+.modal-heading.studio-panel {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, .95);
+  background: rgba(247, 250, 255, .82);
+  box-shadow: inset 0 1px 0 #fff, 0 3px 12px rgba(45, 61, 91, .035);
+  padding: 16px;
+  margin: -4px -4px 0;
+}
+.modal-heading.studio-panel .icon-button { margin: -4px -4px 0 0; }
+.modal-body { position: relative; }
+.page-footer a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+.page-footer a:hover { color: var(--link); }
+
+@media (max-width: 600px) {
+  .glass-header.studio-surface { border-radius: 24px; }
+  .modal-heading.studio-panel { padding: 14px 12px; margin: -3px -3px 0; }
+}
+
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active) {
+  body { background-image: none; }
+  .studio-glass-canvas { display: none; }
+  .glass-header.studio-surface, .mobile-nav.studio-surface, .modal-heading.studio-panel { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .desktop-navigation { background: #ededf1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-glass-canvas, .desktop-nav-link, .mobile-nav > a, .mobile-nav > button { transition: none; }
+}
