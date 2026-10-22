@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import { ArrowUpRight, Plus, Search } from 'lucide-react';
+import { ArrowUpRight, Plus } from 'lucide-react';
 import { Field } from '../components/ui';
 import {
   buildMarketSearchLinks, DEFAULT_MARKET_LOCATION, DEFAULT_MARKET_QUERY,
@@ -21,8 +21,8 @@ export function MarketSearch({ initialQuery, initialLocation, onAddOpportunity }
 
   return <section className="market-search aside-card" aria-labelledby={headingId}>
     <div className="market-search-intro">
-      <div className="section-top"><h2 id={headingId}><Search size={20} aria-hidden="true" /> Search beyond this catalog</h2></div>
-      <p>Explore employers outside our connected feeds, then bring useful roles into My Search.</p>
+      <div className="section-top"><h2 id={headingId}>Wider search</h2></div>
+      <p>Search Google, Indeed or LinkedIn for employers outside the connected feeds.</p>
     </div>
     <div className="market-search-fields form-grid">
       <Field label="Market search keywords"><input value={query} onChange={event => setQuery(event.target.value)} placeholder="Analyst, product, strategy…" maxLength={200} /></Field>
@@ -38,7 +38,7 @@ export function MarketSearch({ initialQuery, initialLocation, onAddOpportunity }
     </ul>
     <p className="hint market-search-disclosure market-search-note">Searches open in a new tab with your keywords and location. External results are unverified by MSBA Shortlist and are not added to this catalog.</p>
     <div className="market-search-save">
-      <div><strong>Found a role worth keeping?</strong><p>Add its original link and details to My Search.</p></div>
+      <div><strong>Track an external role</strong><p>Add its original link and details to My Search.</p></div>
       <button type="button" className="button button-primary" onClick={onAddOpportunity}><Plus size={17} aria-hidden="true" /> Track a job you found</button>
     </div>
   </section>;

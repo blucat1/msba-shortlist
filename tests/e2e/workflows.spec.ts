@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => { await page.goto('/demo'); await expect(page.getByRole('heading', { name: /Find your kind/ })).toBeVisible(); });
+test.beforeEach(async ({ page }) => { await page.goto('/demo'); await expect(page.getByRole('heading', { name: 'Opportunities', exact: true, level: 1 })).toBeVisible(); });
 
 test('discovery saves, dismisses, restores, filters, deep links, and persists', async ({ page }) => {
   await expect(page.getByText('— sample jobs; changes stay in this browser.', { exact: false })).toBeVisible();
@@ -96,7 +96,7 @@ test('manual roles edit, group by exact company, create/snooze/complete tasks, a
 
 test('preferences change ranking, JSON round-trip skips duplicates, CSV previews row errors', async ({ page }) => {
   const initial = await page.locator('.job-card').first().locator('h3').innerText();
-  await page.getByRole('button', { name: 'Your preferences', exact: true }).click();
+  await page.getByRole('button', { name: 'Preferences', exact: true }).click();
   while (await page.locator('.choice.chosen').count()) await page.locator('.choice.chosen').first().click();
   await page.getByRole('button', { name: 'Data engineering', exact: true }).click();
   await page.getByRole('button', { name: 'Continue', exact: true }).click();
@@ -106,7 +106,7 @@ test('preferences change ranking, JSON round-trip skips duplicates, CSV previews
   await page.getByRole('button', { name: 'Save preferences', exact: true }).click();
   await expect(page.locator('.job-card').first().locator('h3')).not.toHaveText(initial);
   await expect(page.locator('.job-card').first()).toContainText('Data engineering matches');
-  await page.getByRole('button', { name: 'Your preferences', exact: true }).click();
+  await page.getByRole('button', { name: 'Preferences', exact: true }).click();
   await page.getByRole('button', { name: 'Data & account', exact: true }).click();
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export JSON', exact: true }).click();
@@ -137,7 +137,7 @@ test('mobile/tablet/desktop, keyboard, honest live configuration and empty state
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
   await page.getByLabel('Search opportunities').fill('nothing-will-match-this-unique-query');
-  await expect(page.getByRole('heading', { name: 'A little too specific, perhaps.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'No listings match these filters.', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Reset filters', exact: true }).click();
   await expect(page.locator('.job-card').first()).toBeVisible();
   await page.goto('/opportunities');
@@ -152,7 +152,7 @@ test('corrupt demo storage has an honest recovery path', async ({ page }) => {
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Your workspace couldn’t load' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset demo', exact: true }).click();
-  await expect(page.getByRole('heading', { name: /Find your kind/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Opportunities', exact: true, level: 1 })).toBeVisible();
 });
 
 test('new-grad discovery separates experienced and unverified jobs while preserving a saved role', async ({ page }) => {
@@ -185,7 +185,7 @@ test('new-grad discovery separates experienced and unverified jobs while preserv
 });
 
 test('wider market search preserves queries, labels unverified results, and tracks an outside role', async ({ page }) => {
-  await page.getByRole('button', { name: 'Search the market', exact: false }).click();
+  await page.getByRole('button', { name: 'Wider search', exact: false }).click();
   await page.getByLabel('Market search keywords', { exact: true }).fill('business analyst');
   await page.getByLabel('Market search location', { exact: true }).fill('San Francisco, CA');
   const linkedIn = page.getByRole('link', { name: 'Search jobs on LinkedIn (opens in a new tab)' });
@@ -195,12 +195,12 @@ test('wider market search preserves queries, labels unverified results, and trac
   expect(target.searchParams.get('location')).toBe('San Francisco, CA');
   await expect(page.locator('.market-search-disclosure')).toContainText('unverified');
   await page.getByRole('button', { name: 'Track a job you found', exact: true }).click();
-  await expect(page.getByRole('dialog')).toContainText('One more possibility.');
+  await expect(page.getByRole('dialog').getByRole('heading', { name: 'Add opportunity', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
   for (const width of [390, 768, 1440]) {
     await page.setViewportSize({ width, height: 960 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
-  await page.getByRole('button', { name: 'For you', exact: false }).click();
+  await page.getByRole('button', { name: 'Shortlist', exact: false }).click();
   await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('new-grad');
 });

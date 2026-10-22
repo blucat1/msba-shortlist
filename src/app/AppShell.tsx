@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, ArrowUpRight, BarChart3, Bookmark, Check, ChevronDown, Compass, Leaf, Plus, Settings2, ShieldCheck, WifiOff, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BarChart3, Bookmark, Check, Compass, Layers2, Plus, Settings2, ShieldCheck, WifiOff, X } from 'lucide-react';
 import { createDemoRepository } from '../repositories/demo';
 import { createSupabaseRepository } from '../repositories/supabase';
 import { getConfigurationError, getSupabaseClient, signInWithGoogle, signOut } from '../lib/supabase';
@@ -16,7 +16,7 @@ import type { Repository } from '../repositories/types';
 import { appConfig } from '../config';
 
 export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
-  const cache = useQueryClient(); const location = useLocation();
+  const cache = useQueryClient();
   const [authId, setAuthId] = useState<string | null>(null); const previousAuth = useRef<string | null>(null);
   const [toast, setToast] = useState(''); const [settings, setSettings] = useState(false);
   const [information, setInformation] = useState<'coverage' | 'privacy' | 'terms' | null>(null);
@@ -61,11 +61,10 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
       let tracked: Opportunity;
       if ('sourceId' in application) { tracked = query.data.opportunities.find(o => o.catalogJobId === application.id) ?? await repository.saveOpportunity(opportunityFromJob(application, query.data.userId)); }
       else tracked = application;
-      const confirmed = await run(() => repository.changeStage(tracked.id, 'Applied', { applicationDate, idempotencyKey: applyKey.current }), 'Application confirmed. You’ve taken the next step.');
+      const confirmed = await run(() => repository.changeStage(tracked.id, 'Applied', { applicationDate, idempotencyKey: applyKey.current }), 'Application confirmed.');
       setApplication(null); setReviewSuggestion(confirmed);
     } catch { /* Keep confirmation open so the date is not lost. */ } finally { setApplying(false); }
   }
-  const page = location.pathname.split('/').at(-1);
   const navigation = [{ path: '/opportunities', label: 'Opportunities', icon: Compass }, { path: '/my-search', label: 'My Search', icon: Bookmark }, { path: '/insights', label: 'Insights', icon: BarChart3 }];
   const snapshot = query.data;
   const pendingKey = `msba-shortlist:pending-application:${mode}:${snapshot?.userId || 'guest'}`;
@@ -83,16 +82,19 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   useEffect(() => { if (mode === 'live' && snapshot?.userId && !snapshot.preferences.onboardingComplete && promptedOnboarding.current !== snapshot.userId) { promptedOnboarding.current = snapshot.userId; setSettings(true); } }, [mode, snapshot?.userId, snapshot?.preferences.onboardingComplete]);
   return <NoticeContext.Provider value={toast}><div className="application">
     <a className="skip-link" href="#main-content">Skip to content</a>
-    <aside className="sidebar">
-      <Link to={`${base}/opportunities`} className="brand"><span className="brand-mark"><Leaf size={24} strokeWidth={1.7} /></span><span>{appConfig.name.split(' ').slice(0, -1).join(' ')}<span className="brand-light">{appConfig.name.split(' ').at(-1)}<span className="brand-dot">.</span></span></span></Link>
-      <div className="workspace-label">YOUR WORKSPACE</div>
-      <nav aria-label="Main navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`} className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}><Icon size={20} strokeWidth={1.7} /><span>{label}</span>{path === '/my-search' && !!snapshot?.opportunities.length && <span className="nav-count">{snapshot.opportunities.length}</span>}</NavLink>)}</nav>
-      <div className="sidebar-note"><span className="note-sprout"><Leaf size={20} /></span><strong>Fresh roles, fewer distractions.</strong><p>Connected job feeds refresh automatically twice a day.</p><button className="text-link" onClick={() => setInformation('coverage')}>Coverage & sources <ArrowUpRight size={14} /></button></div>
-      <div className="sidebar-bottom"><button className="nav-item" onClick={openSettings}><Settings2 size={19} /><span>Settings & preferences</span></button><div className="user-block"><div className="avatar" aria-hidden="true">{mode === 'demo' ? 'D' : authId ? 'Y' : 'G'}</div><div><strong>{mode === 'demo' ? 'Demo workspace' : authId ? 'Your workspace' : 'Guest workspace'}</strong><span>{mode === 'demo' ? 'Sample data in this browser' : authId ? 'Private job tracker' : 'Browsing public job feeds'}</span></div><ChevronDown size={15} /></div></div>
-    </aside>
     <div className="workspace-body">
       {mode === 'demo' && <div className="demo-banner"><span><span className="demo-dot" /> <strong>Demo</strong> — sample jobs; changes stay in this browser.</span><Link to="/opportunities">View live mode <ArrowUpRight size={13} /></Link></div>}
-      <header className="topbar"><div className="topbar-title"><span className="mobile-brand"><Leaf size={20} /> {appConfig.name.split(' ').at(-1)}.</span><span className="desktop-only">Your workspace <span className="breadcrumb">/</span> <strong>{page === 'my-search' ? 'My Search' : page === 'insights' ? 'Insights' : 'Opportunities'}</strong></span></div><div className="topbar-actions"><span className="today-date">{new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}</span>{mode === 'live' && !authId ? <button className="button button-primary small" onClick={() => void signInWithGoogle().catch(e => notify(e.message))}>Sign in with Google <ArrowRight size={15} /></button> : <button className="button button-primary small" onClick={() => { if (requireUser()) setManual('new'); }}><Plus size={16} /> Add opportunity</button>}</div></header>
+      <header className="topbar glass-header">
+        <Link to={`${base}/opportunities`} className="brand shell-brand" aria-label={appConfig.name}>
+          <span className="brand-mark"><Layers2 size={22} strokeWidth={1.7} aria-hidden="true" /></span>
+          <span className="brand-wordmark mobile-brand">{appConfig.name.split(' ').at(-1)}<small className="brand-caption">{appConfig.name.split(' ').slice(0, -1).join(' ')}</small></span>
+        </Link>
+        <nav className="desktop-navigation" aria-label="Main navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`} className={({ isActive }) => `desktop-nav-link ${isActive ? 'active' : ''}`}><Icon size={18} strokeWidth={1.8} aria-hidden="true" /><span>{label}</span></NavLink>)}</nav>
+        <div className="topbar-actions">
+          {mode === 'live' && !authId ? <button className="button button-primary small" onClick={() => void signInWithGoogle().catch(e => notify(e.message))}>Sign in with Google <ArrowRight size={15} aria-hidden="true" /></button> : <button className="button button-primary small" onClick={() => { if (requireUser()) setManual('new'); }}><Plus size={16} aria-hidden="true" /> Add opportunity</button>}
+          <button className="icon-button header-settings" aria-label="Settings" onClick={openSettings}><Settings2 size={20} aria-hidden="true" /></button>
+        </div>
+      </header>
       {offline && <div className="offline-banner" role="status"><WifiOff size={16} /> You’re offline. {mode === 'demo' ? 'Your demo changes still stay in this browser.' : 'Cloud changes need a connection. Retry when you’re back online.'}</div>}
       {reviewSuggestion && snapshot?.userId && <div className="followup-suggestion"><span>Application confirmed. Would a review reminder in 10 days help?</span><button onClick={() => { const opportunity = reviewSuggestion; if (snapshot.tasks.some(t => t.opportunityId === opportunity.id && t.type === 'review' && t.origin === 'suggested')) { notify('A review reminder already exists for this role.'); setReviewSuggestion(null); return; } void run(() => repository!.saveTask({ ...createTask(opportunity.id, snapshot.userId!, 'Review application status'), type: 'review', origin: 'suggested', dueDate: addDays(dateOnlyInTimezone(new Date(), snapshot.preferences.timezone), 10) }), 'Review reminder accepted. No email will be sent.').then(() => setReviewSuggestion(null)).catch(() => {}); }}>Accept reminder <Plus size={13} /></button><button aria-label="Dismiss reminder suggestion" onClick={() => setReviewSuggestion(null)}><X size={15} /></button></div>}
       <main id="main-content" tabIndex={-1}>
@@ -102,7 +104,7 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
           <OpportunityForm open={manual !== null} opportunity={manual && manual !== 'new' ? manual : undefined} onClose={() => setManual(null)} />
         </WorkspaceContext.Provider>}
       </main>
-      <footer className="page-footer"><span>Job discovery. Your private next steps.</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
+      <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
     </div>
     <nav className="mobile-nav" aria-label="Mobile navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} /><span>{label}</span></NavLink>)}<button onClick={openSettings} aria-label="Settings"><Settings2 size={21} aria-hidden="true" /><span>Settings</span></button></nav>
     <InformationDialog kind={information} sources={snapshot?.sources ?? []} snapshot={snapshot} onClose={() => setInformation(null)} />

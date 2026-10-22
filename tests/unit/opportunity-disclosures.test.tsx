@@ -24,7 +24,7 @@ describe('opportunity location disclosure', () => {
     expect(within(card).getByText(/Boston, MA/)).toBeVisible();
     expect(within(card).queryByText(/Chicago, IL/)).not.toBeInTheDocument();
     await user.click(within(card).getByRole('button', { name: `View all locations for ${job.title}` }));
-    const details = await screen.findByRole('dialog', { name: 'A closer look' });
+    const details = await screen.findByRole('dialog', { name: 'Role details' });
     expect(within(details).getByText('Chicago, IL')).not.toBeVisible();
     await user.click(within(details).getByText('View all source locations', { selector: 'summary' }));
     for (const label of ['Boston, MA', 'Chicago, IL', 'Seattle, WA']) expect(within(details).getByText(label, { exact: true })).toBeVisible();
@@ -49,7 +49,7 @@ describe('opportunity location disclosure', () => {
     const priorities = container.querySelectorAll('.today-card');
     expect(priorities).toHaveLength(3);
     for (const priority of priorities) expect(priority).not.toBeVisible();
-    await user.click(within(section).getByText('Show today’s priorities', { selector: 'summary' }));
+    await user.click(within(section).getByText('Next steps', { selector: 'summary' }));
     expect(disclosure).toHaveAttribute('open');
     for (const priority of priorities) expect(priority).toBeVisible();
     queries.clear();
