@@ -1,6 +1,6 @@
 # Contributing to MSBA Shortlist
 
-Teammates can improve the code through branches and pull requests. `blucat1` keeps the production accounts, billing, and final approval. Teammate access has not been granted as part of this setup; the owner can invite selected teammates with **Write** access later. The [owner guide](docs/COLLABORATION.md) describes the intended protections and where to verify them.
+Teammates can improve the code through branches and pull requests. `blucat1` keeps the production accounts, billing, and final merge. Owner controls are applied and verified; no teammates have been invited. The owner can grant selected teammates **Write** access later. See the [owner guide](docs/COLLABORATION.md) for the verified settings and their limits.
 
 ## Start locally
 
@@ -35,7 +35,9 @@ git push -u origin teammate/improve-job-filters
 
 Stage the files you actually changed. In GitHub, open a pull request with base **main**, describe the resulting behavior, and include the checks you ran and anything not tested. Request review from `blucat1`; respond to feedback on the same branch. Public forks are also available for contributions without repository Write access.
 
-Production changes go through owner review and merge. Branch pushes and pull requests do not publish the production site. Automatic Cloudflare preview builds are intended to be disabled; check the owner guide's verification status before relying on that setting. A merge to `main` can automatically deploy the frontend. Database migrations and account configuration remain owner-operated.
+Production changes go through owner review and merge. Branch pushes and pull requests do not publish the production site, and automatic Cloudflare preview builds are disabled. Only the owner can merge into `main`, after both required CI checks pass. That merge can automatically deploy the frontend. Database migrations and account configuration remain owner-operated.
+
+Files in `.github/governance/` document reviewable repository settings. Editing them in a branch or merging their changes does not apply GitHub rulesets; the owner must update and verify the corresponding GitHub settings separately.
 
 ## Check your work
 

@@ -13,19 +13,20 @@ if (!sources.length) throw new Error('No enabled verified source matches request
 const checkedAt = new Date().toISOString();
 
 const results = await mapConcurrent(sources, 3, async source => {
-  const identity = { sourceId: source.id, company: source.company, provider: source.provider, board: source.board, evidenceUrl: source.evidenceUrl, checkedAt };
+  const identity = { sourceId: source.id, company: source.company, provider: source.provider, board: source.board, sourceKind: source.provider === 'jobicy' ? 'rolling-market-feed' : 'employer-board', evidenceUrl: source.evidenceUrl, checkedAt };
   try {
     const snapshot = await fetchBoard(source, fetchPublicJson, checkedAt);
     const jobs = snapshot.postings.map(p => normalizePosting(p, source, checkedAt));
     const graduateJobs = jobs.map(job => ({ job, experience: assessExperience(job) }))
       .filter(({ job, experience }) => job.classification.scope !== 'excluded' && experience.tier === 'new-grad');
     const graduateListings = graduateJobs.map(({ job, experience }) => ({
-      externalId: job.externalId, title: job.title, postingUrl: job.postingUrl,
+      externalId: job.externalId, company: job.company, title: job.title, postingUrl: job.postingUrl,
       scope: job.classification.scope, requiredYears: experience.requiredYears,
       explicitGraduate: experience.explicitGraduate, experienceLabel: experience.label,
     }));
     const result = {
       ...identity, endpoint: snapshot.endpoint, status: 'passed', raw: snapshot.rawCount, listed: jobs.length,
+      employersInWindow: new Set(jobs.map(job => job.company.trim().toLocaleLowerCase())).size,
       inScope: jobs.filter(j => j.classification.scope === 'included').length,
       needsDetails: jobs.filter(j => j.classification.scope === 'needs-details').length,
       strictNewGrad: graduateListings.filter(j => j.scope === 'included').length,
@@ -37,7 +38,7 @@ const results = await mapConcurrent(sources, 3, async source => {
   } catch (error) {
     const message = error instanceof Error && !('issues' in error) ? error.message : 'Payload shape validation failed';
     console.error(`${source.id}: FAILED ${message}`);
-    return { ...identity, endpoint: null, status: 'failed', raw: null, listed: null, inScope: null, needsDetails: null, strictNewGrad: null, strictNewGradNeedsDetails: null, graduateListings: [], error: message };
+    return { ...identity, endpoint: null, status: 'failed', raw: null, listed: null, employersInWindow: null, inScope: null, needsDetails: null, strictNewGrad: null, strictNewGradNeedsDetails: null, graduateListings: [], error: message };
   }
 });
 
@@ -48,15 +49,15 @@ const totals = results.reduce((sum, r) => ({
   strictNewGrad: sum.strictNewGrad + (r.strictNewGrad || 0),
   strictNewGradNeedsDetails: sum.strictNewGradNeedsDetails + (r.strictNewGradNeedsDetails || 0),
 }), { raw: 0, listed: 0, inScope: 0, needsDetails: 0, strictNewGrad: 0, strictNewGradNeedsDetails: 0 });
-const table = results.map(r => `| ${r.company} | ${r.provider}/${r.board} | ${r.status} | ${r.raw ?? '—'} | ${r.listed ?? '—'} | ${r.inScope ?? '—'} | ${r.needsDetails ?? '—'} | ${r.strictNewGrad ?? '—'} | ${r.strictNewGradNeedsDetails ?? '—'} | [Official careers evidence](${r.evidenceUrl}) |`).join('\n');
-const graduateRows = results.flatMap(r => r.graduateListings.map(j => `| ${r.company} | [${j.title.replaceAll('|', ' / ')}](${j.postingUrl}) | ${j.scope === 'included' ? 'Strict default' : 'Needs details checked'} | ${j.requiredYears === null ? 'Not stated; explicit graduate evidence' : `${j.requiredYears}${j.requiredYears === 1 ? ' · experience requirement applies' : ''}`} |`)).join('\n');
+const table = results.map(r => `| ${r.company} | ${r.provider}/${r.board} | ${r.status} | ${r.raw ?? '—'} | ${r.listed ?? '—'} | ${r.inScope ?? '—'} | ${r.needsDetails ?? '—'} | ${r.strictNewGrad ?? '—'} | ${r.strictNewGradNeedsDetails ?? '—'} | [Official source evidence](${r.evidenceUrl}) |`).join('\n');
+const graduateRows = results.flatMap(r => r.graduateListings.map(j => `| ${j.company.replaceAll('|', ' / ')} | [${j.title.replaceAll('|', ' / ')}](${j.postingUrl}) | ${j.scope === 'included' ? 'Strict default' : 'Needs details checked'} | ${j.requiredYears === null ? 'Not stated; explicit graduate evidence' : `${j.requiredYears}${j.requiredYears === 1 ? ' · experience requirement applies' : ''}`} |`)).join('\n');
 
 await mkdir('docs', { recursive: true });
 const pathSuffix = selected ? `.${selected}` : '';
 await writeFile(`docs/source-results${pathSuffix}.json`, JSON.stringify({ checkedAt, classifierVersion: CLASSIFIER_VERSION, totals, results }, null, 2) + '\n');
 await writeFile(`docs/SOURCE_AUDIT${pathSuffix}.md`, `# Source audit
 
-Actual public-feed verification at **${checkedAt}** using \`npm run sources:verify${selected ? ` -- --source ${selected}` : ''}\`. **${success}/${sources.length}** configured sources returned complete, schema-valid snapshots. This report is generated from real public requests, without fixtures. Source verification does not write or verify the production Supabase catalog. Counts change as employers publish and close roles.
+Actual public-feed verification at **${checkedAt}** using \`npm run sources:verify${selected ? ` -- --source ${selected}` : ''}\`. **${success}/${sources.length}** configured sources returned schema-valid employer boards or complete API discovery windows. This report is generated from real public requests, without fixtures. Source verification does not write or verify the production Supabase catalog. Counts change as publishers update listings; these sources do not represent the entire market.
 
 Totals across successful sources:
 
@@ -64,7 +65,7 @@ Totals across successful sources:
 - **${totals.inScope} all-experience in scope / ${totals.needsDetails} all-experience needing details**: broad MSBA role-family coverage, including experienced individual contributors. These are **not new-grad counts**.
 - **${totals.strictNewGrad} strict New grad & 0–1 years / ${totals.strictNewGradNeedsDetails} additional strict-tier listings needing details**: uses the same \`assessExperience\` function as the app. The second group has unknown US eligibility or employment type and is excluded from the strict default.
 
-| Employer | Provider/board | Result | Raw | Public listed | All-experience in scope | All-experience needs details | Strict new-grad / 0–1 | Strict tier needs details | Identity evidence |
+| Employer/source | Provider/board | Result | Raw | Public listed | All-experience in scope | All-experience needs details | Strict new-grad / 0–1 | Strict tier needs details | Identity evidence |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 ${table}
 
@@ -84,17 +85,20 @@ ${graduateRows || '| — | No strict-tier listings found | — | — |'}
 
 Registry identity evidence was established from employers' official careers pages linking the recorded ATS board (or exact job URLs and provider posting IDs cross-matched to that board), not guessed from employer names. See \`data/employers.json\` for dated evidence notes and source-usage review. A healthy response alone does not verify employer identity or grant republication permission. Candidates with blocked/unsupported careers pages were replaced, not marked verified.
 
+Jobicy is a cross-employer publisher, not one selected employer. Its free USA query covers a rolling seven-day remote-job window and may include Anywhere listings, which remain country-unverified. Publisher identity and job-board reuse/credit terms were checked against its official API and fair-use documentation; individual employers are not all independently vetted. The adapter retains each job's actual company name and canonical Jobicy listing URL. Missing from that window never proves closure: production checks older known IDs through its status API, closes only explicit closed statuses and withholds unknown statuses from recommendations. These are Jobicy listing states, not live employer ATS probes. Market search links on the site open external Google, Indeed and LinkedIn results without importing or counting them. Choose either live verification or live ingestion for a Jobicy synchronization, no more than hourly; replay captured public responses for additional development checks instead of polling again.
+
 ## Adapter documentation reviewed
 
 - [Greenhouse Job Board API](https://docs.greenhouse.io/job-board.html): public GET, one entire list with content=true; enforce meta.total. updated_at is an edit timestamp, never original posting date. No individual detail fetches.
 - [Lever public Postings API](https://github.com/lever/postings-api): skip/limit pagination, global and EU hosts, categories.allLocations, country and optional salaryRange. A terminal short page and unique IDs are required; repeated/truncated pages fail the snapshot.
 - [Ashby public Job Postings API](https://developers.ashbyhq.com/docs/public-job-posting-api): includeCompensation=true, separate locations and salary tiers, isListed=false excluded. publishedAt means last publication, never original posting date.
+- [Jobicy public API/fair use](https://jobicy.com/jobs-rss-feed) and [OpenAPI contract](https://jobicy.com/api/openapi.json): unauthenticated free API only, visible Jobicy attribution and canonical listing links; full cursor traversal of its discovery window, plus exact status batches for older records. No paid Bearer API or original-ATS-link mode.
 
 ## Limits and usage review
 
 Public API availability is not a legal review or proof of unrestricted republication rights. This pilot attributes employers, keeps bounded plain text and source links, never submits applications, and retains no raw payload archive. Registry notes record the public career-page/API context; the owner must review employer terms before a public launch and disable a source if permission is required. No source is presented as legally vetted. Current source checks do not imply a deployed or populated Supabase catalog.
 
-Requests use three-source concurrency, 20-second timeouts, at most three attempts, a 24MB response cap and bounded Retry-After. Long retry instructions defer the source. Failed/malformed/partial feeds never reconcile absence. Atomic server finalization quarantines a >60% board drop, and closure requires two complete successful snapshots at least twelve hours apart. Failed sources preserve prior catalog records.
+Requests use three-source concurrency, 20-second timeouts, at most three attempts, a 24MB response cap and bounded Retry-After. Long retry instructions defer the source. Failed/malformed/partial feeds never reconcile absence. Employer-board finalization quarantines a >60% board drop, and board-absence closure requires two complete successful snapshots at least twelve hours apart. Jobicy instead uses the explicit status reconciliation described above. Failed sources preserve prior catalog records.
 
 ${results.filter(r => r.error).map(r => `- **${r.company}:** ${r.error}`).join('\n') || 'No network or payload failures occurred in this verification run.'}
 `);

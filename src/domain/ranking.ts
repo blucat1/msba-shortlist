@@ -92,7 +92,7 @@ export interface RankOptions { now?: Date; trackedJobIds?: string[]; dismissedJo
 export function rankJobs(jobs: Job[], preferences: Preferences, options: RankOptions = {}): RankedJob[] {
   const now = options.now ?? new Date(), hidden = new Set(options.includeTracked ? [] : [...options.trackedJobIds ?? [], ...options.dismissedJobIds ?? []]);
   const view = options.experienceView ?? 'new-grad';
-  return jobs.filter(j => !hidden.has(j.id) && j.classification.scope !== 'excluded' && j.classification.seniority !== 'leadership' && !isLeadershipTitle(j.title) && j.availability !== 'closed'
+  return jobs.filter(j => !hidden.has(j.id) && j.classification.scope !== 'excluded' && j.classification.seniority !== 'leadership' && !isLeadershipTitle(j.title) && j.availability !== 'closed' && !(j.publisher?.kind === 'aggregator' && j.availability === 'availability_unconfirmed')
     && matchesExperienceView(assessExperience(j), view) && (options.includeNeedsDetails || j.classification.scope !== 'needs-details')
     && (options.includeStale || freshness(j.lastVerifiedAt, now) !== 'expired')).map(job => rankJob(job, preferences, now))
     .sort((a, b) => b.score - a.score || b.coverage - a.coverage || Number(b.job.availability === 'open') - Number(a.job.availability === 'open') || b.job.firstSeenAt.localeCompare(a.job.firstSeenAt) || a.job.id.localeCompare(b.job.id));

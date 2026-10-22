@@ -48,7 +48,7 @@ function job(row: CatalogRow, sources: Map<string, SourceRow>): Job {
     postingUrl: row.posting_url, applicationUrl: row.application_url, availability: row.availability,
     contentHash: row.content_hash, firstSeenAt: row.first_seen_at, lastSeenAt: row.last_seen_at,
     sourcePublishedAt: row.source_published_at, sourceUpdatedAt: row.source_updated_at,
-    lastVerifiedAt: sources.get(row.source_id)?.last_success_at ?? null,
+    lastVerifiedAt: sources.get(row.source_id)?.provider === 'jobicy' ? row.last_seen_at : sources.get(row.source_id)?.last_success_at ?? null,
   } as unknown as Job;
 }
 interface Page<T> { data: T[] | null; error: { message: string } | null; }

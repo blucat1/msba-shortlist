@@ -183,3 +183,24 @@ test('new-grad discovery separates experienced and unverified jobs while preserv
   await page.reload();
   await expect(page.locator('.tracker-role').filter({ hasText: title })).toBeVisible();
 });
+
+test('wider market search preserves queries, labels unverified results, and tracks an outside role', async ({ page }) => {
+  await page.getByRole('button', { name: 'Search the market', exact: false }).click();
+  await page.getByLabel('Market search keywords', { exact: true }).fill('business analyst');
+  await page.getByLabel('Market search location', { exact: true }).fill('San Francisco, CA');
+  const linkedIn = page.getByRole('link', { name: 'Search jobs on LinkedIn (opens in a new tab)' });
+  const target = new URL((await linkedIn.getAttribute('href'))!);
+  expect(target.hostname).toBe('www.linkedin.com');
+  expect(target.searchParams.get('keywords')).toContain('business analyst');
+  expect(target.searchParams.get('location')).toBe('San Francisco, CA');
+  await expect(page.locator('.market-search-disclosure')).toContainText('unverified');
+  await page.getByRole('button', { name: 'Track a job you found', exact: true }).click();
+  await expect(page.getByRole('dialog')).toContainText('One more possibility.');
+  await page.keyboard.press('Escape');
+  for (const width of [390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 960 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
+  await page.getByRole('button', { name: 'For you', exact: false }).click();
+  await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('new-grad');
+});

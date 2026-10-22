@@ -1,0 +1,28 @@
+# Discovery coverage
+
+MSBA Shortlist combines an imported catalog with wider external search. It does not claim to index every vacancy or verify an entire platform's results.
+
+| Discovery option | Coverage | What is checked |
+| --- | --- | --- |
+| Employer feeds | The verified Greenhouse, Lever and Ashby boards in the registry | Complete public boards, supported roles, location/employment evidence, experience requirements and freshness |
+| Jobicy remote market feed | Remote jobs across employers, without a company whitelist; free API discovery window of seven days | Complete cursor traversal, actual company names, source requirements, canonical Jobicy links and subsequent listing-status checks |
+| Search the market | Editable searches on Google, Indeed and LinkedIn, including employers outside connected feeds | Safe search links only; results open on those services and are not imported, counted, or verified by MSBA Shortlist |
+| Manual tracking | Any suitable role found elsewhere | Owner-entered link/details and private application history; no scraping or automatic submission |
+
+The catalog's default remains explicit graduate/entry-level hiring or a stated 0–1-year requirement. A one-year minimum is labeled. Required 2–3 years, senior roles and unknown experience have separate views. External platform tags and search keywords do not establish that a role meets this policy. Full-time status, degree, timing, location and work authorization still need to match the employer's actual requirements.
+
+## Jobicy source boundaries
+
+The [official public API and fair-use terms](https://jobicy.com/jobs-rss-feed) permit websites/apps/job boards with credit and canonical Jobicy listing links. The adapter uses only the unauthenticated free API, never a Bearer token or paid original-ATS-link mode. API access needs no owner account or payment method. The [OpenAPI contract](https://jobicy.com/api/openapi.json) defines cursor pagination and the listing-status endpoint.
+
+The USA query also returns Anywhere listings. These keep country unknown, rather than treating remote as US eligibility. Each card and its details retain Jobicy credit and the supplied source link; an application may continue through Jobicy's own flow. Its publication date describes publication on Jobicy, not the employer's original posting date. Provider seniority tags can be inconsistent, so required years and graduate evidence come from the actual title and requirements text.
+
+This feed is remote-only, delayed by approximately three hours, and limited to its recent discovery window. A job aging out of seven days is not closed. The importer checks older known IDs in batches: active retains an open listing, unknown becomes unconfirmed and leaves recommendations, and only explicit closed closes it. These are Jobicy listing states, not independent live probes of every employer's application system. Existing private saved snapshots and history remain intact.
+
+The twice-daily schedule is below the source's maximum hourly synchronization cadence. Development tests replay mock or captured public data rather than repeatedly polling the API. Do not run source verification and ingestion as repeated independent Jobicy polls within the same hour.
+
+## What remains outside automatic coverage
+
+The imported catalog cannot cover all onsite/hybrid employers, every ATS, closed recruiting networks, or login-restricted boards. External market search helps users reach those broader sources; it is not a substitute for an appropriately licensed cross-market data feed if centralized, exhaustive results become a requirement. No paid trial, scraping service, application autofill or additional account is enabled by this implementation.
+
+Current counts are dated observations in [SOURCE_AUDIT.md](SOURCE_AUDIT.md) and [TEST_REPORT.md](TEST_REPORT.md), not a market-size estimate. Distinguish total source listings, supported roles, experience tiers and the number of employers in a rolling discovery window. Multiple locations/program requisitions can also share a title.
