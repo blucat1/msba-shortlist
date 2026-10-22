@@ -1,7 +1,7 @@
 import type { Job } from './types';
 
-export type ExperienceView = 'new-grad' | 'early-career' | 'experienced' | 'unverified' | 'all';
-export type ExperienceTier = Exclude<ExperienceView, 'all'>;
+export type ExperienceView = 'new-grad' | 'zero-experience' | 'early-career' | 'experienced' | 'unverified' | 'all';
+export type ExperienceTier = Exclude<ExperienceView, 'all' | 'zero-experience'>;
 type ExperienceJob = Pick<Job, 'title' | 'experience' | 'classification'>;
 export interface ExperienceAssessment {
   tier: ExperienceTier; label: string; evidence: string | null;
@@ -15,7 +15,7 @@ export function isLeadershipTitle(title: string): boolean {
     || /^(?:(?:senior|sr\.?|associate)\s+)?manager\b/i.test(title);
 }
 const seniorTitle = (title: string) => /\b(?:principal|staff|senior|sr\.?|lead(?![ -]+(?:generation|gen)\b))\b/i.test(title);
-export const explicitGraduateTitle = (title: string): boolean => /\b(?:new[ -]grad(?:uate)?s?|(?:recent|university|college)[ -]graduates?|entry[ -]level|graduate (?:analyst|engineer|data|product|consultant|quantitative|researcher|program|programme|scheme))\b/i.test(title);
+export const explicitGraduateTitle = (title: string): boolean => /\b(?:new[ -]grad(?:uate)?s?|(?:recent|university|college)[ -]grad(?:uate)?s?|entry[ -]level|graduate (?:analyst|engineer|data|product|consultant|quantitative|researcher|program|programme|scheme))\b/i.test(title) || /\b20\d{2}\b[^()]{0,70}\b(?:grads?|graduates?)\b/i.test(title);
 
 export function assessExperience(job: ExperienceJob): ExperienceAssessment {
   const { minYears, alternatives, evidence } = job.experience;
@@ -28,6 +28,7 @@ export function assessExperience(job: ExperienceJob): ExperienceAssessment {
     tier, label, requiredYears, evidence: sourceEvidence, explicitGraduate: explicitGraduate && !notGraduate,
   });
   if (isLeadershipTitle(job.title) || job.classification.seniority === 'leadership') return result('experienced', 'Leadership role');
+  if ((minYears === null || minYears <= 3) && /\banalyst\s*\/\s*(?:senior|sr\.?)\s+analyst\b/i.test(job.title)) return result('unverified', 'Multiple analyst levels offered · check each experience path', null);
   if (seniorTitle(job.title) || job.classification.seniority === 'senior' || (minYears !== null && minYears > 3)) {
     return result('experienced', minYears !== null ? `Experienced role · ${minYears}+ years required` : 'Experienced title · years unverified');
   }
@@ -36,7 +37,7 @@ export function assessExperience(job: ExperienceJob): ExperienceAssessment {
   if (alternatives.length || uncertainRequirement) return result('unverified', alternatives.length ? 'Degree/experience conditions need review' : 'Experience requirement needs review', null);
   if (notGraduate) return result('early-career', 'Employer says this is not a new-grad role');
   if (minYears !== null && minYears > 1) return result('early-career', `${minYears} years required · early-career stretch`);
-  if (minYears === 1) return result('new-grad', '1 year required · check your experience');
+  if (minYears !== null && minYears > 0 && minYears <= 1) return result('new-grad', `${minYears} year${minYears === 1 ? '' : 's'} required · check your experience`);
   if (minYears === 0) return result('new-grad', 'No prior experience required');
   if (explicitGraduate) return result('new-grad', 'Graduate / entry-level hiring · years not stated');
   return result('unverified', 'Required experience unverified', null);
@@ -44,12 +45,14 @@ export function assessExperience(job: ExperienceJob): ExperienceAssessment {
 
 export function matchesExperienceView(assessment: ExperienceAssessment, view: ExperienceView): boolean {
   if (view === 'all') return true;
+  if (view === 'zero-experience') return assessment.tier === 'new-grad' && assessment.requiredYears === 0;
   if (view === 'early-career') return assessment.tier === 'new-grad' || assessment.tier === 'early-career';
   return assessment.tier === view;
 }
 
 export const EXPERIENCE_VIEWS: { value: Exclude<ExperienceView, 'all'>; label: string; description: string }[] = [
   { value: 'new-grad', label: 'New grad & 0–1 years', description: 'Explicit graduate/entry-level hiring or 0–1 years required. A one-year requirement is labeled; missing years never count as zero.' },
+  { value: 'zero-experience', label: 'Zero years confirmed', description: 'Only listings explicitly stating no required experience or a zero-year minimum. Graduate titles with unstated years stay in New grad & 0–1 years.' },
   { value: 'early-career', label: 'Early career · 0–3 years', description: 'Includes roles requiring 2–3 years. These are experience stretches for graduates without that background.' },
   { value: 'experienced', label: 'Experienced · 4+ / senior', description: 'Experienced individual-contributor roles, separate from the graduate shortlist. People-leadership roles remain excluded.' },
   { value: 'unverified', label: 'Experience unverified', description: 'Missing requirements or conditional degree/experience paths. Review the employer posting; these are not verified new-grad roles.' },

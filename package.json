@@ -15,6 +15,8 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "test:db": "tsx scripts/test-db.ts",
+    "test:integration": "tsx scripts/test-ingestion-integration.ts",
+    "quality:check": "tsx scripts/evaluate-quality.ts",
     "sources:verify": "tsx scripts/verify-sources.ts",
     "ingest": "tsx scripts/ingest.ts",
     "setup:check": "tsx scripts/setup-check.ts",

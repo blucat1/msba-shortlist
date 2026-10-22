@@ -35,19 +35,23 @@ Opening an application link **never** counts as Applied. The user must explicitl
 
 Opportunities includes **Search the market**, with editable searches on Google, Indeed and LinkedIn for employers outside the imported catalog. Those services' results open externally and remain unverified; suitable outside roles can be added to My Search. The imported catalog also supports Jobicy's free cross-employer remote-job feed, with actual employer names, visible source credit and explicit listing-status checks. The catalog is broader than the original 29-employer pilot, while retaining the strict experience default. It does not claim every job in the market. See [discovery coverage](docs/MARKET_COVERAGE.md) for the source window, free API, attribution and remaining gaps, and the dated rollout evidence in [TEST_REPORT.md](docs/TEST_REPORT.md).
 
-The production check at **23:24 PDT on October 21 / 06:24 UTC on October 22, 2026** verified **30 healthy sources and 414 retained supported catalog records**. Jobicy's window held **548 all-level listings across 213 employers**, of which **36** matched supported roles. The anonymous strict default showed **7 listings**; one more requires **Needs details checked**. Broad source/employer totals are not graduate-job counts. The complete [30-source production import and maintenance](https://github.com/blucat1/msba-shortlist/actions/runs/39733482284) succeeded; owner-only releases remain active and no teammates have been invited.
+The registry includes 37 verified employer boards and the Jobicy remote market feed; ID.me’s university board and WisdomTree remain disabled pending, respectively, stronger official linkage and resolution of a source-use restriction. Current source/import counts and release checks are dated in [TEST_REPORT.md](docs/TEST_REPORT.md). Broad source or employer totals are never presented as graduate-job counts. Owner-only releases remain active; no teammates have been invited.
 
 ## Experience focus
 
 Live discovery defaults to **New grad & 0–1 years**: explicit graduate/entry-level hiring or a supported 0–1-year required minimum. A one-year requirement is labeled honestly and remains an experience stretch for someone with zero years. Missing years never mean zero; Associate/APM, Junior and generic Early Career titles alone do not verify graduate eligibility. Conditional degree/experience paths remain **Experience unverified**.
 
+Choose **Zero years confirmed** for an explicit zero/no-experience requirement; graduate titles alone do not establish zero. Six-month and one-year minima remain positive requirements.
+
 Choose **Early career · 0–3 years** to include 2–3-year requirements, **Experienced · 4+ / senior** for experienced individual-contributor roles, or **Experience unverified** to review missing/conditional evidence. Senior, Staff, Principal and Lead titles override low or missing numeric requirements; people-leadership roles remain excluded. These discovery controls never remove saved roles, applications, notes, tasks or history from My Search.
 
-Before the market-coverage expansion, the live audit on October 21, 2026 at **03:19:17 PDT / 10:19:17 UTC** verified 29 successful sources and 365 relevant catalog records: 168 in-scope and 197 needing details checked, all on classifier `2026-10-21.2`. That strict default showed **6 listings: 4 Veeva graduate-program listings and 2 roles requiring one year**. These are historical pilot counts; see [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for the latest deployment and ingestion observations.
+Visible cohort defaults are **May 15, 2027 graduation** and availability from **May 16, 2027**. Edit them and optional degree, GPA, authorization and sponsorship facts in Preferences. Known requirements conflicts and passed verified deadlines are withheld by default; unknown requirements remain visible for review. Preference overlap describes hand-set preference sorting, not an eligibility decision or hiring prediction. Similar For-you listings can be expanded to retain every location/requisition and its own save action.
+
+The [source review](docs/SUPPLY_REVIEW.md) and `npm run quality:check` measure bad recommendations and missed matches against bounded real source excerpts. This is assistant review, not independent human or market-wide efficacy validation. [Classmate testing is prepared and explicitly deferred](docs/PILOT_RESULTS.md) at the owner’s request.
 
 ## Live setup
 
-The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All three hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
+The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All four hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
 
 Google sign-in is enabled with basic identity permissions. The owner confirmed that signing in, saving a job and refreshing My Search worked; server counts corroborated a Google account and saved opportunity. Hosted backend authorization/deletion passed 23 checks with two disposable users, both removed afterward. Two independent Google accounts, same-browser account switching, second-device persistence and wider audience availability still need pilot acceptance.
 
@@ -61,6 +65,7 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) and [docs/TEST_REPORT.md](docs/TEST
 npm run typecheck
 npm run lint
 npm run test:unit
+npm run quality:check
 npm run build
 npx playwright install chromium
 npm run test:e2e
@@ -73,6 +78,8 @@ npm run test:db:smoke
 npx supabase start
 npm run test:db
 ```
+
+The new four-provider ingestion → real Supabase → repository → browser gate runs with `npm run test:integration` after starting the disposable test stack; see [its local Auth setup and boundaries](tests/integration/README.md). `--fixtures-only` checks transport and explicitly does not certify database/browser integration.
 
 Docker was unavailable on the initial Mac checkout. The real Supabase SQL gate subsequently passed in GitHub Actions: two suites and 93 pgTAP tests. Hosted REST/RPC/deletion checks also passed separately; the owner-reported Google sign-in/save/refresh result is separate from automated backend and outbound-redirect checks. Wider account-switch and second-device acceptance remain pending. Observed results and verification limits are recorded in [docs/TEST_REPORT.md](docs/TEST_REPORT.md).
 

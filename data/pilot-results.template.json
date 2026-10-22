@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "status": "deferred_by_owner_not_executed",
+  "protocol": "docs/PILOT_PROTOCOL.md",
+  "cohort": {
+    "graduationDate": "2027-05-15",
+    "earliestStartDate": "2027-05-16",
+    "timezone": "America/Los_Angeles"
+  },
+  "plannedParticipantCount": 4,
+  "actualParticipantCount": 0,
+  "recruitmentAuthorizedNow": false,
+  "period": { "startedAt": null, "endedAt": null },
+  "testedCommit": null,
+  "sessions": [],
+  "sessionFieldGuide": {
+    "participantAlias": "P01 through P04; never an account identifier",
+    "consentGiven": "boolean; do not add a session without consent",
+    "consentDate": "YYYY-MM-DD in the cohort timezone",
+    "deviceClasses": "desktop, tablet or physical_phone; distinguish physical devices from emulation",
+    "browserFamily": "family only; no user-agent or device identifier",
+    "taskResults": "task code, attempted/succeeded/failed/skipped, elapsed seconds, non-sensitive issue category",
+    "roleReview": "reviewed count, seriously-consider yes/no/unknown counts, eligibility/timing unknown counts, confirmed contradiction categories",
+    "missedRoles": "present/outside_coverage/requirement_excluded/details_unknown/plausible_monitored_source_miss counts; public URLs only with permission",
+    "timeComparison": "condition order, usual/app elapsed seconds, qualifying-role counts, time-cap flags",
+    "easeRating": "integer 1 through 5, or null if skipped",
+    "wouldUseAgain": "yes/no/unknown",
+    "optionalFeedback": "brief voluntary non-sensitive text; omit notes, resumes and application history"
+  },
+  "aggregate": {
+    "consentingParticipants": 0,
+    "independentGoogleAccountsTested": 0,
+    "crossAccountExposureCount": null,
+    "sameBrowserSwitchOutcome": "not_executed",
+    "pendingRequestSwitchOutcome": "not_executed",
+    "secondPhysicalDeviceAccountsPassed": 0,
+    "criticalTasksAttempted": 0,
+    "criticalTasksSucceeded": 0,
+    "criticalTasksSkipped": 0,
+    "acknowledgedSaveLossCount": null,
+    "falseSuccessCount": null,
+    "reviewedDefaultRoles": 0,
+    "seriouslyConsiderYes": 0,
+    "seriouslyConsiderUnknown": 0,
+    "confirmedStrictDefaultContradictions": null,
+    "timingUnknownCount": 0,
+    "participantSubmittedRoles": 0,
+    "outsideCoverageCount": 0,
+    "plausibleMonitoredSourceMissCount": 0,
+    "validTimeComparisonPairs": 0,
+    "timeCappedConditions": 0,
+    "medianWithinPersonTimeImprovementPercent": null,
+    "willingToContinueYes": 0,
+    "followUpStatus": "not_scheduled",
+    "decision": "insufficient_evidence_not_executed"
+  },
+  "issueCategories": [],
+  "limitations": [
+    "No humans have been recruited, observed or counted.",
+    "Local password-account automation does not establish Google OAuth or human account-switch behavior.",
+    "A mobile viewport is not a second physical device.",
+    "No participant usefulness, whole-market recall, time-saving or retention claim is established."
+  ],
+  "privacy": {
+    "participantIdentifiers": "aliases_only",
+    "privateStorageExample": ".tools/pilot-private/",
+    "participantRowsMayBeCommitted": false,
+    "collectCredentialsOrBackupContents": false,
+    "hiddenAnalytics": false,
+    "screenOrAudioRecording": false,
+    "privateResponseRetentionDaysAfterPilot": 30
+  }
+}

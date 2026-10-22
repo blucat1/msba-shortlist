@@ -13,10 +13,21 @@ const url = z.string().max(2048).refine(value => safeUrl(value) !== null, 'Only 
 const role = z.enum(ROLE_FAMILIES);
 const work = z.enum(['remote', 'hybrid', 'onsite', 'unknown']);
 const strings = z.array(z.string().max(1000)).max(200);
+const educationLevel = z.enum(['bachelors', 'masters', 'doctorate']);
+const strength = z.enum(['required', 'preferred']);
+const fact = <T extends z.ZodType>(value: T) => z.object({ value, evidence: z.string().min(1).max(1000), strength });
+const eligibilitySchema = z.object({
+  degrees: z.array(z.object({ levels: z.array(educationLevel).max(3), fields: strings, allowsRelatedFields: z.boolean(), allowsEquivalentExperience: z.boolean(), evidence: z.string().min(1).max(1000), strength })).max(30),
+  gpa: z.array(fact(z.object({ minimum: z.number().nonnegative().max(100), scale: z.number().positive().max(100).nullable() }))).max(20),
+  workAuthorization: z.array(fact(z.enum(['us-authorization', 'us-citizen', 'us-citizen-or-permanent-resident']))).max(20),
+  sponsorship: z.array(fact(z.enum(['available', 'unavailable']))).max(20),
+});
 const jobSchema = z.object({
   id, sourceId: id, externalId: id, employerId: id, company: z.string().min(1).max(300), title: z.string().min(1).max(500), postingUrl: url, applicationUrl: url,
   publisher: z.object({ name: z.string().min(1).max(200), url: z.string().max(2048).refine(value => safeUrl(value) !== null, 'Only safe publisher URLs are accepted'), kind: z.literal('aggregator') }).optional(),
   employerGroupingKey: z.string().regex(/^market-company:[a-f0-9]{64}$/).optional(),
+  eligibility: eligibilitySchema.optional(),
+  sourceReview: z.object({ status: z.literal('employer-conflict'), reason: z.string().min(1).max(1000), evidenceUrl: z.string().max(2048).refine(value => safeUrl(value) !== null, 'Use a safe evidence URL'), checkedAt: timestamp }).optional(),
   locations: z.array(z.object({ label: z.string().max(500), country: z.string().max(100).nullable(), region: z.string().max(200).nullable(), city: z.string().max(200).nullable() })).max(100),
   countryEvidence: strings, workArrangement: work, employmentType: z.enum(['full-time', 'part-time', 'contract', 'internship', 'unknown']), employmentEvidence: text.nullable(),
   roleFamilies: z.array(role).max(12), primaryRoleFamily: role.nullable(), classification: z.object({ confidence: z.enum(['high', 'medium', 'low']), reasons: z.array(z.object({ code: id, text })).max(100), version: id, scope: z.enum(['included', 'needs-details', 'excluded']), seniority: z.enum(['early-career', 'mid-level', 'senior', 'leadership', 'unknown']) }),
@@ -29,8 +40,11 @@ const jobSchema = z.object({
 export const preferencesSchema = z.object({
   roleFamilies: z.array(role).max(12), primaryRoleFamilies: z.array(role).max(3), locations: z.array(z.string().max(200)).max(50), workArrangements: z.array(z.enum(['remote', 'hybrid', 'onsite'])).max(3),
   desiredSalary: z.number().nonnegative().max(10_000_000).nullable(), salaryCurrency: z.string().length(3), graduationMonth: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).nullable(), earliestStart: date.nullable(),
+  graduationDate: date.nullable().optional(), educationLevel: educationLevel.nullable().optional(), degreeField: z.string().trim().max(200).nullable().optional(),
+  gpa: z.number().nonnegative().max(100).nullable().optional(), gpaScale: z.number().positive().max(100).nullable().optional(),
+  workAuthorization: z.enum(['authorized', 'needs-sponsorship', 'unknown']).nullable().optional(), requiresSponsorshipNowOrFuture: z.boolean().nullable().optional(),
   yearsExperience: z.number().min(0).max(100).nullable(), skills: z.array(z.string().min(1).max(100)).max(200), timezone: z.string().refine(value => { try { new Intl.DateTimeFormat('en', { timeZone: value }); return true; } catch { return false; } }, 'Unknown timezone'), onboardingComplete: z.boolean(),
-});
+}).refine(value => value.gpa == null || value.gpaScale == null || value.gpa <= value.gpaScale, 'GPA cannot exceed its scale');
 export const opportunitySchema = z.object({
   id, userId: id, catalogJobId: id.nullable(), companyKey: id, company: z.string().trim().min(1).max(300), title: z.string().trim().min(1).max(500),
   location: z.string().max(1000), workArrangement: work, postingUrl: url, salaryText: z.string().max(2000), deadline: date.nullable(), stage: z.enum(STAGES), priority: z.enum(['High', 'Normal', 'Low']),

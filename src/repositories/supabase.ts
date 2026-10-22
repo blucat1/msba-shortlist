@@ -1,6 +1,7 @@
+import { mergeCohortPreferences } from '../domain/cohort';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { z } from 'zod';
-import { DEFAULT_PREFERENCES, type AppSnapshot, type Backup, type CompanyNote, type ImportResult, type Job, type JobPreference, type Opportunity, type Task } from '../domain/types';
+import { DEFAULT_PREFERENCES, type AppSnapshot, type Backup, type CompanyNote, type ImportResult, type Job, type JobPreference, type Opportunity, type Preferences, type Task } from '../domain/types';
 import { backupSchema, opportunitySchema, preferencesSchema, taskSchema } from '../domain/transfer';
 import { getSupabaseClient, GUEST_PREFERENCES_KEY, clearGuestPreferences } from '../lib/supabase';
 import type { CatalogRow, Database, EventRow, Json, OpportunityRow, SourceRow, TaskRow } from '../lib/database.types';
@@ -79,7 +80,7 @@ export function createSupabaseRepository(supabase: SupabaseClient<Database> = ge
     if (!uid) {
       try {
         const stored = sessionStorage.getItem(GUEST_PREFERENCES_KEY);
-        if (stored) Object.assign(initialPreferences, preferencesSchema.parse(JSON.parse(stored)));
+        if (stored) Object.assign(initialPreferences, preferencesSchema.parse(mergeCohortPreferences(initialPreferences, JSON.parse(stored))));
       } catch { clearGuestPreferences(); }
     }
     const [sourceResult, employerResult] = await Promise.all([
@@ -124,7 +125,7 @@ export function createSupabaseRepository(supabase: SupabaseClient<Database> = ge
     // account's private state, even when the provider also clears query caches.
     if ((await userId(false)) !== uid) throw new Error('Account changed while loading. Please reload.');
     return { ...base,
-      preferences: preferencesSchema.parse({ ...initialPreferences, ...(profiles.data ? asObject(profiles.data.preferences) : {}) }),
+      preferences: preferencesSchema.parse(mergeCohortPreferences(initialPreferences, profiles.data ? asObject(profiles.data.preferences) as Partial<Preferences> : {})),
       opportunities: opportunities.map(opportunity), events: events.map(event), tasks: tasks.map(task),
       companyNotes: companyNotes.map(note => ({ companyKey: note.company_key, userId: note.user_id, note: note.note, updatedAt: note.updated_at })),
       jobPreferences: jobPreferences.map(preference => ({ jobId: preference.job_id, userId: preference.user_id, dismissed: preference.dismissed, seenAt: preference.seen_at })),

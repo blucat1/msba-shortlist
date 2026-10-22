@@ -1,3 +1,4 @@
+import type { EducationLevel, JobEligibility } from './eligibility';
 /** Dates without a time remain YYYY-MM-DD; event timestamps are ISO UTC strings. */
 export type DateOnly = string;
 export type Timestamp = string;
@@ -31,6 +32,8 @@ export interface Job {
   firstSeenAt: Timestamp; lastSeenAt: Timestamp; lastVerifiedAt: Timestamp | null; contentHash: string; isDemo?: boolean;
   publisher?: { name: string; url: string; kind: 'aggregator' };
   employerGroupingKey?: string;
+  eligibility?: JobEligibility;
+  sourceReview?: { status: 'employer-conflict'; reason: string; evidenceUrl: string; checkedAt: Timestamp };
 }
 export type SourceProvider = 'greenhouse' | 'lever' | 'ashby' | 'jobicy';
 export interface JobSource {
@@ -43,6 +46,13 @@ export interface Preferences {
   roleFamilies: RoleFamily[]; primaryRoleFamilies: RoleFamily[]; locations: string[]; workArrangements: Exclude<WorkArrangement, 'unknown'>[];
   desiredSalary: number | null; salaryCurrency: string; graduationMonth: string | null; earliestStart: DateOnly | null;
   yearsExperience: number | null; skills: string[]; timezone: string; onboardingComplete: boolean;
+  graduationDate?: DateOnly | null;
+  educationLevel?: EducationLevel | null;
+  degreeField?: string | null;
+  gpa?: number | null;
+  gpaScale?: number | null;
+  workAuthorization?: 'authorized' | 'needs-sponsorship' | 'unknown' | null;
+  requiresSponsorshipNowOrFuture?: boolean | null;
 }
 export interface Opportunity {
   id: string; userId: string; catalogJobId: string | null; companyKey: string; company: string; title: string;
@@ -74,5 +84,5 @@ export interface ImportPreview { backup: Backup; opportunityCount: number; taskC
 export interface ImportResult { imported: number; skipped: number; }
 export const DEFAULT_PREFERENCES: Preferences = {
   roleFamilies: [], primaryRoleFamilies: [], locations: [], workArrangements: [], desiredSalary: null,
-  salaryCurrency: 'USD', graduationMonth: null, earliestStart: null, yearsExperience: null, skills: [], timezone: 'America/Los_Angeles', onboardingComplete: false,
+  salaryCurrency: 'USD', graduationMonth: '2027-05', graduationDate: '2027-05-15', earliestStart: '2027-05-16', yearsExperience: null, skills: [], timezone: 'America/Los_Angeles', onboardingComplete: false,
 };

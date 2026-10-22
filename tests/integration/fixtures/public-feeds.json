@@ -1,0 +1,169 @@
+{
+  "manifest": {
+    "purpose": "Frozen bounded public-response projections for offline protocol integration, not a complete board archive or relevance gold set. Only native HTTP is replaced.",
+    "capturedAt": {
+      "greenhouse": "2026-10-22T07:01:42.450242+00:00",
+      "lever": "2026-10-22T07:01:42.915010+00:00",
+      "ashby": "2026-10-22T06:57:57.142767+00:00",
+      "jobicy": "2026-10-22T05:11:00.067514+00:00"
+    },
+    "projection": "Selected public record identity/location/employment/date fields; descriptions limited to first 90 plain-text words, lists omitted, response counts recomputed for the projection. Test-only cursor/status envelopes are synthetic protocol controls. No live coverage or requirement-completeness claim.",
+    "sources": [
+      {
+        "provider": "greenhouse",
+        "endpoint": "https://boards-api.greenhouse.io/v1/boards/figma/jobs?content=true",
+        "posting": "https://boards.greenhouse.io/figma/jobs/5552580004?gh_jid=5552580004"
+      },
+      {
+        "provider": "lever",
+        "endpoint": "https://api.lever.co/v0/postings/veeva?mode=json&skip=0&limit=100",
+        "posting": "https://jobs.lever.co/veeva/9ac55b31-df46-4acb-b305-2c0b7ed56027"
+      },
+      {
+        "provider": "ashby",
+        "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Linear?includeCompensation=true",
+        "posting": "https://jobs.ashbyhq.com/Linear/f272fc4a-91a7-4dcf-9cb5-3600ebaf14e1"
+      },
+      {
+        "provider": "jobicy",
+        "endpoint": "https://jobicy.com/api/jobs?count=200&geo=usa",
+        "postings": [
+          "https://jobicy.com/jobs/153373-financial-analyst-entry-level",
+          "https://jobicy.com/jobs/156082-765-data-analyst-healthcare-fraud"
+        ],
+        "usage": "Public free API requires attribution to Jobicy; test UI checks that credit. No polling in the test."
+      }
+    ]
+  },
+  "greenhouse": {
+    "jobs": [
+      {
+        "id": 5552580004,
+        "title": "Data Scientist  ",
+        "absolute_url": "https://boards.greenhouse.io/figma/jobs/5552580004?gh_jid=5552580004",
+        "updated_at": "2026-10-05T13:10:36-04:00",
+        "first_published": "2025-06-02T05:50:05-04:00",
+        "location": {
+          "name": "San Francisco, CA • New York, NY • United States"
+        },
+        "offices": [
+          {
+            "id": 4031430004,
+            "name": "Canada",
+            "location": null,
+            "child_ids": [
+              4031432004,
+              4031431004
+            ],
+            "parent_id": 4033142004
+          },
+          {
+            "id": 4024285004,
+            "name": "US",
+            "location": null,
+            "child_ids": [],
+            "parent_id": 4033142004
+          }
+        ],
+        "metadata": null,
+        "content": "<div class=\"content-intro\"><p>Figma is growing our team of passionate creatives and builders on a mission to make design accessible to all. Figma’s platform helps teams bring ideas to life—whether you're brainstorming, creating a prototype, translating designs into code, or iterating with AI. From idea to product, Figma empowers teams to streamline workflows, move faster, and work together in real time from anywhere in the world. If you're excited to shape the future of design and collaboration, join us!</p></div><div class=\"section page-centered\"> <p>We are looking for an experienced Data Scientist to join our"
+      }
+    ],
+    "meta": {
+      "total": 1
+    }
+  },
+  "lever": [
+    {
+      "id": "9ac55b31-df46-4acb-b305-2c0b7ed56027",
+      "text": "Account Director",
+      "hostedUrl": "https://jobs.lever.co/veeva/9ac55b31-df46-4acb-b305-2c0b7ed56027",
+      "applyUrl": "https://jobs.lever.co/veeva/9ac55b31-df46-4acb-b305-2c0b7ed56027/apply",
+      "categories": {
+        "commitment": "Full-Time",
+        "department": "Professional Services",
+        "location": "New Jersey - Lyndhurst",
+        "team": "Digital Events",
+        "allLocations": [
+          "New Jersey - Lyndhurst"
+        ]
+      },
+      "country": "US",
+      "workplaceType": "onsite",
+      "createdAt": 1764950728481,
+      "descriptionPlain": "Veeva Systems is a mission-driven organization and pioneer in industry cloud, helping life sciences companies bring therapies to patients faster. As one of the fastest-growing SaaS companies in history, we surpassed $3B in revenue in our last fiscal year with extensive growth potential ahead. At the heart of Veeva are our values: Do the Right Thing, Customer Success, Employee Success, and Speed. We're not just any public company – we made history in 2021 by becoming a public benefit corporation (PBC), legally bound to balancing the interests of customers, employees,",
+      "lists": []
+    }
+  ],
+  "ashby": {
+    "apiVersion": "1",
+    "jobs": [
+      {
+        "id": "f272fc4a-91a7-4dcf-9cb5-3600ebaf14e1",
+        "title": "Analytics Engineer",
+        "jobUrl": "https://jobs.ashbyhq.com/Linear/f272fc4a-91a7-4dcf-9cb5-3600ebaf14e1",
+        "applyUrl": "https://jobs.ashbyhq.com/Linear/f272fc4a-91a7-4dcf-9cb5-3600ebaf14e1/application",
+        "isListed": true,
+        "location": "North America",
+        "secondaryLocations": [],
+        "address": {
+          "postalAddress": {
+            "addressCountry": "United States"
+          }
+        },
+        "employmentType": "FullTime",
+        "workplaceType": "Remote",
+        "publishedAt": "2026-08-11T00:36:47.459+00:00",
+        "compensation": {
+          "compensationTierSummary": null,
+          "scrapeableCompensationSalarySummary": null,
+          "compensationTiers": [],
+          "summaryComponents": []
+        },
+        "descriptionPlain": "At Linear, we're building the product development system for teams and agents. AI is fundamentally changing how software gets built, and we’re shaping the tools this new era requires. Founded in 2019, Linear has become the platform of choice for more than 40,000 companies (including OpenAI, Coinbase, and Ramp) to plan, build, and ship their products. Today, our team is distributed across North America, Europe, and Australia, and we’re continuing to grow internationally. What unites us is relentless focus, fast execution, and a deep care for software craftsmanship. The Data"
+      }
+    ]
+  },
+  "jobicy": {
+    "apiVersion": "2.2.19",
+    "jobCount": 2,
+    "nextCursor": null,
+    "hasMore": false,
+    "appliedFilters": {
+      "count": 200,
+      "geo": "usa"
+    },
+    "jobs": [
+      {
+        "id": 153373,
+        "url": "https://jobicy.com/jobs/153373-financial-analyst-entry-level",
+        "jobTitle": "Financial Analyst (Entry-Level)",
+        "companyName": "CertiK",
+        "jobType": [
+          "Full-Time"
+        ],
+        "jobGeo": "USA",
+        "pubDate": "2026-10-17T04:05:12+00:00",
+        "salaryMin": 60000,
+        "salaryMax": 80000,
+        "salaryCurrency": "USD",
+        "salaryPeriod": "yearly",
+        "jobDescription": "About CertiK Born from groundbreaking research at Columbia and Yale, CertiK has grown to become the largest Web3 security platform, combining proprietary models with comprehensive security solutions and end-to-end toolkits to support the full lifecycle of Web3 development. Founded in 2017 and headquartered in New York City, CertiK provides a wide range of services including smart contract audits, penetration testing, on-chain monitoring, incident response, and compliance solutions for some of the largest projects and institutions in the digital asset ecosystem. About You We are looking for a detail-oriented, highly organized"
+      },
+      {
+        "id": 156082,
+        "url": "https://jobicy.com/jobs/156082-765-data-analyst-healthcare-fraud",
+        "jobTitle": "(765) Data Analyst (Healthcare Fraud)",
+        "companyName": "Arlo Solutions",
+        "jobType": [
+          "Full-Time"
+        ],
+        "jobGeo": "USA",
+        "pubDate": "2026-10-20T19:18:51+00:00",
+        "jobDescription": "Company Summary Arlo Solutions (Arlo) is an information technology consulting services company that specializes in delivering technology solutions. Our reputation reflects the high quality of the talented Arlo Solutions team and the consultants working in partnership with our customers. Our mission is to understand and meet the needs of both our customers and consultants by delivering quality, value-added solutions. Our solutions are designed and managed to not only reduce costs, but to improve business processes, accelerate response time, improve services to end-users, and give our customers a competitive edge, now"
+      }
+    ],
+    "statusCode": 200,
+    "success": true
+  }
+}
