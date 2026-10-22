@@ -1,41 +1,81 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Clock3, Info, Banknote, MapPin, Search, SlidersHorizontal, X } from 'lucide-react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Clock3, FileText, Info, Banknote, MapPin, Search, SlidersHorizontal, X } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { useWorkspace } from '../app/store';
-import { CompanyMark, Empty, Field, formatDate, Modal, safeUrl } from '../components/ui';
+import { CompanyMark, Empty, formatDate, Modal, safeUrl } from '../components/ui';
 import { dailyQueue } from '../domain/tasks';
-import { rankJob, rankJobs, type RankedJob } from '../domain/ranking';
+import { rankJob, type RankedJob } from '../domain/ranking';
+import { createDiscoveryFilters, discoverJobs } from '../domain/discovery';
+import { compareResumeToJob } from '../domain/resume-matching';
+import type { ResumeProfile } from '../domain/resume';
+import { useResumeWorkspace } from '../app/resume-store';
+import { ResumeCompatibility } from '../components/ResumeCompatibility';
+import { DiscoveryFilterFields } from './DiscoveryFilterFields';
+import { FILTER_KEYS, filterLabel, filtersFromParams, MATCHING_MODES, type MatchingMode } from './discovery-options';
 import { opportunityFromJob } from '../domain/records';
 import { groupSimilarListings } from '../domain/grouping';
-import { freshness } from '../domain/dates';
+import { freshness, isDateOnly } from '../domain/dates';
 import { formatCompensation } from '../lib/compensation';
 import { assessExperience, EXPERIENCE_VIEWS, type ExperienceView } from '../domain/experience';
-import { ROLE_FAMILIES, ROLE_LABELS, type Job, type Preferences } from '../domain/types';
+import { DEFAULT_PREFERENCES, ROLE_FAMILIES, ROLE_LABELS, type Job, type Preferences } from '../domain/types';
 import { MarketSearch } from './MarketSearch';
 import { SourceAttribution } from '../components/SourceAttribution';
 import { EligibilityEvidence } from '../components/EligibilityEvidence';
+const ResumeWorkspace = lazy(() => import('./ResumeWorkspace').then(module => ({ default: module.ResumeWorkspace })));
 
 export function Opportunities() {
   const { snapshot, base, showSettings, showCoverage, showManual, requireUser, repository, run, notify, openApplication } = useWorkspace();
-  const [params, setParams] = useSearchParams(); const [filterFlags, setFilterFlags] = useState<Record<string, boolean>>({}); const [filters, setFilters] = useState(false); const [tab, setTab] = useState('for-you'); const [sort, setSort] = useState('fit'); const [pageSize, setPageSize] = useState(15);
-  const search = params.get('q') || '', family = params.get('role') || '', place = params.get('location') || '';
-  const setFilter = (key: string, value: string) => setParams(_previous => { const p = new URLSearchParams(window.location.search); if (value) p.set(key, value); else p.delete(key); return p; }, { replace: true });
+  const [params, writeParams] = useSearchParams(); const location = useLocation();
+  const setParams: typeof writeParams = (next, options) => {
+    // BrowserRouter writes history before its deferred render. Its callback
+    // setter is not a queued React-state updater: quick typing after Apply
+    // must compose with that current URL, not the previous render's params.
+    // MemoryRouter consumers instead keep their own router-local location.
+    const latest = window.location.pathname === location.pathname ? new URLSearchParams(window.location.search) : new URLSearchParams(location.search);
+    writeParams(typeof next === 'function' ? next(latest) : next, options);
+  };
+  const [filterDraft, setFilterDraft] = useState(''); const [filters, setFilters] = useState(false); const [sort, setSort] = useState('fit'); const [pageSize, setPageSize] = useState(15);
+  const [resumeOpen, setResumeOpen] = useState(false);
+  const tab = ['all', 'market'].includes(params.get('view') || '') ? params.get('view')! : 'for-you';
+  const setTab = (value: string) => setFilter('view', value === 'for-you' ? '' : value);
+  const resume = useResumeWorkspace();
+  const matchingMode: MatchingMode = MATCHING_MODES.find(mode => mode.value === params.get('match'))?.value ?? 'filters';
+  const useResume = matchingMode !== 'filters', resumeReady = !!resume.profile && resume.reviewed;
+  const search = params.get('q') || '', family = (params.get('role') || '').split(',')[0], place = params.get('location') || '';
+  const setFilter = (key: string, value: string) => { setPageSize(15); setParams(previous => { const p = new URLSearchParams(previous); if (value) p.set(key, value); else p.delete(key); return p; }, { replace: true }); };
   const flag = (key: string) => params.get(key) === '1';
-  const experienceView: ExperienceView = EXPERIENCE_VIEWS.find(view => view.value === params.get('career'))?.value ?? 'new-grad';
+  const experienceView: ExperienceView = EXPERIENCE_VIEWS.find(view => view.value === params.get('career'))?.value ?? (tab === 'all' ? 'all' : 'new-grad');
   const experienceDescription = EXPERIENCE_VIEWS.find(view => view.value === experienceView)!.description;
   const queue = dailyQueue(snapshot).slice(0, 3);
-  const results = useMemo(() => {
-    let rows = rankJobs(snapshot.jobs, snapshot.preferences, { trackedJobIds: snapshot.opportunities.flatMap(o => o.catalogJobId ? [o.catalogJobId] : []), dismissedJobIds: snapshot.jobPreferences.filter(p => p.dismissed).map(p => p.jobId), includeTracked: flag('show-saved') || tab === 'all', experienceView, includeNeedsDetails: flag('details'), includeStale: flag('stale'), includeEligibilityConflicts: flag('conflicts') });
-    rows = rows.filter(({ job }) => (!search || [job.title, job.company, job.summary, ...job.requiredSkills, ...job.preferredSkills].join(' ').toLowerCase().includes(search.toLowerCase())) && (!family || job.roleFamilies.includes(family as typeof ROLE_FAMILIES[number])) && (!place || job.locations.some(l => l.label.toLowerCase().includes(place.toLowerCase()))) && (!params.get('work') || job.workArrangement === params.get('work')) && (!params.get('experience') || (assessExperience(job).requiredYears !== null && assessExperience(job).requiredYears! <= Number(params.get('experience')))) && (!params.get('pay') || job.salary.some(s => s.currency === 'USD' && s.period === 'year' && s.compensationType === 'base' && s.min !== null && s.min >= Number(params.get('pay')))) && (!params.get('deadline') || (job.timing.deadlineVerified && job.timing.deadline !== null && job.timing.deadline <= params.get('deadline')!)));
-    if (sort === 'found') rows.sort((a, b) => b.job.firstSeenAt.localeCompare(a.job.firstSeenAt));
-    return rows;
-  }, [snapshot, search, family, place, params, tab, sort, experienceView]);
+  const expanded = useQuery({ queryKey: ['expanded-catalog', repository.mode, snapshot.userId], queryFn: () => repository.getExpandedCatalog!(), enabled: matchingMode !== 'resume' && flag('excluded') && !!repository.getExpandedCatalog, staleTime: 300_000, retry: 1 });
+  const catalog = useMemo(() => [...new Map([...snapshot.jobs, ...(matchingMode !== 'resume' && flag('excluded') ? expanded.data?.jobs ?? [] : [])].map(job => [job.id, job])).values()], [snapshot.jobs, expanded.data, matchingMode, params]);
+  const resumeMatches = useMemo(() => new Map(useResume && resumeReady ? catalog.map(job => [job.id, compareResumeToJob(resume.profile!, job)]) : []), [catalog, useResume, resumeReady, resume.profile]);
+  const discovery = useMemo(() => {
+    try {
+      if (useResume && !resumeReady) return { rows: [], error: '' };
+      const options = matchingMode === 'resume' ? { ...createDiscoveryFilters('catalog'), includeTracked: true, includeDismissed: true } : filtersFromParams(params, tab === 'all');
+      // Resume-only evaluates confirmed qualifications in the compatibility
+      // report rather than silently using them as eligibility filters.
+      const preferences = matchingMode === 'resume' ? resumePreferences({ ...resume.profile!, educationLevel: null, degreeField: null }, snapshot.preferences.timezone) : snapshot.preferences;
+      let rows = discoverJobs(catalog, preferences, options, { sources: snapshot.sources, trackedJobIds: snapshot.opportunities.flatMap(o => o.catalogJobId ? [o.catalogJobId] : []), dismissedJobIds: snapshot.jobPreferences.filter(p => p.dismissed).map(p => p.jobId) });
+      const deadline = matchingMode !== 'resume' ? params.get('deadline') : null;
+      if (deadline && !isDateOnly(deadline)) throw new Error('Enter a valid application deadline.');
+      if (deadline) rows = rows.filter(({ job }) => job.timing.deadlineVerified && job.timing.deadline !== null && job.timing.deadline <= deadline);
+      if (useResume && sort !== 'found') rows.sort((a, b) => (resumeMatches.get(a.job.id)?.conflicts.length ?? 0) - (resumeMatches.get(b.job.id)?.conflicts.length ?? 0) || (resumeMatches.get(b.job.id)?.score ?? -1) - (resumeMatches.get(a.job.id)?.score ?? -1) || (resumeMatches.get(b.job.id)?.coverage ?? 0) - (resumeMatches.get(a.job.id)?.coverage ?? 0) || a.job.id.localeCompare(b.job.id));
+      if (sort === 'found') rows.sort((a, b) => b.job.firstSeenAt.localeCompare(a.job.firstSeenAt));
+      return { rows, error: '' };
+    } catch (error) { return { rows: [], error: error instanceof Error ? error.message : 'Check your filter values.' }; }
+  }, [snapshot, catalog, params, tab, sort, matchingMode, useResume, resumeReady, resume.profile, resumeMatches]);
+  const results = discovery.rows;
   const groups = useMemo(() => tab === 'for-you' ? groupSimilarListings(results) : results.map(result => ({ key: result.job.id, representative: result, variants: [], listingCount: 1 })), [results, tab]);
-  const activeFilters = [...params].filter(([key]) => !['job', 'career', 'stretch'].includes(key));
+  const activeFilters = [...params].filter(([key]) => FILTER_KEYS.includes(key as typeof FILTER_KEYS[number]));
+  const resetFilters = () => { setPageSize(15); setParams(matchingMode === 'filters' ? {} : { match: matchingMode }); };
+  const openFilters = () => { const draft = new URLSearchParams(params); if (!draft.has('career')) draft.set('career', experienceView); if (tab === 'all') { if (!draft.has('details')) draft.set('details', '1'); if (!draft.has('show-saved')) draft.set('show-saved', '1'); } setFilterDraft(draft.toString()); setFilters(true); };
+  const broaden = () => { setPageSize(15); setParams(previous => { const next = new URLSearchParams(previous); next.set('career', 'all'); next.set('details', '1'); return next; }); };
   async function save(job: Job) { if (!requireUser()) return; if (snapshot.opportunities.some(o => o.catalogJobId === job.id)) { notify('Already saved in My Search.'); return; } await run(() => repository.saveOpportunity(opportunityFromJob(job, snapshot.userId!)), 'Saved to My Search.').catch(() => {}); }
   async function dismiss(job: Job) { if (!requireUser()) return; const previous = snapshot.jobPreferences.find(p => p.jobId === job.id); await run(() => repository.setJobPreference({ jobId: job.id, userId: snapshot.userId!, dismissed: !previous?.dismissed, seenAt: new Date().toISOString() }), previous?.dismissed ? 'Opportunity restored.' : 'Dismissed. Show saved & dismissed to restore it.').catch(() => {}); }
-  const card = (result: RankedJob) => <JobCard key={result.job.id} result={result} profile={snapshot.preferences} saved={snapshot.opportunities.some(o => o.catalogJobId === result.job.id)} dismissed={snapshot.jobPreferences.some(p => p.jobId === result.job.id && p.dismissed)} onSave={() => void save(result.job)} onDismiss={() => void dismiss(result.job)} onView={() => setFilter('job', result.job.id)} onApply={() => openApplication(result.job)} />;
+  const card = (result: RankedJob) => <JobCard key={result.job.id} result={result} profile={matchingMode === 'resume' ? resumePreferences(resume.profile!, snapshot.preferences.timezone) : snapshot.preferences} resumeMatch={resumeMatches.get(result.job.id)} saved={snapshot.opportunities.some(o => o.catalogJobId === result.job.id)} dismissed={snapshot.jobPreferences.some(p => p.jobId === result.job.id && p.dismissed)} onSave={() => void save(result.job)} onDismiss={() => void dismiss(result.job)} onView={() => setFilter('job', result.job.id)} onApply={() => openApplication(result.job)} />;
   return <div className="page-content opportunities-page">
     <div className="page-heading"><div><h1>Opportunities</h1><p>Discover roles. Keep your search moving.</p></div><button className="button button-secondary desktop-only" onClick={showSettings}><SlidersHorizontal size={16} aria-hidden="true" /> Preferences</button></div>
     <section className="cohort-focus" aria-label="Your graduation and availability"><div><p>Graduation <strong>{snapshot.preferences.graduationDate ? profileDate(snapshot.preferences.graduationDate) : snapshot.preferences.graduationMonth ? `${snapshot.preferences.graduationMonth} (month only)` : 'Not set'}</strong><span> · </span>Start <strong>{snapshot.preferences.earliestStart ? profileDate(snapshot.preferences.earliestStart) : 'Not set'}</strong></p></div><button className="text-link" aria-label="Edit timing & profile" onClick={showSettings}>Edit profile <ArrowRight size={14} aria-hidden="true" /></button></section>
@@ -43,22 +83,37 @@ export function Opportunities() {
     <div className="discovery-layout"><section className="results-section" aria-label="Job opportunities">
       <div className="results-header"><div className="view-tabs"><button className={tab === 'for-you' ? 'selected' : ''} aria-pressed={tab === 'for-you'} onClick={() => setTab('for-you')}>Shortlist</button><button className={tab === 'all' ? 'selected' : ''} aria-pressed={tab === 'all'} onClick={() => setTab('all')}>All listings</button><button className={tab === 'market' ? 'selected' : ''} aria-pressed={tab === 'market'} onClick={() => setTab('market')}>Wider search</button></div></div>
       {tab === 'market' ? <MarketSearch initialQuery={search || (family && ROLE_FAMILIES.includes(family as typeof ROLE_FAMILIES[number]) ? ROLE_LABELS[family as typeof ROLE_FAMILIES[number]] : '')} initialLocation={place || snapshot.preferences.locations[0]} onAddOpportunity={() => { if (requireUser()) showManual(); }} /> : <>
-      <div className="discovery-controls">
-      <div className="discovery-filters"><div className="search-box"><Search size={17} /><input aria-label="Search opportunities" placeholder="Title, company, or keyword" value={search} onChange={e => setFilter('q', e.target.value)} />{search && <button className="icon-button" aria-label="Clear search" onClick={() => setFilter('q', '')}><X size={14} /></button>}</div><select aria-label="Role family" value={family} onChange={e => setFilter('role', e.target.value)}><option value="">All roles</option>{ROLE_FAMILIES.map(role => <option key={role} value={role}>{ROLE_LABELS[role]}</option>)}</select><button className="filter-button" aria-label="Filters" aria-haspopup="dialog" aria-expanded={filters} onClick={() => { setFilterFlags(Object.fromEntries(['show-saved', 'details', 'stale', 'conflicts'].map(key => [key, flag(key)]))); setFilters(true); }}><SlidersHorizontal size={16} /><span>Filters</span>{activeFilters.length > 0 && <span className="filter-count">{activeFilters.length}</span>}</button></div>
-      <div className="experience-controls"><label htmlFor="experience-view">Experience focus</label><select id="experience-view" aria-label="Experience focus" value={experienceView} onChange={e => setFilter('career', e.target.value === 'new-grad' ? '' : e.target.value)}>{EXPERIENCE_VIEWS.map(view => <option key={view.value} value={view.value}>{view.label}</option>)}</select><details className="experience-explainer"><summary aria-label="About this experience view"><span>About this experience view</span><Info size={17} aria-hidden="true" /></summary><p>{experienceDescription}</p></details></div>
-      </div>
-      {!!activeFilters.length && <div className="active-filters">{activeFilters.map(([key, value]) => <button key={key} className="filter-chip active" onClick={() => setFilter(key, '')}>{key === 'role' && ROLE_FAMILIES.includes(value as typeof ROLE_FAMILIES[number]) ? ROLE_LABELS[value as typeof ROLE_FAMILIES[number]] : value === '1' ? key === 'conflicts' ? 'Known requirements conflicts included' : key.replaceAll('-', ' ') : `${key}: ${value}`}<X size={12} /></button>)}<button className="text-link" onClick={() => setParams(params.get('job') ? { job: params.get('job')! } : {})}>Reset</button></div>}
-      <div className="results-explainer"><span>{tab === 'for-you' ? 'Connected job feeds' : 'Connected catalog'}</span><button className="text-link" onClick={showCoverage}>Coverage & sources <ArrowUpRight size={14} aria-hidden="true" /></button><select aria-label="Sort opportunities" className="sort-select" value={sort} onChange={e => setSort(e.target.value)}><option value="fit">Preference overlap</option><option value="found">First found: newest</option></select></div>
+      <section className="matching-toolbar" aria-label="Matching method">
+        <div className="matching-toolbar-top"><select className="matching-mode-mobile" aria-label="Matching method" aria-describedby="matching-method-help" value={matchingMode} onChange={event => setFilter('match', event.target.value === 'filters' ? '' : event.target.value)}>{MATCHING_MODES.map(mode => <option key={mode.value} value={mode.value}>{mode.label}</option>)}</select><div className="matching-mode-options" role="group" aria-label="Choose matching method">{MATCHING_MODES.map(mode => <button type="button" key={mode.value} aria-pressed={matchingMode === mode.value} className={matchingMode === mode.value ? 'selected' : ''} onClick={() => setFilter('match', mode.value === 'filters' ? '' : mode.value)}>{mode.label}</button>)}</div><button className="button button-secondary resume-open" aria-label={resume.document ? 'Review resume' : 'Upload resume'} onClick={() => setResumeOpen(true)}><FileText size={17} aria-hidden="true" />Resume</button></div>
+        <p id="matching-method-help" className="matching-mode-help">{MATCHING_MODES.find(mode => mode.value === matchingMode)!.description}</p>
+        {resume.document && <p className="resume-session-status">{resume.reviewed ? 'Reviewed resume ready' : 'Resume needs review'} · This tab only · {matchingMode === 'filters' ? 'Not used in results' : resume.reviewed ? 'Used for compatibility' : 'Confirm the extracted profile to compare roles'}</p>}
+      </section>
+      {matchingMode === 'resume' ? <div className="filters-paused"><span>{activeFilters.length ? `${activeFilters.length} search filters paused` : 'Search filters paused'} · open roles, all experience levels</span><button className="text-link" onClick={() => setFilter('match', 'combined')}>Use filters too <ArrowRight size={15} /></button></div> : <div className="discovery-controls">
+      <div className="discovery-filters"><div className="search-box"><Search size={17} /><input aria-label="Search opportunities" placeholder="Title, company, or keyword" value={search} onChange={e => setFilter('q', e.target.value)} />{search && <button className="icon-button" aria-label="Clear search" onClick={() => setFilter('q', '')}><X size={14} /></button>}</div><select aria-label="Role family" value={family} onChange={e => setFilter('role', e.target.value)}><option value="">All roles</option>{ROLE_FAMILIES.map(role => <option key={role} value={role}>{ROLE_LABELS[role]}</option>)}</select><button className="filter-button" aria-label="Filters" aria-haspopup="dialog" aria-expanded={filters} onClick={openFilters}><SlidersHorizontal size={16} /><span>Filters</span>{activeFilters.length > 0 && <span className="filter-count">{activeFilters.length}</span>}</button></div>
+      <div className="experience-controls"><label htmlFor="experience-view">Experience focus</label><select id="experience-view" aria-label="Experience focus" value={experienceView} onChange={e => setFilter('career', e.target.value)}>{EXPERIENCE_VIEWS.map(view => <option key={view.value} value={view.value}>{view.label}</option>)}</select><details className="experience-explainer"><summary aria-label="About this experience view"><span>About this experience view</span><Info size={17} aria-hidden="true" /></summary><p>{experienceDescription}</p></details></div>
+      </div>}
+      {matchingMode !== 'resume' && !!activeFilters.length && <div className="active-filters">{activeFilters.map(([key, value]) => <button key={key} className="filter-chip active" onClick={() => setFilter(key, '')}>{filterLabel(key, value)}<X size={12} /></button>)}<button className="text-link" onClick={resetFilters}>Reset</button></div>}
+      <div className="results-explainer"><span>{tab === 'for-you' ? 'Connected job feeds' : 'Connected catalog'}</span><button className="text-link" onClick={showCoverage}>Coverage & sources <ArrowUpRight size={14} aria-hidden="true" /></button><select aria-label="Sort opportunities" className="sort-select" value={sort} onChange={e => setSort(e.target.value)}><option value="fit">{useResume ? 'Resume compatibility' : 'Preference overlap'}</option><option value="found">First found: newest</option></select></div>
+      {matchingMode !== 'resume' && experienceView !== 'all' && <div className="broaden-search"><span>Want more options?</span><button className="text-link" onClick={broaden}>Browse all experience levels <ArrowRight size={15} /></button></div>}
+      {discovery.error && <p role="alert" className="filter-error">{discovery.error} <button className="text-link" onClick={resetFilters}>Reset filters</button></p>}
+      {flag('excluded') && matchingMode !== 'resume' && <div className="expanded-catalog-status" role="status">{expanded.isPending ? 'Loading additional relevant postings…' : expanded.isError ? <span>Additional postings could not load. Your existing catalog remains available. <button className="text-link" onClick={() => void expanded.refetch()}>Retry wider scope</button></span> : expanded.data ? `${expanded.data.jobs.length} additional records loaded${expanded.data.truncated ? ` of ${expanded.data.total}; this wider result set is capped at 1,500 records` : ''}. Outside-scope roles retain their warnings.` : 'Additional postings are not available in this workspace.'}</div>}
       <p className="listing-count" aria-live="polite">{results.length} listing{results.length === 1 ? '' : 's'}{tab === 'for-you' && groups.length < results.length ? ` in ${groups.length} group${groups.length === 1 ? '' : 's'}` : ''}{tab === 'for-you' && groups.length < results.length ? ' · Expand groups for each location and requisition.' : ''}</p>
       {snapshot.catalogTruncated && <p role="status" className="warning-text">Showing a limited catalog of {snapshot.jobs.length} / {snapshot.catalogTotal ?? 'unknown'} records. Narrow your search; this ordering is within the loaded set.</p>}
-      {results.length ? <div className="job-list">{groups.slice(0, pageSize).map(group => <div className="listing-group" key={group.key}>{card(group.representative)}{!!group.variants.length && <details className="listing-variants"><summary>{group.listingCount} listings · Show {group.variants.length} more with matching recorded requirements</summary><p>Each location or requisition keeps its own source, save button and application link. Confirm the full posting before applying.</p><div className="job-list">{group.variants.map(card)}</div></details>}</div>)}{groups.length > pageSize && <button className="button button-secondary load-more" onClick={() => setPageSize(pageSize + 15)}>Show more opportunities <ChevronDown size={16} /></button>}</div> : <Empty title={activeFilters.length ? 'No listings match these filters.' : experienceView === 'new-grad' ? 'No new-grad matches right now.' : 'No roles in this experience view.'} action={<div className="inline-actions"><button className="button button-secondary" onClick={() => setParams({})}>Reset filters</button><button className="button button-primary" onClick={showCoverage}>Check coverage</button></div>}>{activeFilters.length ? 'Try a broader search or reset your filters. You can always add an opportunity you found elsewhere.' : 'We do not fill the graduate shortlist with experienced or unverified roles. Check coverage, choose another experience focus, or track a suitable role you found elsewhere.'}</Empty>}
-      <p className="results-footnote">Preference comparisons use recorded evidence and do not predict hiring.</p></>}
+      {useResume && !resumeReady ? <Empty title="Add a reviewed resume to see recommendations." action={<button className="button button-primary" onClick={() => setResumeOpen(true)}>{resume.document ? 'Review resume' : 'Upload resume'}</button>}>Upload a PDF, DOCX or text file, or paste your resume. You can use Filters only while preparing it. Resume recommendations do not run until you confirm the extracted profile.</Empty> : results.length ? <div className="job-list">{groups.slice(0, pageSize).map(group => <div className="listing-group" key={group.key}>{card(group.representative)}{!!group.variants.length && <details className="listing-variants"><summary>{group.listingCount} listings · Show {group.variants.length} more with matching recorded requirements</summary><p>Each location or requisition keeps its own source, save button and application link. Confirm the full posting before applying.</p><div className="job-list">{group.variants.map(card)}</div></details>}</div>)}{groups.length > pageSize && <button className="button button-secondary load-more" onClick={() => setPageSize(pageSize + 15)}>Show more opportunities <ChevronDown size={16} /></button>}</div> : <Empty title={activeFilters.length ? 'No listings match these filters.' : experienceView === 'new-grad' ? 'No new-grad matches right now.' : 'No roles in this experience view.'} action={<div className="inline-actions"><button className="button button-secondary" onClick={resetFilters}>Reset filters</button><button className="button button-primary" onClick={showCoverage}>Check coverage</button></div>}>{activeFilters.length ? 'Try a broader search or reset your filters. You can always add an opportunity you found elsewhere.' : 'We do not fill the graduate shortlist with experienced or unverified roles. Check coverage, choose another experience focus, or track a suitable role you found elsewhere.'}</Empty>}
+      <p className="results-footnote">{useResume ? 'Compatibility describes recorded evidence overlap, not employer ATS acceptance or a chance of being hired.' : 'Preference comparisons use recorded evidence and do not predict hiring.'} Connected feeds cover part of the market; use Wider search for external listings.</p></>}
     </section></div>
-    <Modal open={filters} onClose={() => setFilters(false)} title="Filter opportunities" description="Known conflicts hidden by default. Review unknown requirements. Unknown values won’t match numeric filters.">
-      <div className="filter-form"><Field label="Role family"><select value={family} onChange={e => setFilter('role', e.target.value)}><option value="">All roles</option>{ROLE_FAMILIES.map(role => <option key={role} value={role}>{ROLE_LABELS[role]}</option>)}</select></Field><Field label="Location contains"><input value={place} onChange={e => setFilter('location', e.target.value)} placeholder="City, state, or country" /></Field><Field label="Work arrangement"><select value={params.get('work') || ''} onChange={e => setFilter('work', e.target.value)}><option value="">Any arrangement</option><option value="remote">Remote (verify restrictions)</option><option value="hybrid">Hybrid</option><option value="onsite">Onsite</option></select></Field><Field label="Maximum required years of experience"><input type="number" min="0" max="50" value={params.get('experience') || ''} onChange={e => setFilter('experience', e.target.value)} /></Field><Field label="Minimum published annual base (USD)"><input type="number" min="0" value={params.get('pay') || ''} onChange={e => setFilter('pay', e.target.value)} /></Field><Field label="Verified deadline on or before"><input type="date" value={params.get('deadline') || ''} onChange={e => setFilter('deadline', e.target.value)} /></Field>{[['show-saved', 'Show saved & dismissed roles'], ['details', 'Include “Needs details checked”'], ['stale', 'Include results unverified for 72+ hours'], ['conflicts', 'Include known requirements conflicts']].map(([key, label]) => <label className="checkbox-label" key={key}><input type="checkbox" checked={filterFlags[key] ?? flag(key)} onChange={e => setFilterFlags(current => ({ ...current, [key]: e.target.checked }))} />{label}</label>)}</div><div className="dialog-actions"><button className="button button-quiet" onClick={() => { setParams({}); setFilterFlags({}); }}>Reset filters</button><button className="button button-primary" onClick={() => { setParams(_previous => { const updated = new URLSearchParams(window.location.search); for (const [key, enabled] of Object.entries(filterFlags)) { if (enabled) updated.set(key, '1'); else updated.delete(key); } return updated; }, { replace: true }); setFilters(false); }}>Show opportunities <ArrowRight size={16} /></button></div>
+    <Modal open={filters} onClose={() => setFilters(false)} title="Filter opportunities" description="Choose the evidence and scope you want. Exceptions remain labeled; missing information stays unknown." wide>
+      <DiscoveryFilterFields value={filterDraft} onChange={setFilterDraft} sources={snapshot.sources} companies={[...new Set(catalog.map(job => job.company))].sort()} />
+      <div className="dialog-actions"><button className="button button-quiet" onClick={() => setFilterDraft(matchingMode === 'filters' ? '' : `match=${matchingMode}`)}>Reset filters</button><button className="button button-primary" onClick={() => { setParams(new URLSearchParams(filterDraft), { replace: true }); setPageSize(15); setFilters(false); }}>Show opportunities <ArrowRight size={16} /></button></div>
+    </Modal>
+    <Modal open={resumeOpen} onClose={() => setResumeOpen(false)} title="Resume & ATS review" description="Review extracted text, parsing checks and job compatibility locally in this browser. No employer ATS account is connected." wide>
+      <Suspense fallback={<p role="status">Opening resume workspace…</p>}><ResumeWorkspace onUseResume={() => { if (matchingMode === 'filters') setFilter('match', 'combined'); setResumeOpen(false); }} /></Suspense>
     </Modal>
     <JobDetails id={params.get('job')} onClose={() => setFilter('job', '')} onSave={save} />
   </div>;
+}
+function resumePreferences(profile: ResumeProfile, timezone: string): Preferences {
+  return { ...DEFAULT_PREFERENCES, timezone, graduationMonth: null, graduationDate: null, earliestStart: null, roleFamilies: profile.roleInterests, primaryRoleFamilies: [], skills: profile.skills, yearsExperience: profile.yearsExperience, educationLevel: profile.educationLevel, degreeField: profile.degreeField };
 }
 function profileDate(value: string) { return new Date(`${value}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }); }
 function cardLocations(job: Job) {
@@ -66,7 +121,7 @@ function cardLocations(job: Job) {
   const first = labels[0] || 'Location unknown';
   return { labels, preview: first.length > 80 ? `${first.slice(0, 80).trimEnd()}…` : first, hasMore: labels.length > 1 || first.length > 80 };
 }
-function JobCard({ result, profile, saved, dismissed, onSave, onDismiss, onView, onApply }: { result: RankedJob; profile: Preferences; saved: boolean; dismissed: boolean; onSave: () => void; onDismiss: () => void; onView: () => void; onApply: () => void }) {
+function JobCard({ result, profile, resumeMatch, saved, dismissed, onSave, onDismiss, onView, onApply }: { result: RankedJob; profile: Preferences; resumeMatch?: ReturnType<typeof compareResumeToJob>; saved: boolean; dismissed: boolean; onSave: () => void; onDismiss: () => void; onView: () => void; onApply: () => void }) {
   const { job, label, reasons, caveats } = result;
   const stale = freshness(job.lastVerifiedAt) !== 'fresh';
   const experience = assessExperience(job);
@@ -90,6 +145,8 @@ function JobCard({ result, profile, saved, dismissed, onSave, onDismiss, onView,
       {!!sourceUnknowns.length && <p className="job-source-summary warning-text">{sourceUnknowns.join(' · ')}</p>}
       <EligibilityEvidence profile={profile} job={job} />
       <SourceAttribution job={job} />
+      {job.classification.scope === 'excluded' && <div className="scope-warning"><strong>Outside the graduate catalog</strong><p>{job.classification.reasons.map(reason => reason.text).join(' · ') || 'Check employment type, location and seniority before applying.'}</p></div>}
+      {resumeMatch && <ResumeCompatibility result={resumeMatch} />}
       <details className="job-supporting-details">
         <summary>Experience and match details</summary>
         <div className="job-supporting-content"><p className="job-preference-summary"><strong>Preference comparison:</strong> {label}</p>{job.primaryRoleFamily && <p className="job-role-family"><strong>Role family:</strong> {ROLE_LABELS[job.primaryRoleFamily]}</p>}
@@ -113,7 +170,11 @@ function JobDetails({ id, onClose, onSave }: { id: string | null; onClose: () =>
   const [notes, setNotes] = useState('');
   const tracked = snapshot.opportunities.find(opportunity => opportunity.catalogJobId === id);
   useEffect(() => { setNotes(tracked?.notes || ''); }, [id, tracked?.notes]);
-  const match = job ? rankJob(job, snapshot.preferences) : null;
+  const [params] = useSearchParams(); const resume = useResumeWorkspace();
+  const resumeActive = ['resume', 'combined'].includes(params.get('match') || '') && resume.reviewed && !!resume.profile;
+  const comparisonProfile = params.get('match') === 'resume' && resumeActive ? resumePreferences(resume.profile!, snapshot.preferences.timezone) : snapshot.preferences;
+  const match = job ? rankJob(job, comparisonProfile) : null;
+  const compatibility = job && resumeActive ? compareResumeToJob(resume.profile!, job) : null;
   const locations = job ? cardLocations(job) : null;
 
   return <Modal open={!!id} onClose={onClose} title="Role details" description="Review the source posting and requirements before applying." drawer>
@@ -127,7 +188,7 @@ function JobDetails({ id, onClose, onSave }: { id: string | null; onClose: () =>
         <p><Clock3 size={17} aria-hidden="true" /><span>{job.employmentType === 'unknown' ? 'Full-time status unverified' : job.employmentType}</span></p>
       </div>
       <ExperienceEvidence job={job} full />
-      <EligibilityEvidence profile={snapshot.preferences} job={job} full />
+      <EligibilityEvidence profile={comparisonProfile} job={job} full />
       <SourceAttribution job={job} />
       <div className="inline-actions detail-actions"><button type="button" className="button button-primary" onClick={() => openApplication(job)}>Open application <ArrowUpRight size={16} aria-hidden="true" /></button><button type="button" className="button button-secondary" onClick={() => void onSave(job)}><Bookmark size={16} aria-hidden="true" />{tracked ? 'Saved' : 'Save role'}</button>{tracked && <button type="button" className="button button-secondary" onClick={() => confirmApplication(tracked)}>Mark applied</button>}</div>
       <p className="hint">Opening a link never marks your application submitted.</p>
@@ -136,6 +197,7 @@ function JobDetails({ id, onClose, onSave }: { id: string | null; onClose: () =>
         <h3>About this role</h3><p>{job.summary}</p>
         <details className="detail-disclosure"><summary>Read full job description</summary><div className="plain-description">{job.description || (details.isPending ? 'Loading original description…' : 'The source has not supplied a description.')}</div></details>
       </section>
+      {compatibility && <ResumeCompatibility result={compatibility} full />}
       <section className="detail-section">
         <h3>Skills in the posting</h3><p><strong>Required:</strong> {job.requiredSkills.join(', ') || 'Not specified'}</p><p><strong>Preferred:</strong> {job.preferredSkills.join(', ') || 'Not specified'}</p>
       </section>

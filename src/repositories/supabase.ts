@@ -133,6 +133,26 @@ export function createSupabaseRepository(supabase: SupabaseClient<Database> = ge
   }
   return {
     mode: 'live', getSnapshot,
+    async getExpandedCatalog() {
+      // Only requested by the explicit wider-scope switch. Fetch compact public
+      // records with a recognized role family, not every unrelated source row.
+      const sourceResult = await supabase.from('job_sources').select('*').order('id');
+      ensure(sourceResult.error);
+      const sources = new Map((sourceResult.data ?? []).map(source => [source.id, source]));
+      const rows: CatalogRow[] = []; let total = 0;
+      const limit = 1500;
+      for (let offset = 0; offset < limit; offset += PAGE_SIZE) {
+        const page = await supabase.from('catalog_jobs').select('*', { count: 'exact' })
+          .eq('summary->classification->>scope', 'excluded')
+          .not('summary->>primaryRoleFamily', 'is', null)
+          .neq('availability', 'closed')
+          .order('first_seen_at', { ascending: false }).order('id')
+          .range(offset, offset + PAGE_SIZE - 1);
+        ensure(page.error); total = page.count ?? total; rows.push(...(page.data ?? []));
+        if (!page.data || page.data.length < PAGE_SIZE) break;
+      }
+      return { jobs: rows.map(row => job(row, sources)), total, truncated: total > rows.length };
+    },
     async getJobDetails(id) {
       const [catalog, details, sourceResult] = await Promise.all([
         supabase.from('catalog_jobs').select('*').eq('id', id).maybeSingle(),

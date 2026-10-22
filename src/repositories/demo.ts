@@ -56,6 +56,7 @@ export function createDemoRepository(options: DemoRepositoryOptions = {}): Repos
     mode: 'demo',
     async getSnapshot() { const next = load(); return structuredClone({ ...createDemoSnapshot(reference), ...next, preferences: withCohortDefaults(next.preferences) }); },
     async getJobDetails(id) { load(); return structuredClone(createDemoSnapshot(reference).jobs.find(j => j.id === id) ?? null); },
+    async getExpandedCatalog() { load(); const jobs = structuredClone(createDemoSnapshot(reference).jobs.filter(j => j.classification.scope === 'excluded' && j.availability !== 'closed')); return { jobs, total: jobs.length, truncated: false }; },
     async saveOpportunity(input) {
       const opportunity = opportunitySchema.parse({ ...input, userId: 'demo-user', updatedAt: now().toISOString() });
       const next = load(), existing = next.opportunities.find(o => o.id === opportunity.id);

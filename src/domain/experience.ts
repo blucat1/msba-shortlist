@@ -50,10 +50,11 @@ export function matchesExperienceView(assessment: ExperienceAssessment, view: Ex
   return assessment.tier === view;
 }
 
-export const EXPERIENCE_VIEWS: { value: Exclude<ExperienceView, 'all'>; label: string; description: string }[] = [
+export const EXPERIENCE_VIEWS: { value: ExperienceView; label: string; description: string }[] = [
   { value: 'new-grad', label: 'New grad & 0–1 years', description: 'Explicit graduate/entry-level hiring or 0–1 years required. A one-year requirement is labeled; missing years never count as zero.' },
   { value: 'zero-experience', label: 'Zero years confirmed', description: 'Only listings explicitly stating no required experience or a zero-year minimum. Graduate titles with unstated years stay in New grad & 0–1 years.' },
   { value: 'early-career', label: 'Early career · 0–3 years', description: 'Includes roles requiring 2–3 years. These are experience stretches for graduates without that background.' },
   { value: 'experienced', label: 'Experienced · 4+ / senior', description: 'Experienced individual-contributor roles, separate from the graduate shortlist. People-leadership roles remain excluded.' },
   { value: 'unverified', label: 'Experience unverified', description: 'Missing requirements or conditional degree/experience paths. Review the employer posting; these are not verified new-grad roles.' },
+  { value: 'all', label: 'All experience levels', description: 'New-grad, early-career, experienced and unverified requirements together. Original evidence and experience warnings remain visible. Broader scope, stale results and known conflicts are separate choices.' },
 ];

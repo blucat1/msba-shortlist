@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // Discover document readers before the first interactive resume session, so
+  // a cold dev/CI server does not reload and discard the in-memory draft.
+  optimizeDeps: { include: ['fflate', 'pdfjs-dist'] },
   test: { environment: 'jsdom', include: ['tests/unit/**/*.test.{ts,tsx}'], setupFiles: ['tests/setup.ts'] },
   build: { rolldownOptions: { output: { codeSplitting: { groups: [
     { name: 'react', test: /node_modules\/(react|react-dom|react-router|react-router-dom|scheduler)\//, priority: 30 },

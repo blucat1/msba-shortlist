@@ -5,6 +5,8 @@ export interface Repository {
   readonly mode: 'demo' | 'live';
   getSnapshot(): Promise<AppSnapshot>;
   getJobDetails(id: string): Promise<Job | null>;
+  /** Explicit opt-in to relevant roles outside the graduate catalog; never a default read. */
+  getExpandedCatalog?(): Promise<{ jobs: Job[]; total: number; truncated: boolean }>;
   saveOpportunity(opportunity: Opportunity): Promise<Opportunity>;
   changeStage(id: string, stage: Stage, options: StageChangeOptions): Promise<Opportunity>;
   recordApplicationOpened(id: string, idempotencyKey: string): Promise<void>;

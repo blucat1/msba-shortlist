@@ -15,7 +15,7 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
   const dismissedTitle = await page.locator('.job-card').first().locator('h3').innerText();
   await page.locator('.job-card').first().getByRole('button', { name: `Dismiss ${dismissedTitle}`, exact: true }).click();
   await expect(page.locator('.job-card').filter({ hasText: dismissedTitle })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Filters', exact: false }).first().click();
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
   await page.getByLabel('Show saved & dismissed roles').check();
   await page.getByRole('button', { name: 'Show opportunities', exact: true }).click();
   await page.getByLabel('Search opportunities').fill(dismissedTitle);
