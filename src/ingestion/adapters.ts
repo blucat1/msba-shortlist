@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { JobSource, SalaryBand } from '../domain/types';
 import { location, plainText, safePostingUrl } from './classification';
 import type { JobLocation } from '../domain/types';
+import { fetchJobicyWindow } from './jobicy';
 
 const optionalText = z.string().nullish();
 const id = z.union([z.string().min(1), z.number().int()]).transform(String);
@@ -11,8 +12,8 @@ const postal = z.object({ addressCountry: optionalText, addressRegion: optionalT
 const ashbyJob = z.object({ id: optionalText, title: z.string().min(1), jobUrl: z.string().url(), applyUrl: z.string().url(), isListed: z.boolean(), location: optionalText, secondaryLocations: z.array(z.object({ location: optionalText, address: postal.nullish() })).nullish(), address: z.object({ postalAddress: postal.nullish() }).nullish(), descriptionPlain: optionalText, descriptionHtml: optionalText, workplaceType: optionalText, employmentType: optionalText, publishedAt: optionalText, compensation: z.object({ compensationTierSummary: optionalText, compensationTiers: z.array(z.object({ title: optionalText, tierSummary: optionalText, components: z.array(z.object({ compensationType: z.string(), interval: optionalText, currencyCode: optionalText, minValue: z.number().nullish(), maxValue: z.number().nullish(), summary: optionalText })) })).nullish() }).nullish() }).passthrough();
 export const schemas = { greenhouse: z.object({ jobs: z.array(greenhouseJob), meta: z.object({ total: z.number().int().nonnegative() }) }), lever: z.array(leverJob), ashby: z.object({ apiVersion: z.string().optional(), jobs: z.array(ashbyJob) }) };
 
-export interface ProviderPosting { externalId: string; title: string; postingUrl: string; applicationUrl: string; locations: JobLocation[]; description: string; employment: string | null; workMode: string | null; sourcePostedAt: string | null; sourceUpdatedAt: string | null; sourcePublishedAt: string | null; salary: SalaryBand[]; }
-export interface BoardSnapshot { postings: ProviderPosting[]; rawCount: number; complete: true; checkedAt: string; endpoint: string; }
+export interface ProviderPosting { externalId: string; title: string; companyName?: string; postingUrl: string; applicationUrl: string; locations: JobLocation[]; description: string; employment: string | null; workMode: string | null; sourcePostedAt: string | null; sourceUpdatedAt: string | null; sourcePublishedAt: string | null; salary: SalaryBand[]; }
+export interface BoardSnapshot { postings: ProviderPosting[]; rawCount: number; complete: true; checkedAt: string; endpoint: string; reconciliation?: 'complete-board' | 'rolling-status'; }
 export type Fetcher = (url: string) => Promise<unknown>;
 
 function timestamp(value: string | number | null | undefined): string | null { if (value === null || value === undefined) return null; const date = new Date(value); return Number.isNaN(date.getTime()) ? null : date.toISOString(); }
@@ -22,6 +23,10 @@ function uniqueLocations(values: JobLocation[]): JobLocation[] { return [...new 
 function uniqueIds(postings: ProviderPosting[]): void { if (new Set(postings.map(p => p.externalId)).size !== postings.length) throw new Error('Duplicate provider posting IDs; snapshot completeness cannot be established.'); }
 
 export async function fetchBoard(source: JobSource, fetchJson: Fetcher, now = new Date().toISOString()): Promise<BoardSnapshot> {
+  if (source.provider === 'jobicy') {
+    if (source.board !== 'usa' || source.region === 'eu') throw new Error('Unsupported Jobicy market identity.');
+    return fetchJobicyWindow(fetchJson, now);
+  }
   const board = encodeURIComponent(source.board);
   if (source.provider === 'greenhouse') {
     const endpoint = `https://boards-api.greenhouse.io/v1/boards/${board}/jobs?content=true`;

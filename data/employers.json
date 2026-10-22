@@ -578,5 +578,25 @@
     "relevantCount": null,
     "error": null,
     "notes": "Official careers page for [2027] Associate Product Manager, Early Career was fetched and its exact URL, title and Greenhouse job ID 8143976 cross-matched to the complete public roblox board snapshot. This is a 21-month rotational APM program in San Mateo accepting undergraduate/graduate business and other related degrees. Public-feed employment type remains unknown, so preserve Needs details checked. Application deadline text and work authorization restrictions require review; do not infer an exact graduation window from 2027 in the title."
+  },
+  {
+    "id": "jobicy-usa",
+    "employerId": "jobicy-market",
+    "company": "Jobicy · remote market feed",
+    "careersUrl": "https://jobicy.com/remote-jobs",
+    "provider": "jobicy",
+    "board": "usa",
+    "region": "global",
+    "state": "verified",
+    "enabled": true,
+    "verifiedAt": "2026-10-22T05:34:14.835Z",
+    "evidenceUrl": "https://jobicy.com/jobs-rss-feed",
+    "usageReview": "Official public API and fair-use section 9 reviewed October 21, 2026: permits websites, apps and job boards with visible Jobicy credit and canonical Jobicy listing links. Use only the free unauthenticated API; never send an API key or Bearer token or request paid original-ATS links. Preserve attribution and source restrictions; recheck terms before changing usage. Synchronize no more than hourly; the pilot runs twice daily.",
+    "lastSuccessfulCheck": null,
+    "lastAttemptAt": null,
+    "rawCount": null,
+    "relevantCount": null,
+    "error": null,
+    "notes": "Cross-employer remote discovery, not a selected employer board or the entire labor market. Canonical documented endpoint https://jobicy.com/api/jobs?count=200&geo=usa ; full cursor traversal covers the free seven-day window, with an approximately three-hour publication delay. USA query also returns Anywhere, kept country-unknown. Per-posting company names remain visible; employer_id identifies the source publisher for existing provenance foreign keys. Absence from the rolling window never closes listings. Revalidate older known IDs using /api/jobs/status in batches of 100: explicit closed only, unknown unconfirmed and withheld from recommendations. Official contract https://jobicy.com/api/openapi.json . No account or paid service is configured."
   }
 ]

@@ -4,7 +4,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 type Table<T> = { Row: { [K in keyof T]: T[K] }; Insert: Partial<T>; Update: Partial<T>; Relationships: [] };
 export interface EmployerRow { id: string; name: string; careers_url: string; created_at: string; }
 export interface SourceRow {
-  id: string; employer_id: string; provider: 'greenhouse' | 'lever' | 'ashby'; board_id: string; region: string | null;
+  id: string; employer_id: string; provider: 'greenhouse' | 'lever' | 'ashby' | 'jobicy'; board_id: string; region: string | null;
   state: 'candidate' | 'verified' | 'disabled' | 'failed'; enabled: boolean; verified_at: string | null; evidence_url: string | null;
   usage_note: string; last_success_at: string | null; last_check_at: string | null; last_run_status: 'success' | 'failed' | 'quarantined' | null;
   snapshot_count: number | null; raw_count: number | null; relevant_count: number | null; last_warning: string | null;
@@ -54,6 +54,7 @@ export interface Database {
       record_application_opened: { Args: { p_opportunity_id: string; p_idempotency_key: string }; Returns: undefined };
       import_tracker_backup: { Args: { p_backup: Json }; Returns: Json };
       finalize_source_run: { Args: { p_source_id: string; p_run_key: string; p_jobs: Json; p_complete: boolean; p_raw_count: number; p_warning?: string | null; p_checked_at?: string }; Returns: Json };
+      finalize_market_source_run: { Args: { p_source_id: string; p_run_key: string; p_jobs: Json; p_statuses: Json; p_complete: boolean; p_raw_count: number; p_warning?: string | null; p_checked_at?: string }; Returns: Json };
       run_catalog_maintenance: { Args: { p_retention_days?: number }; Returns: Json };
     };
     Enums: Record<string, never>;

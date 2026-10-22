@@ -29,8 +29,9 @@ export interface Job {
   availability: 'open' | 'availability_unconfirmed' | 'closed';
   sourcePostedAt: Timestamp | null; sourceUpdatedAt: Timestamp | null; sourcePublishedAt: Timestamp | null;
   firstSeenAt: Timestamp; lastSeenAt: Timestamp; lastVerifiedAt: Timestamp | null; contentHash: string; isDemo?: boolean;
+  publisher?: { name: string; url: string; kind: 'aggregator' };
 }
-export type SourceProvider = 'greenhouse' | 'lever' | 'ashby';
+export type SourceProvider = 'greenhouse' | 'lever' | 'ashby' | 'jobicy';
 export interface JobSource {
   id: string; employerId: string; company: string; careersUrl: string; provider: SourceProvider; board: string;
   state: 'candidate' | 'verified' | 'disabled' | 'failed'; enabled: boolean; verifiedAt: Timestamp | null;

@@ -5,6 +5,7 @@ import { fetchBoard } from '../src/ingestion/adapters';
 import { fetchPublicJson, mapConcurrent } from '../src/ingestion/http';
 import { normalizePosting, deduplicateJobs } from '../src/ingestion/normalize';
 import { loadRegistry } from '../src/ingestion/registry';
+import { fetchJobicyStatuses } from '../src/ingestion/jobicy';
 
 const args = process.argv.slice(2);
 if (args.some((a, i) => !['--dry-run', '--source'].includes(a) && args[i - 1] !== '--source')) throw new Error('Usage: npm run ingest -- [--dry-run] [--source source-id]');
@@ -47,7 +48,26 @@ const results = await mapConcurrent(sources, 3, async source => {
           summary, description: job.classification.scope === 'excluded' ? '' : description || '', content_hash: job.contentHash,
           source_published_at: job.sourcePublishedAt, source_updated_at: job.sourceUpdatedAt };
       });
-      const { data, error } = await client.rpc('finalize_source_run', { p_source_id: source.id, p_run_key: runKey, p_jobs: payload, p_complete: true, p_raw_count: snapshot.rawCount, p_warning: null, p_checked_at: checkedAt });
+      const common = { p_source_id: source.id, p_run_key: runKey, p_jobs: payload, p_complete: true, p_raw_count: snapshot.rawCount, p_warning: null, p_checked_at: checkedAt };
+      let result;
+      if (source.provider === 'jobicy') {
+        if (snapshot.reconciliation !== 'rolling-status') throw new Error('Market window reconciliation mode is missing.');
+        const known: string[] = [];
+        for (let offset = 0; ; offset += 500) {
+          const page = await client.from('catalog_jobs').select('external_id').eq('source_id', source.id).neq('availability', 'closed').order('external_id').range(offset, offset + 499);
+          if (page.error) throw new Error(`Market status identity read failed (${page.error.code}).`);
+          known.push(...(page.data || []).map(job => job.external_id));
+          if (known.length > 10000) throw new Error('Market status safety limit exceeded; no reconciliation performed.');
+          if (!page.data || page.data.length < 500) break;
+        }
+        const current = new Set(jobs.map(job => job.externalId));
+        const statuses = await fetchJobicyStatuses(known.filter(id => !current.has(id)), fetchPublicJson);
+        result = await client.rpc('finalize_market_source_run', { ...common, p_statuses: statuses.map(item => ({ external_id: item.externalId, status: item.status })) });
+      } else {
+        if (snapshot.reconciliation === 'rolling-status') throw new Error('Rolling discovery cannot use board-absence reconciliation.');
+        result = await client.rpc('finalize_source_run', common);
+      }
+      const { data, error } = result;
       if (error) throw new Error(`Atomic finalization failed (${error.code}).`); status = JSON.stringify(data);
     }
     console.log(`${source.id}: ${snapshot.rawCount} raw, ${jobs.length} listed, ${relevant} in scope, ${needsDetails} need details; ${status}`);

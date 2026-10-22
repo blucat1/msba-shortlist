@@ -27,9 +27,13 @@ The demo includes 30 fictional jobs, 12 tracked opportunities, varied applicatio
 - **My Search:** manual add/edit/delete; seven stages; application dates and history; priorities; exact company grouping and private company notes; multiple dated/timed next steps; completion, editing, and snoozing; accepted review reminders.
 - **Insights:** confirmed submissions by week, companies, current pipeline, historical interview/offer conversion cohorts, 14-day maturity view, primary-role results, tasks, denominators, and uncertainty.
 - **Portability:** versioned JSON backup preview/merge with ownership remapping and duplicate handling; CSV import with row errors and task suggestions; formula-safe CSV export.
-- **Live code:** Google identity through Supabase, public catalog browsing and owner-only tracker, transactional RPCs, RLS/composite foreign keys, authenticated deletion function, three real feed adapters, complete-snapshot finalization, retention, and trusted scheduled GitHub Actions.
+- **Live code:** Google identity through Supabase, public catalog browsing and owner-only tracker, transactional RPCs, RLS/composite foreign keys, authenticated deletion function, employer-feed adapters plus a cross-employer remote feed, explicit source/status reconciliation, retention, and trusted scheduled GitHub Actions.
 
 Opening an application link **never** counts as Applied. The user must explicitly confirm a submission. Assessment events are not interviews. Unknown salaries, dates, country, employment, and eligibility remain unknown. Missing configuration or failed feeds never enable sample data in live mode.
+
+## Wider discovery
+
+Opportunities includes **Search the market**, with editable searches on Google, Indeed and LinkedIn for employers outside the imported catalog. Those services' results open externally and remain unverified; suitable outside roles can be added to My Search. The imported catalog also supports Jobicy's free cross-employer remote-job feed, with actual employer names, visible source credit and explicit listing-status checks. The catalog is broader than the original 29-employer pilot, while retaining the strict experience default. It does not claim every job in the market. See [discovery coverage](docs/MARKET_COVERAGE.md) for the source window, free API, attribution and remaining gaps, and the dated rollout evidence in [TEST_REPORT.md](docs/TEST_REPORT.md).
 
 ## Experience focus
 
@@ -37,7 +41,7 @@ Live discovery defaults to **New grad & 0–1 years**: explicit graduate/entry-l
 
 Choose **Early career · 0–3 years** to include 2–3-year requirements, **Experienced · 4+ / senior** for experienced individual-contributor roles, or **Experience unverified** to review missing/conditional evidence. Senior, Staff, Principal and Lead titles override low or missing numeric requirements; people-leadership roles remain excluded. These discovery controls never remove saved roles, applications, notes, tasks or history from My Search.
 
-The live audit on October 21, 2026 at **03:19:17 PDT / 10:19:17 UTC** verified 29 successful sources and 365 relevant catalog records: 168 in-scope and 197 needing details checked, all on classifier `2026-10-21.2`. The strict default showed **6 listings: 4 Veeva graduate-program listings and 2 roles requiring one year**. One additional Databricks US APM listing meets the experience focus but appears only with **Needs details checked** enabled. This remains narrow employer coverage, not the whole graduate job market. See [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for deployment and ingestion evidence.
+Before the market-coverage expansion, the live audit on October 21, 2026 at **03:19:17 PDT / 10:19:17 UTC** verified 29 successful sources and 365 relevant catalog records: 168 in-scope and 197 needing details checked, all on classifier `2026-10-21.2`. That strict default showed **6 listings: 4 Veeva graduate-program listings and 2 roles requiring one year**. These are historical pilot counts; see [docs/TEST_REPORT.md](docs/TEST_REPORT.md) for the latest deployment and ingestion observations.
 
 ## Live setup
 
