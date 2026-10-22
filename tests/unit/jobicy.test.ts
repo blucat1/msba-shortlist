@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { assessExperience } from '../../src/domain/experience';
 import { classify, employment, extractExperience } from '../../src/ingestion/classification';
+import { fetchPublicJson } from '../../src/ingestion/http';
 import { fetchJobicyStatuses, fetchJobicyWindow } from '../../src/ingestion/jobicy';
 
 const now = '2026-10-21T12:00:00.000Z';
@@ -192,5 +193,43 @@ describe('Jobicy explicit listing status synchronization', () => {
       return batch.length === 100 ? statuses(batch.map(id => ({ id: Number(id), status: 'active' }))) : statuses([{ id: 102, status: 'closed' }]);
     });
     await expect(fetchJobicyStatuses(ids, fetcher)).rejects.toThrow('incomplete');
+  });
+});
+
+describe('Jobicy integration with the shared public HTTP client', () => {
+  it('passes both approved endpoint requests through the real client without credentials', async () => {
+    const transport = vi.fn<typeof fetch>().mockImplementation(async (input, options) => {
+      const url = new URL(String(input));
+      expect(url.origin).toBe('https://jobicy.com');
+      expect(options?.redirect).toBe('error');
+      expect(new Headers(options?.headers).has('Authorization')).toBe(false);
+      expect(new Headers(options?.headers).get('Accept')).toBe('application/json');
+      const payload = url.pathname === '/api/jobs' ? page() : statuses([{ id: 1, status: 'unknown' }]);
+      return new Response(JSON.stringify(payload), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    });
+    const publicClient = (url: string) => fetchPublicJson(url, { fetch: transport, maxAttempts: 1 });
+    const window = await fetchJobicyWindow(publicClient, now);
+    expect(window).toMatchObject({ complete: true, reconciliation: 'rolling-status', rawCount: 1 });
+    expect(window.postings[0]).toMatchObject({ externalId: '1', companyName: 'Example Employer (fixture)' });
+    expect(await fetchJobicyStatuses(['1'], publicClient)).toEqual([{ externalId: '1', status: 'unknown' }]);
+    expect(transport).toHaveBeenCalledTimes(2);
+    expect(transport.mock.calls.map(([input]) => new URL(String(input)).pathname)).toEqual(['/api/jobs', '/api/jobs/status']);
+  });
+
+  it.each([
+    'https://jobicy.com/api/v2/remote-jobs',
+    'https://jobicy.com/api/jobs/extra',
+    'https://jobicy.com/api/jobs/',
+    'https://jobicy.com/api/jobs/status/',
+    'https://jobicy.com/jobs/1-data-analyst',
+    'https://jobicy.com:8443/api/jobs',
+    'http://jobicy.com/api/jobs',
+    'https://person:password@jobicy.com/api/jobs',
+    'https://jobicy.com.evil.example/api/jobs',
+    'https://api.jobicy.com/api/jobs',
+  ])('rejects unsupported Jobicy URLs before invoking the transport: %s', async url => {
+    const transport = vi.fn<typeof fetch>();
+    await expect(fetchPublicJson(url, { fetch: transport, maxAttempts: 1 })).rejects.toThrow();
+    expect(transport).not.toHaveBeenCalled();
   });
 });
