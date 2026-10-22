@@ -1,0 +1,13 @@
+Avery Synthetic — RESUME_ONLY_SYNTHETIC_9517
+resume-synthetic-9517@example.test
+Education
+Bachelor of Science in Statistics, completed 2026
+Master of Business Analytics candidate, expected May 2027
+Experience
+Data Analyst Intern — academic project, 2025–2026
+Analyzed 500 records and created reports for a fictional research project.
+Skills
+PostgreSQL, Python, Excel, Tableau, Statistics
+Projects
+Built a Python dashboard for 50 synthetic records. Improved processing by 20%.
+All names, contact information and achievements are synthetic public test data.

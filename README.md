@@ -112,3 +112,9 @@ CSV requires `company,title`. Optional columns: `location,stage,priority,applica
 - [Known limitations](docs/KNOWN_LIMITATIONS.md) and [actual source coverage](docs/SOURCE_AUDIT.md)
 
 This is a bounded $0 pilot target, subject to provider limits and source-usage review. The owner approved a public contact. Complete the remaining two-account, browser-switching, second-device and audience-availability checks before inviting a wider pilot.
+
+## Resume matching and broader discovery
+
+Opportunities now offers **Filters only**, **Resume only**, or **Resume + filters**. Upload a TXT, DOCX or selectable-text PDF (up to 5 MiB), or paste text, select **Analyze resume**, review the extracted profile, and confirm it before using compatibility scores. Resume content stays only in this tab's memory and clears on reload/sign-out/removal; it is not synced or included in tracker exports. The local score explains evidence overlap and gaps, not an employer ATS result or hiring odds.
+
+Use **All listings**, **All experience levels**, and the advanced filter choices for broader results. The optional **Include roles outside the graduate catalog** switch loads additional relevant records with their original scope warnings. Coverage remains limited to connected feeds. See [the feature guide](docs/RESUME_MATCHING.md) for matching rules, unknown-data controls, limits and privacy.

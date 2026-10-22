@@ -15,6 +15,7 @@ import type { Job, Opportunity } from '../domain/types';
 import type { Repository } from '../repositories/types';
 import { appConfig } from '../config';
 import { StudioGlass } from '../components/glass/StudioGlass';
+import { ResumeWorkspaceProvider } from './resume-store';
 
 export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   const cache = useQueryClient();
@@ -102,9 +103,11 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
       {reviewSuggestion && snapshot?.userId && <div className="followup-suggestion"><span>Application confirmed. Would a review reminder in 10 days help?</span><button onClick={() => { const opportunity = reviewSuggestion; if (snapshot.tasks.some(t => t.opportunityId === opportunity.id && t.type === 'review' && t.origin === 'suggested')) { notify('A review reminder already exists for this role.'); setReviewSuggestion(null); return; } void run(() => repository!.saveTask({ ...createTask(opportunity.id, snapshot.userId!, 'Review application status'), type: 'review', origin: 'suggested', dueDate: addDays(dateOnlyInTimezone(new Date(), snapshot.preferences.timezone), 10) }), 'Review reminder accepted. No email will be sent.').then(() => setReviewSuggestion(null)).catch(() => {}); }}>Accept reminder <Plus size={13} /></button><button aria-label="Dismiss reminder suggestion" onClick={() => setReviewSuggestion(null)}><X size={15} /></button></div>}
       <main id="main-content" tabIndex={-1}>
         {configError ? <div className="config-state"><span className="eyebrow">LIVE CATALOG</span><h1>The live workspace needs setup.</h1><p role="alert">{configError}</p><p>You can explore every workflow in the separate demo while the owner connects Supabase.</p><Link className="button button-primary" to="/demo">Try the demo <ArrowRight size={17} /></Link><button className="button button-quiet" onClick={() => setInformation('privacy')}>Privacy & storage</button></div> : query.isPending ? <Busy /> : query.isError || !snapshot || !repository ? <Empty title="Your workspace couldn’t load" action={<div className="inline-actions"><button className="button button-primary" onClick={() => void query.refetch()}>Try again</button>{mode === 'demo' && <button className="button button-secondary" onClick={() => void run(() => repository!.resetDemo!(), 'Demo reset.').catch(() => {})}>Reset demo</button>}</div>}>{query.error?.message || 'Check your connection and try again. The demo remains available at /demo.'}</Empty> : <WorkspaceContext.Provider value={{ snapshot, repository, mode, base, run, notify, requireUser, showSettings: () => setSettings(true), showCoverage: () => setInformation('coverage'), showManual: o => { if (requireUser()) setManual(o ?? 'new'); }, openApplication, confirmApplication: o => { setApplication(o); applyKey.current = crypto.randomUUID(); setApplicationDate(o.applicationDate || dateOnlyInTimezone(new Date(), snapshot.preferences.timezone)); } }}>
+          <ResumeWorkspaceProvider key={`${mode}:${snapshot.userId || 'guest'}`} mode={mode}>
           <Outlet />
           <SettingsDialog open={settings} onClose={() => setSettings(false)} onSignOut={async () => { cache.clear(); setApplication(null); await signOut(); }} />
           <OpportunityForm open={manual !== null} opportunity={manual && manual !== 'new' ? manual : undefined} onClose={() => setManual(null)} />
+          </ResumeWorkspaceProvider>
         </WorkspaceContext.Provider>}
       </main>
       <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><a href="/licenses/" target="_blank" rel="noopener noreferrer">Credits</a><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
