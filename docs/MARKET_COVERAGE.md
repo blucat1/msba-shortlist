@@ -23,6 +23,8 @@ This feed is remote-only, delayed by approximately three hours, and limited to i
 
 The twice-daily schedule is below the source's maximum hourly synchronization cadence. Development tests replay mock or captured public data rather than repeatedly polling the API. Do not run source verification and ingestion as repeated independent Jobicy polls within the same hour.
 
+Production ingestion also checks persisted `job_sources.last_check_at` before making any Jobicy window or status request. A recorded attempt, including failure, less than 60 minutes old skips Jobicy without finalization or advancing source health; future/invalid timestamps also skip. Exactly 60 minutes elapsed permits the next attempt. This prevents a manual run shortly before the scheduled run from immediately polling again, while other employer feeds continue normally. GitHub's shared ingestion concurrency group serializes scheduled/manual production runs. Credential-free source verification and dry-runs cannot read this production guard, so operators must still coordinate those checks and any unrecorded failed attempt.
+
 ## What remains outside automatic coverage
 
 The imported catalog cannot cover all onsite/hybrid employers, every ATS, closed recruiting networks, or login-restricted boards. External market search helps users reach those broader sources; it is not a substitute for an appropriately licensed cross-market data feed if centralized, exhaustive results become a requirement. No paid trial, scraping service, application autofill or additional account is enabled by this implementation.

@@ -16,14 +16,17 @@ if (sourceId && !registry.some(s => s.id === sourceId)) throw new Error('Unknown
 const sources = registry.filter(s => s.enabled && s.state === 'verified' && (!sourceId || s.id === sourceId));
 const server = dryRun ? null : z.object({ SUPABASE_URL: z.string().url(), SUPABASE_SECRET_KEY: z.string().min(20) }).parse(process.env);
 const client = server ? createClient(server.SUPABASE_URL, server.SUPABASE_SECRET_KEY, { auth: { persistSession: false, autoRefreshToken: false } }) : null;
+const lastSourceChecks = new Map<string, string | null>();
 if (client) {
   const employers = [...new Map(registry.map(s => [s.employerId, { id: s.employerId, name: s.company, careers_url: s.careersUrl }])).values()];
   const { error: employerError } = await client.from('employers').upsert(employers); if (employerError) throw new Error(`Employer registry write failed (${employerError.code}).`);
-  const { data: existing, error: identityError } = await client.from('job_sources').select('id,provider,board_id,region');
+  const { data: existing, error: identityError } = await client.from('job_sources').select('id,provider,board_id,region,last_check_at');
   if (identityError) throw new Error(`Existing source identity check failed (${identityError.code}).`);
+  const existingById = new Map((existing || []).map(row => [row.id, row] as const));
   for (const entry of registry) {
-    const previous = existing?.find(s => s.id === entry.id);
+    const previous = existingById.get(entry.id);
     if (previous && (previous.provider !== entry.provider || previous.board_id !== entry.board || (previous.region || 'global') !== (entry.region || 'global'))) throw new Error(`Source ${entry.id} changed board identity. Create a new source ID for a board migration; preserve existing catalog provenance.`);
+    lastSourceChecks.set(entry.id, previous?.last_check_at ?? null);
   }
   // Synchronize disabled entries too: a registry disable must immediately remove
   // its catalog from public RLS reads, even when no boards are fetched this run.
@@ -33,6 +36,17 @@ if (client) {
 if (!sources.length) console.log('No enabled verified sources selected. Registry metadata was synchronized only in production mode.');
 const results = await mapConcurrent(sources, 3, async source => {
   const checkedAt = new Date().toISOString(); const runKey = randomUUID();
+  const previousCheck = lastSourceChecks.get(source.id);
+  if (client && source.provider === 'jobicy' && previousCheck) {
+    const elapsed = Date.parse(checkedAt) - Date.parse(previousCheck);
+    // Failed attempts count too. A future/invalid clock value must not permit
+    // another poll; exactly 60 minutes elapsed is the first eligible boundary.
+    if (!Number.isFinite(elapsed) || elapsed < 60 * 60 * 1000) {
+      const status = 'skipped cooldown: a recorded attempt is less than 60 minutes old, in the future, or invalid';
+      console.log(`${source.id}: SKIPPED — ${status}; no network requests or source-health updates.`);
+      return { source: source.id, ok: true, status, skipped: true };
+    }
+  }
   try {
     const snapshot = await fetchBoard(source, fetchPublicJson, checkedAt);
     const jobs = deduplicateJobs(snapshot.postings.map(p => normalizePosting(p, source, checkedAt)));
@@ -71,12 +85,13 @@ const results = await mapConcurrent(sources, 3, async source => {
       if (error) throw new Error(`Atomic finalization failed (${error.code}).`); status = JSON.stringify(data);
     }
     console.log(`${source.id}: ${snapshot.rawCount} raw, ${jobs.length} listed, ${relevant} in scope, ${needsDetails} need details; ${status}`);
-    return { source: source.id, ok: true, status };
+    return { source: source.id, ok: true, status, skipped: false };
   } catch (error) {
     const message = error instanceof Error && !('issues' in error) ? error.message : 'Source payload failed validation; no reconciliation performed.';
     if (client) { const { error: failureError } = await client.rpc('finalize_source_run', { p_source_id: source.id, p_run_key: runKey, p_jobs: [], p_complete: false, p_raw_count: 0, p_warning: message.slice(0, 240), p_checked_at: checkedAt }); if (failureError) console.error(`${source.id}: failure recording unavailable (${failureError.code})`); }
-    console.error(`${source.id}: FAILED — ${message}`); return { source: source.id, ok: false, status: message };
+    console.error(`${source.id}: FAILED — ${message}`); return { source: source.id, ok: false, status: message, skipped: false };
   }
 });
-console.log(`${dryRun ? 'Dry-run (no database writes)' : 'Production import'}: ${results.filter(r => r.ok).length}/${results.length} sources completed. Public feeds never fall back to fixtures.`);
+const skipped = results.filter(result => result.skipped).length;
+console.log(`${dryRun ? 'Dry-run (no database writes)' : 'Production import'}: ${results.filter(r => r.ok && !r.skipped).length}/${results.length} sources completed${skipped ? `; ${skipped} skipped for cooldown` : ''}. Public feeds never fall back to fixtures.`);
 if (results.some(r => !r.ok || /quarantined/.test(r.status))) process.exitCode = 1;
