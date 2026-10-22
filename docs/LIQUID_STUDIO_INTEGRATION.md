@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-The owner supplied `liquid-glass-studio-main` and requested that its files inform the site's glass interface. This document records the inspected source and implemented adaptation. Source review and local browser checks have completed as recorded below. Protected release and hosted acceptance are recorded in the associated pull request after execution.
+The owner supplied `liquid-glass-studio-main`, then supplied Apple's `LandmarksBuildingAnAppWithLiquidGlass` sample and rejected the first visual result. The current material combines a true browser-backdrop displacement layer with a decorative GPU rim. The Landmarks composition and current visual acceptance are documented in [UI_LANDMARKS_REVIEW.md](UI_LANDMARKS_REVIEW.md). Protected release and hosted acceptance are recorded in the associated pull request after execution.
 
 The adaptation is decorative. Opportunities, My Search and Insights remain the three primary routes. Accessible HTML retains navigation, text, buttons, dialogs and forms. Provider accounts, ownership, billing, authentication, database authorization and feed behavior are outside this change.
 
@@ -25,7 +25,17 @@ The adaptation should retain the Quilez provenance recorded by the supplied READ
 
 The root MIT license is not treated as evidence that every bundled sample image or video has identical reuse terms. The README separately credits Unsplash, Pexels, Apple and Tim Cook. No bundled sample media, Apple artwork, editor screenshots or external background URLs are included. No Apple branding or endorsement is implied.
 
-## Rendering boundary
+## Current rendering boundary
+
+[refraction.ts](../src/lib/glass/refraction.ts) adapts the supplied superellipse distance and guarded Snell edge model into a small geometry image. Its red/green channels encode displacement; blue encodes the depth mask. The image contains no captured page pixels. An SVG filter on the same DOM host consumes the browser's actual `SourceGraphic`, refracts the outer 22px, and blends a 10px-blurred center behind readable controls. The blue depth mask transitions over the following 14px. Additive composition preserves constant opacity through that transition.
+
+The supported Chromium path is positively tested against real CSS stripes: changing displacement scale from 64 to zero changes the rim while leaving the deep center unchanged. Moving the CSS backdrop changes the same lens without regenerating its geometry. Other unverified engines receive conventional native blur. This is a web adaptation of the supplied native sample, not Apple's SwiftUI renderer running in a browser.
+
+Google Sans Flex is self-hosted with its complete OFL notice and provenance. The site's original vector scene extends behind the split navigation, while content cards remain readable light surfaces. No Apple sample photograph is distributed; the supplied sample's license expressly excludes those photographs. No native framework, sample app icon or Apple endorsement is included.
+
+The WebGL material now has a transparent center and supplies only the decorative optical rim. Its texture is still a local lighting environment. Live DOM refraction is supplied by the browser's SVG backdrop filter, rather than by that GPU texture. No DOM screenshot, pixel upload or private-note texture is created.
+
+## Inspected upstream renderer and original adaptation
 
 The reference application is a canvas scene with four render passes: background, vertical blur, horizontal blur and the final glass composite. Its WebGL renderer requires WebGL2 and `EXT_color_buffer_float`; offscreen passes allocate floating-point color textures and depth attachments. The demo also contains a separate WebGPU backend and an interactive editor.
 
@@ -33,13 +43,14 @@ The application integration is smaller: a demand-rendered WebGL2 decorative mate
 
 Direct source comparison confirms the rounded superellipse SDF, clamped `safeAsin`, Snell-law edge refraction, separate RGB channel offsets, fifth-power Fresnel response and directional glare. Surface normals are normalized and the optical parameters are tuned for bounded interface surfaces; smooth shape merging, LCH tint conversion and the studio editor controls are not ported. The implementation uses one pass with a local 128 × 64 RGBA8 environment texture, without float render targets, depth attachments or the upstream blur passes. It therefore does not require the original `EXT_color_buffer_float` extension. This is an adaptation of selected shader behavior, not the complete studio scene.
 
-The shader generates its environment locally. The reference shader samples a supplied texture or generated background; it does **not** sample arbitrary live HTML. Native CSS `backdrop-filter` provides blur of page content behind the DOM surface where supported. Shader refraction and CSS backdrop blur are distinct layers. No DOM screenshots, private-page capture, user-note textures, pixel uploads or external media requests are needed.
+The original adaptation used a locally generated pearl environment with ordinary CSS blur. Its functional tests established shader execution, but the subsequent visual review found that the composited effect was almost invisible and could not establish reference fidelity. That limitation is preserved in [UI_STUDIO_REVIEW.md](UI_STUDIO_REVIEW.md); the current SVG backdrop path above supersedes that material boundary.
 
 The canvas is `aria-hidden` and CSS makes it ignore pointer events. Real HTML above it provides labels and hit targets, including when no GPU renderer is available. Targeted keyboard and material-contrast browser checks passed; these are not a complete accessibility audit. The integration adds no MUI, Emotion, Leva, React Spring, WebGPU dependency or studio asset bundle.
 
 ## Resource and fallback contract
 
 - The renderer caps effective device pixel ratio at **1.5** and allocated pixels at **512,000 per surface**, also respecting GPU viewport limits. There is no viewport-sized scene or renderer per listing.
+- Geometry maps are capped at **131,072 pixels** and **512px per side**, and regenerate only when the surface geometry changes. Scrolling and pointer motion do not regenerate the map. Covered nested panels remove their backdrop-filter variable and suspend their renderer.
 - Frames are requested on initial display, resize, pointer changes, preference changes and visibility/context restoration. The callback does not schedule itself continuously. Pointer updates are coalesced to one scheduled frame.
 - Hidden documents and nonintersecting/zero-sized surfaces release their renderer resources. Reduced motion uses a fixed light position. Reduced transparency, `prefers-contrast: more` and forced colors disable GPU material creation; matching CSS hides the canvas and gives the material surfaces opaque backgrounds without backdrop filtering.
 - WebGL creation, shader compilation/linking and allocation failures select the underlying CSS presentation. Context-loss events stop scheduled drawing and release resources; restoration requests reinitialization. Native Chromium tests exercise unavailable WebGL, shader compilation failure, preference changes and context loss/restoration.
@@ -47,7 +58,7 @@ The canvas is `aria-hidden` and CSS makes it ignore pointer events. Real HTML ab
 - The active material budget is header + dock + one modal heading, at most three surfaces with the current call sites. A registry selects the last connected modal panel in document order; other modal headings release their renderer and use the underlying CSS surface. Opening or closing a nested panel requests an update for the other panels. This explicitly handles nesting rather than relying on intersection observation to detect an overlay. Native Chromium tests verify covered-panel suspension and restoration with nested dialogs.
 - Keep shader inputs local and visual. Do not log account data or expose notes, credentials, GPU fingerprints or image contents through telemetry.
 
-## Verification record
+## Original adaptation verification record
 
 | Check | Observed result |
 | --- | --- |
@@ -60,4 +71,4 @@ The canvas is `aria-hidden` and CSS makes it ignore pointer events. Real HTML ab
 | Lint, TypeScript, unit/browser tests and production build | Local lint/typecheck/build and 332 unit tests passed; browser results as above. |
 | Production deployment | **PENDING**; local checks do not establish cloud acceptance. |
 
-Observed test and release outcomes belong in [TEST_REPORT.md](TEST_REPORT.md). Update the pending entries only with results actually observed; preserve the distinction between local/demo behavior and production acceptance.
+This table records the earlier adaptation's checkpoints. Current Landmarks revision results are in [UI_LANDMARKS_REVIEW.md](UI_LANDMARKS_REVIEW.md) and [TEST_REPORT.md](TEST_REPORT.md); final hosted/CI acceptance is recorded on its release pull request. Preserve the distinction between local/demo behavior and production acceptance.

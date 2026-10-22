@@ -27,3 +27,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Google Sans Flex
+
+The application self-hosts the official Google Fonts Latin and Latin Extended WOFF2 files for Google Sans Flex, normal style with variable optical size and weight. Font binaries are copied without modification from `fonts.gstatic.com`; no visitor request to Google Fonts is needed. Other writing systems use the application's system-font fallback.
+
+Copyright 2022 The Google Sans Flex Project Authors (github.com/googlefonts/googlesans-flex).
+
+Google Sans Flex is distributed under the **SIL Open Font License, Version 1.1**. The complete license accompanies the font in [public/licenses/google-sans-flex-OFL.txt](public/licenses/google-sans-flex-OFL.txt), served at `/licenses/google-sans-flex-OFL.txt`. Exact download URLs, distributor CSS request, retrieval time, file sizes, SHA-256 hashes and the pinned license-source revision are recorded in [public/licenses/google-sans-flex-source.txt](public/licenses/google-sans-flex-source.txt).
+
+The upstream trademark notice is preserved in [public/licenses/google-sans-flex-trademarks.txt](public/licenses/google-sans-flex-trademarks.txt). The font name identifies the font software; its use does not imply Google affiliation, sponsorship or endorsement.

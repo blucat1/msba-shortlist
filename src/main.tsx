@@ -9,6 +9,8 @@ import { AuthCallback } from './app/AuthCallback';
 import './styles.css';
 import './styles/apple.css';
 import './styles/studio.css';
+import './styles/typography.css';
+import './styles/landmarks.css';
 import { appConfig } from './config';
 document.title = `${appConfig.name} · Find your next step`;
 const Insights = lazy(() => import('./features/Insights'));

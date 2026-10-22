@@ -68,7 +68,7 @@ void main() {
   float coverage = 1.0 - smoothstep(-0.6, 0.6, distance);
   if (coverage <= 0.0) { fragColor = vec4(0.0); return; }
   float depth = max(-distance, 0.0);
-  float thickness = mix(10.0, 13.0, u_panel);
+  float thickness = mix(20.0, 24.0, u_panel);
   // Snell-law edge bending from upstream fragment-main.glsl STEP 8/9.
   float x_R_ratio = clamp(1.0 - depth / thickness, 0.0, 1.0);
   float thetaI = safeAsin(pow(x_R_ratio, 2.0));
@@ -78,17 +78,17 @@ void main() {
   vec2 offset = -normal * edgeFactor * mix(11.0, 14.0, u_panel) / max(u_size, vec2(1.0));
   vec3 color = getTextureDispersion(offset, 9.0);
   // Upstream distance-based fifth-power Fresnel and directional glare models.
-  float fresnelFactor = clamp(pow(max(0.0, 1.0 - depth / 17.0 + 0.03), 5.0), 0.0, 1.0);
-  float glareGeoFactor = clamp(pow(max(0.0, 1.0 - depth / 24.0 + 0.02), 5.0), 0.0, 1.0);
+  float fresnelFactor = clamp(pow(max(0.0, 1.0 - depth / 20.0 + 0.03), 5.0), 0.0, 1.0);
+  float glareGeoFactor = clamp(pow(max(0.0, 1.0 - depth / 26.0 + 0.02), 5.0), 0.0, 1.0);
   float lightAngle = (u_pointer.x - 0.5) * 0.8 + (u_pointer.y - 0.5) * 0.45;
   float glareAngle = (vec2ToAngle(normal) - PI / 4.0 + lightAngle) * 2.0;
   bool farSide = (glareAngle > PI * 1.5 && glareAngle < PI * 3.5) || glareAngle < PI * -0.5;
   float glareAngleFactor = clamp(pow(max(0.0, (0.5 + sin(glareAngle) * 0.5)
     * (farSide ? 0.6 : 1.05)), 1.6), 0.0, 1.0);
   float glare = glareAngleFactor * glareGeoFactor;
-  color = mix(color, vec3(1.0), fresnelFactor * 0.7);
-  color = mix(color, vec3(1.0), glare * 0.7);
-  // Bound the overlay; central content never becomes an opaque GPU surface.
-  float alpha = min(0.4, 0.018 + fresnelFactor * 0.20 + glare * 0.16) * coverage;
+  color = mix(color, vec3(1.0), fresnelFactor * 0.25);
+  color = mix(color, vec3(1.0), glare * 0.3);
+  // Only the optical rim is painted here; SVG refracts the real backdrop.
+  float alpha = min(0.55, fresnelFactor * 0.34 + glare * 0.28) * coverage;
   fragColor = vec4(color * alpha, alpha);
 }`;

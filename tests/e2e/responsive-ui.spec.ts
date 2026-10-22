@@ -55,9 +55,13 @@ test('critical discovery, tracker and Insights text stays readable across suppor
       await expect(navigation.getByRole('link')).toHaveCount(3);
       for (const action of await navigation.locator('a,button').all()) await expectTouchTarget(action);
       await page.goto('/demo/opportunities');
-      const family = page.getByLabel('Role family', { exact: true });
+      await page.getByRole('button', { name: 'Filters', exact: true }).click();
+      const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
+      const family = filters.getByLabel('Role family', { exact: true });
       await family.selectOption('business-intelligence');
       await expectSelectedLabelFits(family);
+      await filters.getByRole('button', { name: 'Show opportunities', exact: true }).click();
+      await expect(filters).toHaveCount(0);
       await page.goto('/opportunities');
       const signIn = page.getByRole('button', { name: 'Sign in with Google', exact: false });
       await expectWithinViewport(signIn, page);
@@ -134,6 +138,18 @@ test('mobile forms retain a reachable close button, readable inputs and trapped 
   await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('button', { name: 'Settings', exact: true }).click();
   await dialog.getByRole('button', { name: /Your preferences/ }).click();
   await expectReadable(dialog.locator('input:not([type=checkbox]),select,textarea'), 16);
+  const brokenWords = await dialog.locator('.step-indicator button').evaluateAll(buttons => buttons.flatMap(button => {
+    const failures: { label: string | null; word: string }[] = [];
+    const walker = document.createTreeWalker(button, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) for (const match of walker.currentNode.textContent!.matchAll(/\S+/g)) {
+      const range = document.createRange(); range.setStart(walker.currentNode, match.index!); range.setEnd(walker.currentNode, match.index! + match[0].length);
+      const rows: number[] = [];
+      for (const rect of range.getClientRects()) if (!rows.some(top => Math.abs(top - rect.top) < 1)) rows.push(rect.top);
+      if (rows.length > 1) failures.push({ label: button.textContent, word: match[0] });
+    }
+    return failures;
+  }));
+  expect(brokenWords, 'Step labels must wrap between words without splitting a word into extra lines.').toEqual([]);
   const save = dialog.getByRole('button', { name: 'Save preferences', exact: true });
   await save.scrollIntoViewIfNeeded();
   for (const name of ['Back', 'Continue', 'Save preferences']) {

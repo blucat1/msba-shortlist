@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1000" viewBox="0 0 1800 1000" fill="none">
+  <!-- Original Shortlist landscape, drawn for this application; no sample photographs. -->
+  <defs>
+    <linearGradient id="sky" x1="300" y1="0" x2="1450" y2="650" gradientUnits="userSpaceOnUse"><stop stop-color="#d8e7ff"/><stop offset=".5" stop-color="#eff4ff"/><stop offset="1" stop-color="#dfe4ff"/></linearGradient>
+    <linearGradient id="far" x1="50" y1="170" x2="900" y2="740" gradientUnits="userSpaceOnUse"><stop stop-color="#a3b9ed"/><stop offset="1" stop-color="#d7def5"/></linearGradient>
+    <linearGradient id="near" x1="1500" y1="220" x2="750" y2="900" gradientUnits="userSpaceOnUse"><stop stop-color="#b5b4e2"/><stop offset="1" stop-color="#e5e5f7"/></linearGradient>
+    <linearGradient id="water" x1="900" y1="450" x2="900" y2="1000" gradientUnits="userSpaceOnUse"><stop stop-color="#e7edff"/><stop offset="1" stop-color="#f8faff"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1800v1000H0z"/>
+  <circle cx="1340" cy="100" r="180" fill="#fff" fill-opacity=".4"/>
+  <path d="M0 220C190 300 265 100 460 160S715 490 1030 360s490-150 770-20v660H0Z" fill="url(#far)"/>
+  <path d="M0 262C190 343 279 146 463 205s263 317 573 200 488-145 764-19" stroke="#f1f5ff" stroke-opacity=".85" stroke-width="2"/>
+  <path d="M0 312C190 392 288 198 478 254s270 282 572 194 482-132 750-9" stroke="#e7efff" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M1800 170c-240-70-305 174-520 188s-229-38-430 124S320 680 0 540v460h1800Z" fill="url(#near)"/>
+  <path d="M1800 210c-240-70-307 174-522 188s-227-38-428 124S320 720 0 580" stroke="#f5f3ff" stroke-opacity=".9" stroke-width="2"/>
+  <path d="M1800 262c-240-70-307 174-522 188s-227-38-428 124S320 772 0 632" stroke="#f5f3ff" stroke-opacity=".7" stroke-width="2"/>
+  <path d="M0 670c420-160 647-1 963-56s556-45 837 61v325H0Z" fill="url(#water)"/>
+  <path d="M0 720c420-160 647-1 963-56s556-45 837 61" stroke="#fff" stroke-opacity=".8" stroke-width="2"/>
+</svg>
