@@ -1,5 +1,13 @@
 # Observed implementation checks
 
+## Readability, responsive layout and interaction revision — October 22, 2026 UTC
+
+The interface pass raises body/form type to 16px and critical secondary text to at least 14px, improves muted/chart contrast, and uses 44px minimum touch targets for controls. Job cards lead with title, company, location, pay and required experience. Supporting evidence is expandable while uncertainty and actual conflicts remain visible. Long source locations and descriptions remain available in the role drawer. The tracker stacks on smaller screens without hiding next steps or truncating long titles. Insights uses a native table with contained keyboard scrolling. Modal headings/close controls remain reachable during body scrolling; closing returns keyboard focus to the initiating control. Preferences can be saved at any step, including timing changes. Today’s priorities start collapsed so discovery comes first, with the all-next-steps link always available.
+
+Observed local checks passed: ESLint, strict TypeScript, production build, **332 unit tests across 21 files**, the existing **101-record diagnostic quality gate**, **183 PostgreSQL WASM assertions**, and **13 Chromium workflows** (eight existing workflows plus five responsive/keyboard regressions). The browser regressions cover all three routes at **320/390/768/1024/1440 CSS pixels**, complete long tracker titles, status/next-step controls, readable mobile inputs, focus containment/return, persistent dialog close, preference actions and original evidence disclosures. Source classification, ingestion cadence, data ownership, provider settings and repository release protections are outside this interface change.
+
+Real Supabase SQL/Auth integration cannot run locally because Docker is absent; `npm run test:db` explicitly reported it was not executed. Those suites remain required CI checks before the protected release. Physical touch devices, real Google sign-in, operating-system screen readers and independent classmate usability testing were not exercised by this pass. See [the interface review](UI_REVIEW.md) for measured baseline issues, screenshot review and reflow limits. Protected release and hosted verification evidence is recorded in the associated pull request after execution.
+
 ## Cohort eligibility, supply review and integration revision — October 22, 2026 UTC
 
 The owner authorized the full improvement pass, specified graduation **2027-05-15** and availability **2027-05-16 or later**, and explicitly deferred classmate testing. The completed release evidence below records the observed CI, merge, hosted deployment and import. No human participation or Google acceptance is inferred from automated tests.
