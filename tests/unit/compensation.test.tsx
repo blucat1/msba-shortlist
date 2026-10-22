@@ -45,7 +45,9 @@ describe('source compensation presentation', () => {
     await user.click(within(card).getByRole('button', { name: 'View role' }));
     const details = await screen.findByRole('dialog', { name: 'A closer look' });
     expect(within(details).getByText(/Currency not specified/)).toHaveTextContent('Pay period not specified');
-    expect(await within(details).findByText('Original public source description.')).toBeVisible();
+    expect(await within(details).findByText('Original public source description.')).not.toBeVisible();
+    await user.click(within(details).getByText('Read full job description', { selector: 'summary' }));
+    expect(within(details).getByText('Original public source description.')).toBeVisible();
     expect(repository.getJobDetails).toHaveBeenCalledWith(job.id);
     queries.clear();
   });
