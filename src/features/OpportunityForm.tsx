@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useWorkspace } from '../app/store';
 import { Field, Modal, safeUrl } from '../components/ui';
 import { dateOnlyInTimezone } from '../domain/dates';
-import { companyKey, createTask, manualOpportunity } from '../domain/records';
+import { catalogCompanyKey, companyKey, createTask, manualOpportunity } from '../domain/records';
 import { ROLE_FAMILIES, ROLE_LABELS, STAGES, type Opportunity, type Stage } from '../domain/types';
 const schema = z.object({ company: z.string().trim().min(1, 'Company is required.').max(150), title: z.string().trim().min(1, 'Title is required.').max(250), notes: z.string().max(20_000), postingUrl: z.string().max(2000).refine(v => !v || !!safeUrl(v), 'Use a complete http or https link.') });
 export function OpportunityForm({ open, opportunity, onClose }: { open: boolean; opportunity?: Opportunity; onClose: () => void }) {
@@ -22,7 +22,7 @@ export function OpportunityForm({ open, opportunity, onClose }: { open: boolean;
     if (!snapshot.userId) { notify('Sign in before saving a personal opportunity.'); return; }
     setBusy(true); setError('');
     try {
-      const fields = { ...draft, ...(matchedJob ? { catalogJobId: matchedJob.id, snapshot: matchedJob, primaryRoleFamily: draft.primaryRoleFamily || matchedJob.primaryRoleFamily, companyKey: `employer:${matchedJob.employerId}` } : {}), ...parsed.data, postingUrl: parsed.data.postingUrl || null, userId: snapshot.userId, updatedAt: new Date().toISOString(), stage: opportunity?.stage ?? 'Saved', applicationDatePrecision: draft.applicationDate ? 'day' as const : 'unknown' as const };
+      const fields = { ...draft, ...(matchedJob ? { catalogJobId: matchedJob.id, snapshot: matchedJob, primaryRoleFamily: draft.primaryRoleFamily || matchedJob.primaryRoleFamily, companyKey: catalogCompanyKey(matchedJob) } : {}), ...parsed.data, postingUrl: parsed.data.postingUrl || null, userId: snapshot.userId, updatedAt: new Date().toISOString(), stage: opportunity?.stage ?? 'Saved', applicationDatePrecision: draft.applicationDate ? 'day' as const : 'unknown' as const };
       await run(async () => {
         const latest = (await repository.getSnapshot()).opportunities.find(o => o.id === fields.id);
         let saved = await repository.saveOpportunity({ ...fields, stage: latest?.stage ?? fields.stage });

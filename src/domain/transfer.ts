@@ -15,6 +15,8 @@ const work = z.enum(['remote', 'hybrid', 'onsite', 'unknown']);
 const strings = z.array(z.string().max(1000)).max(200);
 const jobSchema = z.object({
   id, sourceId: id, externalId: id, employerId: id, company: z.string().min(1).max(300), title: z.string().min(1).max(500), postingUrl: url, applicationUrl: url,
+  publisher: z.object({ name: z.string().min(1).max(200), url: z.string().max(2048).refine(value => safeUrl(value) !== null, 'Only safe publisher URLs are accepted'), kind: z.literal('aggregator') }).optional(),
+  employerGroupingKey: z.string().regex(/^market-company:[a-f0-9]{64}$/).optional(),
   locations: z.array(z.object({ label: z.string().max(500), country: z.string().max(100).nullable(), region: z.string().max(200).nullable(), city: z.string().max(200).nullable() })).max(100),
   countryEvidence: strings, workArrangement: work, employmentType: z.enum(['full-time', 'part-time', 'contract', 'internship', 'unknown']), employmentEvidence: text.nullable(),
   roleFamilies: z.array(role).max(12), primaryRoleFamily: role.nullable(), classification: z.object({ confidence: z.enum(['high', 'medium', 'low']), reasons: z.array(z.object({ code: id, text })).max(100), version: id, scope: z.enum(['included', 'needs-details', 'excluded']), seniority: z.enum(['early-career', 'mid-level', 'senior', 'leadership', 'unknown']) }),

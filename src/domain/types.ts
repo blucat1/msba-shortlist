@@ -30,6 +30,7 @@ export interface Job {
   sourcePostedAt: Timestamp | null; sourceUpdatedAt: Timestamp | null; sourcePublishedAt: Timestamp | null;
   firstSeenAt: Timestamp; lastSeenAt: Timestamp; lastVerifiedAt: Timestamp | null; contentHash: string; isDemo?: boolean;
   publisher?: { name: string; url: string; kind: 'aggregator' };
+  employerGroupingKey?: string;
 }
 export type SourceProvider = 'greenhouse' | 'lever' | 'ashby' | 'jobicy';
 export interface JobSource {
