@@ -1,3 +1,5 @@
+> **Current release:** the protected production import at 07:42:56 UTC on October 22, 2026 succeeded for **38/38 enabled sources**. Its anonymous hosted read found 459 retained supported records, 15 default listings across 8 companies and 3 confirmed-zero requirements. See [completed acceptance](TEST_REPORT.md), [the 36-board live audit](SOURCE_AUDIT.employer-boards.md), [the additional ERG audit](SOURCE_AUDIT.lever-erg.md) and [supply review](SUPPLY_REVIEW.md). The generated whole-registry audit below is retained as historical evidence; its older counts and CertiK recommendation predate the employer-conflict correction. Avoid a new Jobicy poll within an hour of the last actual synchronization at 07:42:56 UTC.
+
 # Source audit
 
 This is the earlier direct audit of the 29 employer boards. The later 30-source production refresh, including the Jobicy market window, is recorded with actual import and browser evidence in [TEST_REPORT.md](TEST_REPORT.md). Jobicy was not polled again just to regenerate this document; production and verification must share its maximum hourly synchronization cadence.
