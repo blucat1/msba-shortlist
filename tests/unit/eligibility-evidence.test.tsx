@@ -43,7 +43,7 @@ describe('visible eligibility evidence', () => {
     rerender(<EligibilityEvidence profile={DEFAULT_PREFERENCES} job={job} />);
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
   });
-  it('groups exact variants only in For you and keeps each save/apply action attached to its requisition', async () => {
+  it('groups exact variants only in the shortlist and keeps each save/apply action attached to its requisition', async () => {
     const user = userEvent.setup(), repository = createDemoRepository({ storage: null, referenceDate: now });
     const first = sourceJob(), second = structuredClone(first); second.id = 'second-requisition'; second.externalId = 'second'; second.locations = [{ label: 'Boston', country: 'US', city: 'Boston', region: 'MA' }];
     const snapshot = { ...createDemoSnapshot(now), jobs: [first, second], opportunities: [], tasks: [], preferences: structuredClone(DEFAULT_PREFERENCES) };
@@ -58,7 +58,7 @@ describe('visible eligibility evidence', () => {
     expect(save.mock.calls[0][0].catalogJobId).toBe(second.id);
     await user.click(within(variants as HTMLElement).getByRole('button', { name: `Open application for ${second.title}` }));
     expect(context.openApplication).toHaveBeenCalledWith(second);
-    await user.click(screen.getByRole('button', { name: 'All catalog' }));
+    await user.click(screen.getByRole('button', { name: 'All listings' }));
     expect(document.querySelectorAll('.listing-variants')).toHaveLength(0);
     expect(screen.getByText('2 listings', { exact: true })).toBeVisible();
     expect(screen.getAllByRole('article')).toHaveLength(2);

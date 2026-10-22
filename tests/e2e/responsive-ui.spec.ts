@@ -184,6 +184,14 @@ test('Insights keeps its readable table locally scrollable by keyboard at narrow
 test('compact cards keep evidence and the original description reachable by keyboard on a phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto('/demo/opportunities');
+  const experienceExplanation = page.locator('.experience-explainer');
+  await experienceExplanation.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(experienceExplanation).toHaveAttribute('open', '');
+  await expect(experienceExplanation).toContainText(/missing years never count as zero/i);
+  await expectReadable(experienceExplanation.locator('p'));
+  await page.keyboard.press('Enter');
+  await expect(experienceExplanation).not.toHaveAttribute('open', '');
   const priorities = page.locator('.today-priorities');
   await expect(priorities).not.toHaveAttribute('open', '');
   await expect(page.getByRole('link', { name: 'All next steps', exact: false })).toBeVisible();
@@ -213,4 +221,74 @@ test('compact cards keep evidence and the original description reachable by keyb
   await expect(description.locator('.plain-description')).toContainText('This is a fictional demonstration role');
   await expectWithinViewport(description, page);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+});
+
+test('glass navigation keeps contrast over changing content and offers an opaque reduced-motion alternative', async ({ page }) => {
+  const session = await page.context().newCDPSession(page);
+  await session.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-transparency', value: 'no-preference' }, { name: 'prefers-reduced-motion', value: 'no-preference' }] });
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/demo/opportunities');
+    const navigation = page.getByRole('navigation', { name: width === 1440 ? 'Main navigation' : 'Mobile navigation' });
+    await expect(navigation.getByRole('link')).toHaveCount(3);
+    const glass = await page.locator(width === 1440 ? '.glass-header' : '.mobile-nav').evaluate(element => {
+      const style = getComputedStyle(element), canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d')!; context.fillStyle = style.backgroundColor; context.fillRect(0, 0, 1, 1);
+      return { supported: CSS.supports('backdrop-filter', 'blur(1px)'), backdrop: style.backdropFilter, alpha: context.getImageData(0, 0, 1, 1).data[3] };
+    });
+    expect(glass.supported, 'Chromium must exercise the supported glass enhancement').toBe(true);
+    expect(glass.backdrop).not.toBe('none');
+    expect(glass.alpha, 'Supported material must retain real translucency').toBeLessThan(255);
+    await expectReadable(navigation.locator('a > span, button > span'));
+    await page.locator('.job-card').first().scrollIntoViewIfNeeded();
+    const contrast = await navigation.evaluate(root => {
+      const canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d')!;
+      const color = (value: string) => {
+        context.clearRect(0, 0, 1, 1); context.fillStyle = value; context.fillRect(0, 0, 1, 1);
+        const channels = [...context.getImageData(0, 0, 1, 1).data]; return [...channels.slice(0, 3), channels[3] / 255];
+      };
+      const composite = (foreground: number[], background: number[]) => foreground.slice(0, 3).map((channel, index) => channel * foreground[3] + background[index] * (1 - foreground[3]));
+      const luminance = (channels: number[]) => channels.map(channel => channel / 255).map(channel => channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4).reduce((sum, channel, index) => sum + channel * [.2126, .7152, .0722][index], 0);
+      const material = root.closest('.glass-header') ?? root;
+      return [...root.querySelectorAll('a > span, button > span')].filter(element => element.getBoundingClientRect().width > 0).map(element => {
+        const ancestors: Element[] = [];
+        for (let parent: Element | null = element; parent; parent = parent.parentElement) { ancestors.unshift(parent); if (parent === material) break; }
+        const ratios = [[0, 0, 0], [255, 255, 255]].map(underlying => {
+          const background = ancestors.reduce((result, ancestor) => composite(color(getComputedStyle(ancestor).backgroundColor), result), underlying);
+          const foreground = composite(color(getComputedStyle(element).color), background), first = luminance(background), second = luminance(foreground);
+          return (Math.max(first, second) + .05) / (Math.min(first, second) + .05);
+        });
+        return { label: element.textContent, minimum: Math.min(...ratios) };
+      });
+    });
+    expect(contrast.length).toBeGreaterThanOrEqual(3);
+    for (const item of contrast) expect(item.minimum, `${item.label} contrast over black and white content`).toBeGreaterThanOrEqual(4.5);
+    for (const action of await navigation.locator('a,button').all()) await expectTouchTarget(action);
+    if (width < 768) {
+      const bounds = await navigation.boundingBox();
+      expect(bounds!.x, 'Floating navigation retains an inset').toBeGreaterThan(0);
+      expect(bounds!.x + bounds!.width).toBeLessThan(width);
+    }
+    await navigation.getByRole('link', { name: 'Insights', exact: true }).focus();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('heading', { name: 'Insights', level: 1, exact: true })).toBeVisible();
+  }
+  await session.send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-transparency', value: 'reduce' }, { name: 'prefers-reduced-motion', value: 'reduce' }] });
+  expect(await page.evaluate(() => matchMedia('(prefers-reduced-transparency: reduce)').matches && matchMedia('(prefers-reduced-motion: reduce)').matches)).toBe(true);
+  for (const width of [1440, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('/demo/opportunities');
+    const material = page.locator(width === 1440 ? '.glass-header' : '.mobile-nav');
+    const fallback = await material.evaluate(element => {
+      const style = getComputedStyle(element), canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d')!; context.fillStyle = style.backgroundColor; context.fillRect(0, 0, 1, 1);
+      return { backdrop: style.backdropFilter, alpha: context.getImageData(0, 0, 1, 1).data[3] };
+    });
+    expect(fallback).toEqual({ backdrop: 'none', alpha: 255 });
+  }
+  await page.getByRole('button', { name: 'Add opportunity', exact: true }).click();
+  const motion = await page.getByRole('dialog').evaluate(element => ({ animation: parseFloat(getComputedStyle(element).animationDuration), transition: parseFloat(getComputedStyle(element).transitionDuration) }));
+  expect(motion.animation).toBeLessThanOrEqual(.01);
+  expect(motion.transition).toBeLessThanOrEqual(.01);
 });

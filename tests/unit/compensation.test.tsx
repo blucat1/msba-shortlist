@@ -43,7 +43,7 @@ describe('source compensation presentation', () => {
     expect(within(card).getByText(/Currency not specified/)).toHaveTextContent('Pay period not specified');
     expect(card).not.toHaveTextContent(/USD|\/ yr/);
     await user.click(within(card).getByRole('button', { name: 'View role' }));
-    const details = await screen.findByRole('dialog', { name: 'A closer look' });
+    const details = await screen.findByRole('dialog', { name: 'Role details' });
     expect(within(details).getByText(/Currency not specified/)).toHaveTextContent('Pay period not specified');
     expect(await within(details).findByText('Original public source description.')).not.toBeVisible();
     await user.click(within(details).getByText('Read full job description', { selector: 'summary' }));
