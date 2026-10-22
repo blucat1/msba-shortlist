@@ -1,9 +1,9 @@
 {
-  "evaluatedAt": "2026-10-22T07:24:38.289Z",
+  "evaluatedAt": "2026-10-22T07:37:12.486Z",
   "dataset": "data/quality-benchmark-v1.json",
   "reviewedAt": "2026-10-22T07:23:37.735885Z",
   "reviewMethod": "assistant-manual-source-review",
-  "classifierVersion": "2026-10-22.1",
+  "classifierVersion": "2026-10-22.2",
   "baselineCommit": null,
   "reviewedCount": 101,
   "minimumSample": 80,
@@ -505,7 +505,7 @@
       "id": "lever:wisdomtree:621718c3-779f-4e9c-9681-be75dafc427e",
       "scope": "included",
       "experienceTier": "new-grad",
-      "requiredYears": 1,
+      "requiredYears": null,
       "strictDefault": true,
       "zeroExperienceDefault": false,
       "sourceConflict": false

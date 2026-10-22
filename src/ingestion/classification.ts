@@ -1,7 +1,7 @@
 import type { EmploymentType, Evidence, Experience, Job, JobLocation, RoleFamily, SalaryBand, WorkArrangement } from '../domain/types';
 import { explicitGraduateTitle, isLeadershipTitle } from '../domain/experience';
 
-export const CLASSIFIER_VERSION = '2026-10-22.1';
+export const CLASSIFIER_VERSION = '2026-10-22.2';
 const QUANTITATIVE_CONSULTING = /\b(?:econometric|economic|statistical|quantitative|financial|data) (?:analysis|research|model(?:ing|s)?)|\b(?:Python|Stata|SAS|R programming|regression|econometrics|data analytics|statistical programs)\b/i;
 export const TAXONOMY: { family: RoleFamily; titles: RegExp; context?: RegExp }[] = [
   { family: 'product-management', titles: /\b(?:associate product manager|apm|product manager|technical product manager|product operations|product rotational)\b/i },
@@ -159,6 +159,10 @@ export function extractExperience(text: string): Experience {
       };
       for (let index = 0; index < matches.length; index++) {
         const match = matches[index], start = match.index!, end = start + match[0].length;
+        // A graduate OR experienced-candidate path does not require the latter
+        // branch's years from every applicant. Preserve that original evidence.
+        const beforeQuantity = statement.slice(0, start);
+        if (/\b(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\s+or\s+(?:(?:an?\s+)?(?:candidates?|applicants?|individuals?|professionals?)\s+)?(?:(?:with|having)\s+)?$/i.test(beforeQuantity)) { snippets.add(statement.trim().slice(0, 800)); continue; }
         const following = statement.slice(end, matches[index + 1]?.index ?? statement.length).replace(/^\s*\.\s*/, /^yrs?/i.test(match[4]) ? ' ' : '.');
         const prefix = statement.slice(Math.max(statement.lastIndexOf(',', start), statement.lastIndexOf(';', start)) + 1, start);
         // Domain modifiers may be long ("years of product management experience")
@@ -283,8 +287,9 @@ export function classify(title: string, text: string, locations: JobLocation[], 
   if (noExperience && experience.minYears === 0) reasons.push({ code: 'experience.no_experience_required', text: noExperience[0] });
   const graduateWelcome = text.match(/[^.\n]*\b(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\s+(?:are\s+)?(?:welcome|encouraged|eligible|invited)\b[^.\n]*/i);
   const graduateTarget = text.match(/\b(?:this|the|our)\s+(?:role|position|program(?:me)?)\b[^.\n]{0,100}\b(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\b/i);
+  const graduateIdeal = text.match(/[^.\n]*\b(?:ideal|suitable|intended|designed)\s+for\s+(?:a\s+)?(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\b[^.\n]*/i);
   const graduateHiring = text.match(/[^.\n]*\b(?:we(?:['’]re| are)?|(?:our|the)\s+(?:company|team)(?:\s+is)?)\s+(?:actively\s+)?(?:hiring|accepting|recruiting)\s+(?:applications?\s+from\s+)?(?:(?:new|recent)\s+)?(?:(?:college|university)\s+)?grad(?:uate)?s?\b[^.\n]*/i);
-  if (!notGraduate && (explicitGraduateTitle(title) || graduateWelcome || graduateTarget || graduateHiring)) reasons.push({ code: 'experience.entry_level_explicit', text: explicitGraduateTitle(title) ? title : (graduateWelcome?.[0] || graduateTarget?.[0] || graduateHiring![0]).trim() });
+  if (!notGraduate && (explicitGraduateTitle(title) || graduateWelcome || graduateTarget || graduateIdeal || graduateHiring)) reasons.push({ code: 'experience.entry_level_explicit', text: explicitGraduateTitle(title) ? title : (graduateWelcome?.[0] || graduateTarget?.[0] || graduateIdeal?.[0] || graduateHiring![0]).trim() });
   const scope = !roleFamilies.length || internationalOnly || explicitlyExcluded || leadership ? 'excluded' : !us || employmentType === 'unknown' ? 'needs-details' : 'included';
   return { roleFamilies, primaryRoleFamily: roleFamilies[0] || null, classification: { scope, seniority, confidence: scope === 'included' ? 'high' : roleFamilies.length ? 'medium' : 'low', reasons, version: CLASSIFIER_VERSION } };
 }

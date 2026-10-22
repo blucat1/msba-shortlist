@@ -5,6 +5,7 @@ import { createDemoSnapshot } from '../../src/domain/fixtures';
 import { rankJob, rankJobs } from '../../src/domain/ranking';
 import { assessExperience, matchesExperienceView } from '../../src/domain/experience';
 import { extractExperience, classify } from '../../src/ingestion/classification';
+import { extractEligibility } from '../../src/ingestion/eligibility';
 import { normalizePosting } from '../../src/ingestion/normalize';
 import { backupSchema } from '../../src/domain/transfer';
 
@@ -91,5 +92,31 @@ describe('reviewed market patterns preserve boundaries', () => {
       expect(classify(title, 'Coordinate office administration.', places, 'full-time', extractExperience('')).classification.scope).toBe('excluded');
     }
     expect(classify('Implementation Engineer', 'Build data pipelines with Python and SQL.', places, 'full-time', extractExperience('2 years experience')).roleFamilies).toContain('data-engineering');
+  });
+});
+
+describe('explicit graduate or experienced-candidate alternatives', () => {
+  const sourceText = 'ideal for a recent graduate or candidate with 1+ years of experience';
+  it('does not turn the experienced branch into an unconditional required year', () => {
+    const experience = extractExperience(sourceText); expect(experience.minYears).toBeNull();
+    expect(experience.evidence).toContain('recent graduate or candidate');
+    const classification = classify('AI Solutions Analyst', sourceText, [{ label: 'New York', country: 'US', region: null, city: 'New York' }], 'full-time', experience);
+    const value = { ...job(), title: 'AI Solutions Analyst', ...classification, experience };
+    expect(assessExperience(value)).toMatchObject({ tier: 'new-grad', requiredYears: null, explicitGraduate: true });
+    expect(matchesExperienceView(assessExperience(value), 'zero-experience')).toBe(false);
+  });
+  it('preserves an independent positive experience requirement', () => {
+    expect(extractExperience(`${sourceText}.\nRequirements\nAt least 3 years of SQL experience required.`).minYears).toBe(3);
+    expect(extractExperience('Recent graduates with at least 2 years of experience or candidates with 5 years of experience.').minYears).not.toBeNull();
+  });
+});
+
+
+describe('bounded timing evidence in saved snapshots', () => {
+  it('bounds the complete preferred annotation after composing it with the source excerpt', () => {
+    const extracted = extractEligibility('Analyst', `Preferred graduation in May 2027 ${'source text '.repeat(100)}`);
+    expect(extracted.timing.evidence[0]).toContain('Preferred; not a required constraint');
+    expect(extracted.timing.evidence[0].length).toBeLessThanOrEqual(1000);
+    expect(extracted.timing.graduationStart).toBeNull();
   });
 });

@@ -142,6 +142,6 @@ export function extractEligibility(title: string, description: string): { eligib
       timing.evidence.push(`Conflicting or alternative ${kind} dates need source review; no single window inferred.`);
     }
   }
-  timing.evidence = [...new Set(timing.evidence)].slice(0, 100);
+  timing.evidence = [...new Set(timing.evidence)].slice(0, 100).map(excerpt => excerpt.slice(0, 1000));
   return { eligibility, timing };
 }
