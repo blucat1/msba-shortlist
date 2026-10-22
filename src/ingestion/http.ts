@@ -1,9 +1,10 @@
 export interface HttpOptions { fetch?: typeof fetch; timeoutMs?: number; maxAttempts?: number; sleep?: (ms: number) => Promise<void>; }
-const ALLOWED_HOSTS = new Set(['boards-api.greenhouse.io', 'api.lever.co', 'api.eu.lever.co', 'api.ashbyhq.com']);
+const ALLOWED_HOSTS = new Set(['boards-api.greenhouse.io', 'api.lever.co', 'api.eu.lever.co', 'api.ashbyhq.com', 'jobicy.com']);
+const JOBICY_API_PATHS = new Set(['/api/jobs', '/api/jobs/status']);
 const sleep = (ms: number) => new Promise<void>(resolve => setTimeout(resolve, ms));
 export async function fetchPublicJson(url: string, options: HttpOptions = {}): Promise<unknown> {
   const target = new URL(url);
-  if (target.protocol !== 'https:' || !ALLOWED_HOSTS.has(target.hostname) || target.username || target.password) throw new Error('Only approved public feed hosts can be fetched.');
+  if (target.protocol !== 'https:' || !ALLOWED_HOSTS.has(target.hostname) || target.username || target.password || (target.hostname === 'jobicy.com' && (target.port || !JOBICY_API_PATHS.has(target.pathname)))) throw new Error('Only approved public feed hosts can be fetched.');
   const fetcher = options.fetch || fetch; const attempts = options.maxAttempts || 3; const pause = options.sleep || sleep;
   for (let attempt = 0; attempt < attempts; attempt++) {
     let response: Response;
