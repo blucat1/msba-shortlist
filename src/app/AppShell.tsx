@@ -81,7 +81,8 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   }, [application, applicationDate, pendingKey, snapshot?.userId]);
   const promptedOnboarding = useRef<string | null>(null);
   useEffect(() => { if (mode === 'live' && snapshot?.userId && !snapshot.preferences.onboardingComplete && promptedOnboarding.current !== snapshot.userId) { promptedOnboarding.current = snapshot.userId; setSettings(true); } }, [mode, snapshot?.userId, snapshot?.preferences.onboardingComplete]);
-  return <NoticeContext.Provider value={toast}><div className="application">
+  return <NoticeContext.Provider value={toast}><div className="application landmarks-workspace">
+    <div className="workspace-scene" aria-hidden="true" />
     <a className="skip-link" href="#main-content">Skip to content</a>
     <div className="workspace-body">
       {mode === 'demo' && <div className="demo-banner"><span><span className="demo-dot" /> <strong>Demo</strong> — sample jobs; changes stay in this browser.</span><Link to="/opportunities">View live mode <ArrowUpRight size={13} /></Link></div>}
@@ -94,7 +95,7 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
         <nav className="desktop-navigation" aria-label="Main navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`} className={({ isActive }) => `desktop-nav-link ${isActive ? 'active' : ''}`}><Icon size={18} strokeWidth={1.8} aria-hidden="true" /><span>{label}</span></NavLink>)}</nav>
         <div className="topbar-actions">
           {mode === 'live' && !authId ? <button className="button button-primary small" onClick={() => void signInWithGoogle().catch(e => notify(e.message))}>Sign in with Google <ArrowRight size={15} aria-hidden="true" /></button> : <button className="button button-primary small" onClick={() => { if (requireUser()) setManual('new'); }}><Plus size={16} aria-hidden="true" /> Add opportunity</button>}
-          <button className="icon-button header-settings" aria-label="Settings" onClick={openSettings}><Settings2 size={20} aria-hidden="true" /></button>
+          <button className="icon-button header-settings" aria-label="Settings" onClick={openSettings}><Settings2 size={20} aria-hidden="true" /><span className="header-settings-label">Settings</span></button>
         </div>
       </header>
       {offline && <div className="offline-banner" role="status"><WifiOff size={16} /> You’re offline. {mode === 'demo' ? 'Your demo changes still stay in this browser.' : 'Cloud changes need a connection. Retry when you’re back online.'}</div>}
@@ -106,7 +107,7 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
           <OpportunityForm open={manual !== null} opportunity={manual && manual !== 'new' ? manual : undefined} onClose={() => setManual(null)} />
         </WorkspaceContext.Provider>}
       </main>
-      <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><a href="/licenses/liquid-glass-studio.txt" target="_blank" rel="noopener noreferrer">Credits</a><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
+      <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><a href="/licenses/" target="_blank" rel="noopener noreferrer">Credits</a><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
     </div>
     <nav className="mobile-nav studio-surface" aria-label="Mobile navigation"><StudioGlass tone="chrome" />{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} /><span>{label}</span></NavLink>)}<button onClick={openSettings} aria-label="Settings"><Settings2 size={21} aria-hidden="true" /><span>Settings</span></button></nav>
     <InformationDialog kind={information} sources={snapshot?.sources ?? []} snapshot={snapshot} onClose={() => setInformation(null)} />
