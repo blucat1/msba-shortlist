@@ -37,6 +37,8 @@ Opportunities includes **Search the market**, with editable searches on Google, 
 
 The registry includes 37 verified employer boards and the Jobicy remote market feed; ID.me’s university board and WisdomTree remain disabled pending, respectively, stronger official linkage and resolution of a source-use restriction. Current source/import counts and release checks are dated in [TEST_REPORT.md](docs/TEST_REPORT.md). Broad source or employer totals are never presented as graduate-job counts. Owner-only releases remain active; no teammates have been invited.
 
+The hosted acceptance on **October 22, 2026 at 07:43 UTC** found **459 retained supported records**, **15 default listings in 14 groups across 8 companies**, and **3 confirmed-zero listings**. All **38 enabled source imports** succeeded. These are dated connected-catalog counts, not the entire market or a promise that every requirement matches an individual applicant.
+
 ## Experience focus
 
 Live discovery defaults to **New grad & 0–1 years**: explicit graduate/entry-level hiring or a supported 0–1-year required minimum. A one-year requirement is labeled honestly and remains an experience stretch for someone with zero years. Missing years never mean zero; Associate/APM, Junior and generic Early Career titles alone do not verify graduate eligibility. Conditional degree/experience paths remain **Experience unverified**.
