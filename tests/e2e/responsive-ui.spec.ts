@@ -55,7 +55,7 @@ test('critical discovery, tracker and Insights text stays readable across suppor
       await expect(navigation.getByRole('link')).toHaveCount(3);
       for (const action of await navigation.locator('a,button').all()) await expectTouchTarget(action);
       await page.goto('/demo/opportunities');
-      await page.getByRole('button', { name: 'Filters', exact: true }).click();
+      await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
       const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
       const family = filters.getByLabel('Role family', { exact: true });
       await family.selectOption('business-intelligence');

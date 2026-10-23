@@ -94,7 +94,7 @@ test('matching modes keep filters independent and resume-only pauses rather than
   await expect(page.locator('.resume-session-status')).toContainText('Not used in results');
   await method.selectOption('combined');
   await page.getByLabel('Search opportunities', { exact: true }).fill('NO_MATCH_QUERY_48219');
-  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
   const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
   await filters.getByLabel('Role family', { exact: true }).selectOption('machine-learning');
   await filters.getByLabel('Experience focus', { exact: true }).selectOption('zero-experience');
@@ -121,7 +121,7 @@ test('matching modes keep filters independent and resume-only pauses rather than
   await expect(page.locator('.job-card')).toHaveCount(0);
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveValue('NO_MATCH_QUERY_48219');
   await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
-  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
   await expect(filters.getByLabel('Role family', { exact: true })).toHaveValue('machine-learning');
   await expect(filters.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
   await page.keyboard.press('Escape');

@@ -15,7 +15,7 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
   const dismissedTitle = await page.locator('.job-card').first().locator('h3').innerText();
   await page.locator('.job-card').first().getByRole('button', { name: `Dismiss ${dismissedTitle}`, exact: true }).click();
   await expect(page.locator('.job-card').filter({ hasText: dismissedTitle })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
   const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
   await filters.locator('.filter-advanced > summary').click();
   await filters.locator('summary').filter({ hasText: /^Listing options/ }).click();
@@ -204,6 +204,6 @@ test('wider market search preserves queries, labels unverified results, and trac
     await page.setViewportSize({ width, height: 960 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
-  await page.getByRole('button', { name: 'Shortlist', exact: false }).click();
+  await page.getByRole('button', { name: 'Top matches for you', exact: true }).click();
   await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('new-grad');
 });
