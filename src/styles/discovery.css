@@ -7,6 +7,7 @@
 .opportunities-page .search-profile-button { min-height: 52px; padding: 12px 20px; font-size: 1rem; }
 .opportunities-page .results-header { padding-bottom: 16px; }
 .opportunities-page .view-tabs > button { min-height: 50px; padding: 12px 22px; font-size: 1rem; }
+.opportunities-page .view-tabs .match-tab-tail { background: none; color: inherit; font: inherit; }
 .discovery-workbench { padding: 16px; border: 1px solid #e0e6ef; border-radius: 24px; background: rgba(255,255,255,.88); box-shadow: 0 4px 18px #31477906; }
 .discovery-workbench .discovery-filters { display: grid; grid-template-columns: minmax(0,1fr) auto; margin: 0; gap: 12px; }
 .discovery-workbench .search-box { min-height: 58px; background: #f5f7fb; border-radius: 16px; box-shadow: none; border: 1px solid transparent; }
@@ -126,6 +127,7 @@
   .discovery-options-row { gap: 10px; }
 }
 @media (max-width: 600px) {
+  .opportunities-page .view-tabs .match-tab-tail, .matches-action-tail { display: none; }
   .opportunities-page { padding-top: 22px; }
   .opportunities-page > .page-heading { margin-bottom: 18px; gap: 10px; }
   .opportunities-page > .page-heading h1 { font-size: 2rem; }
@@ -166,6 +168,8 @@
 
 @media (max-width: 370px) {
   .discovery-workbench .filter-button > span:not(.filter-count) { display: none; }
+  .opportunities-page .view-tabs > button:first-child { flex: 1.25; }
+  .discovery-workbench .match-adjust > span:not(.filter-count) { display: inline; }
   .discovery-workbench .resume-open { width: 54px; min-width: 54px; padding: 12px; }
   .discovery-workbench .resume-open > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }

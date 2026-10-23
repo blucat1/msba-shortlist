@@ -1,5 +1,11 @@
 # Observed implementation checks
 
+## Top matches wording — October 23, 2026 UTC
+
+Renamed the personalized Shortlist tab to **Top matches for you** and its existing filter action to **Adjust matches**. Phone labels shorten to Top matches and Adjust while their full accessible names remain. All listings retains its current Filters action and discovery behavior; no domain or backend behavior changed.
+
+Observed local verification: **447/447 unit tests**, lint, strict TypeScript and production build passed. **Four targeted Chromium workflows** passed: responsive text/controls across supported widths, independent resume/filter modes, save/dismiss/restore/filter/deep-link persistence, and navigation to/from wider market search. Existing assertions were retained with the updated accessible control names. A 20-state screenshot audit at 1440/768/390/320 px found no clipped labels, horizontal overflow or JavaScript errors; tabs and adjustment controls measured at least 48 px. Adjust changed and retained experience filtering, while a fresh All listings view kept its original all-experience defaults. Required CI and deployed acceptance are recorded in the release pull request after execution.
+
 ## Discovery interface simplification — October 22, 2026 UTC
 
 The owner reported that the released screen was wordy and cluttered. Search, Filters, the matching method and Resume now share one compact panel. Duplicate profile/date rows, method paragraphs, filter chips and broadening prompts were removed from the initial view; profile settings, coverage and evidence remain accessible. Main discovery controls are 48–58 px tall. Phones use the same matching selector and keep experience in Filters. The filter dialog opens with five common fields; multiple selections, source/date/pay controls and labeled scope exceptions remain under More filters with configured counts. Parsing checks and detailed compatibility evidence are expandable, while known conflicts, coverage and file warnings remain visible. The resume-only empty state no longer refers to paused new-grad filters.
