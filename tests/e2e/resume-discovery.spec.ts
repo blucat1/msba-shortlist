@@ -3,12 +3,13 @@ import { fileURLToPath } from 'node:url';
 
 const fixture = (name: string) => fileURLToPath(new URL(`../fixtures/resume/${name}`, import.meta.url));
 const privateMarkers = ['RESUME_ONLY_SYNTHETIC_9517', 'resume-synthetic-9517@example.test', 'private-synthetic-9517'];
-const reviewName = 'I reviewed this profile. Use it for optional role comparisons in this tab.';
+const reviewName = 'I reviewed this profile. Use it for matches in this tab.';
 
 async function openResume(page: Page) {
   await page.locator('.resume-open').click();
   const dialog = page.getByRole('dialog', { name: 'Resume & ATS review', exact: true });
   await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAccessibleDescription(/.+/);
   return dialog;
 }
 async function importText(page: Page) {
@@ -56,7 +57,7 @@ test('TXT analysis requires explicit review, remains private and is cleared by r
   const requests: { url: string; method: string; body: string }[] = [];
   page.on('request', request => requests.push({ url: request.url(), method: request.method(), body: request.postData() || '' }));
   await reviewedResume(page);
-  await expect(page.getByRole('group', { name: 'Choose matching method' }).getByRole('button', { name: 'Resume + filters', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('combobox', { name: 'Matching method', exact: true })).toHaveValue('combined');
   await expect(page.locator('.job-card .resume-score strong').first()).toHaveText(/\d+\/100/);
   const stored = await page.evaluate(() => JSON.stringify({ local: Object.entries(localStorage), session: Object.entries(sessionStorage) }));
   for (const marker of privateMarkers) {
@@ -86,19 +87,23 @@ test('TXT analysis requires explicit review, remains private and is cleared by r
 test('matching modes keep filters independent and resume-only pauses rather than discards the saved URL', async ({ page }) => {
   test.setTimeout(60_000);
   await reviewedResume(page);
-  const modes = page.getByRole('group', { name: 'Choose matching method' });
-  await modes.getByRole('button', { name: 'Filters only', exact: true }).click();
+  const method = page.getByRole('combobox', { name: 'Matching method', exact: true });
+  await method.selectOption('filters');
   expect(await page.locator('.job-card').count()).toBeGreaterThan(0);
   await expect(page.locator('.resume-compatibility')).toHaveCount(0);
   await expect(page.locator('.resume-session-status')).toContainText('Not used in results');
-  await modes.getByRole('button', { name: 'Resume + filters', exact: true }).click();
+  await method.selectOption('combined');
   await page.getByLabel('Search opportunities', { exact: true }).fill('NO_MATCH_QUERY_48219');
-  await page.getByLabel('Role family', { exact: true }).selectOption('machine-learning');
-  await page.getByLabel('Experience focus', { exact: true }).selectOption('zero-experience');
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
+  await filters.getByLabel('Role family', { exact: true }).selectOption('machine-learning');
+  await filters.getByLabel('Experience focus', { exact: true }).selectOption('zero-experience');
+  await filters.getByRole('button', { name: 'Show opportunities', exact: true }).click();
+  await expect(filters).toHaveCount(0);
   await expect(page.locator('.job-card')).toHaveCount(0);
   expect(await listingCount(page)).toBe(0);
   const saved = new URL(page.url()).searchParams;
-  await modes.getByRole('button', { name: 'Resume only', exact: true }).click();
+  await method.selectOption('resume');
   await expect(page.locator('.filters-paused')).toContainText('all experience levels');
   const resumed = new URL(page.url()).searchParams;
   for (const key of ['q', 'role', 'career']) expect(resumed.get(key)).toBe(saved.get(key));
@@ -112,11 +117,14 @@ test('matching modes keep filters independent and resume-only pauses rather than
     expect(Number(ranked[index].conflict)).toBeGreaterThanOrEqual(Number(ranked[index - 1].conflict));
     if (ranked[index].conflict === ranked[index - 1].conflict) expect(ranked[index].score).toBeLessThanOrEqual(ranked[index - 1].score);
   }
-  await modes.getByRole('button', { name: 'Resume + filters', exact: true }).click();
+  await method.selectOption('combined');
   await expect(page.locator('.job-card')).toHaveCount(0);
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveValue('NO_MATCH_QUERY_48219');
-  await expect(page.getByLabel('Role family', { exact: true })).toHaveValue('machine-learning');
   await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
+  await expect(filters.getByLabel('Role family', { exact: true })).toHaveValue('machine-learning');
+  await expect(filters.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
+  await page.keyboard.press('Escape');
 });
 
 for (const extension of ['pdf', 'docx'] as const) test(`the real lazy ${extension.toUpperCase()} parser extracts a synthetic document before explicit analysis`, async ({ page }) => {
@@ -188,7 +196,7 @@ test('phone resume review keeps text and controls within the dialog and keyboard
       await action.scrollIntoViewIfNeeded(); const bounds = await action.boundingBox();
       expect(bounds!.width).toBeGreaterThanOrEqual(44); expect(bounds!.height).toBeGreaterThanOrEqual(44);
     }
-    const clipped = await dialog.locator('h2,h3,p,label,.resume-file-summary').evaluateAll(elements => elements.filter(element => element.getClientRects().length && element.clientWidth > 0 && element.scrollWidth > element.clientWidth + 1).map(element => element.tagName));
+    const clipped = await dialog.locator('h2,h3,p,label,.resume-file-summary').evaluateAll(elements => elements.filter(element => !element.closest('.sr-only') && element.getClientRects().length && element.clientWidth > 0 && element.scrollWidth > element.clientWidth + 1).map(element => ({ tag: element.tagName, text: element.textContent, width: element.clientWidth, scrollWidth: element.scrollWidth })));
     expect(clipped).toEqual([]);
     const close = dialog.getByRole('button', { name: 'Close dialog', exact: true });
     await close.focus();

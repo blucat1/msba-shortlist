@@ -16,7 +16,10 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
   await page.locator('.job-card').first().getByRole('button', { name: `Dismiss ${dismissedTitle}`, exact: true }).click();
   await expect(page.locator('.job-card').filter({ hasText: dismissedTitle })).toHaveCount(0);
   await page.getByRole('button', { name: 'Filters', exact: true }).click();
-  await page.getByLabel('Show saved & dismissed roles').check();
+  const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
+  await filters.locator('.filter-advanced > summary').click();
+  await filters.locator('summary').filter({ hasText: /^Listing options/ }).click();
+  await filters.getByLabel('Show saved & dismissed roles').check();
   await page.getByRole('button', { name: 'Show opportunities', exact: true }).click();
   await page.getByLabel('Search opportunities').fill(dismissedTitle);
   await expect(page.locator('.job-card')).toHaveCount(1);
@@ -27,7 +30,7 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
   await expect(page.getByRole('dialog')).toContainText(dismissedTitle);
   expect(deepLink).toContain('job=');
   await page.keyboard.press('Escape');
-  await page.getByRole('button', { name: 'Reset', exact: true }).click();
+  await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
   await expect(page.locator('.job-card').first()).toBeVisible();
 });
 
