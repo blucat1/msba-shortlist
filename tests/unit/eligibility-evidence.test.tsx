@@ -51,8 +51,8 @@ describe('visible eligibility evidence', () => {
     const save = vi.spyOn(repository, 'saveOpportunity');
     render(<QueryClientProvider client={new QueryClient()}><MemoryRouter initialEntries={['/demo/opportunities']}><WorkspaceContext.Provider value={context}><Opportunities /></WorkspaceContext.Provider></MemoryRouter></QueryClientProvider>);
     expect(screen.getByText(/2 listings in 1 group/)).toBeVisible();
-    expect(screen.getByRole('region', { name: 'Your graduation and availability' })).toHaveTextContent('May 15, 2027');
-    await user.click(screen.getByText(/2 listings.*matching recorded requirements/));
+    expect(screen.getByRole('button', { name: 'Preferences' })).toBeVisible();
+    await user.click(screen.getByText(/2 listings.*more locations or requisitions/));
     const variants = document.querySelector('.listing-variants')!;
     await user.click(within(variants as HTMLElement).getByRole('button', { name: `Save ${second.title}` }));
     expect(save.mock.calls[0][0].catalogJobId).toBe(second.id);
@@ -62,7 +62,7 @@ describe('visible eligibility evidence', () => {
     expect(document.querySelectorAll('.listing-variants')).toHaveLength(0);
     expect(screen.getByText('2 listings', { exact: true })).toBeVisible();
     expect(screen.getAllByRole('article')).toHaveLength(2);
-    await user.click(screen.getByRole('button', { name: 'Edit timing & profile' }));
+    await user.click(screen.getByRole('button', { name: 'Preferences' }));
     expect(context.showSettings).toHaveBeenCalledOnce();
   });
 });

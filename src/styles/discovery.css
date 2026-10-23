@@ -1,20 +1,56 @@
 /* Discovery controls share the Landmarks workspace's type and material. */
-.matching-toolbar { margin: 0 0 14px; padding: 12px 14px; border: 1px solid #fff; border-radius: 22px; background: rgba(250,252,255,.8); }
-.matching-toolbar-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.matching-mode-mobile { display: none; }
-.matching-mode-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 3px; padding: 3px; background: #e9effa; border-radius: 999px; }
-.matching-mode-options > button { min-height: 44px; padding: 9px 14px; border: 0; border-radius: 999px; color: #40516b; background: transparent; font-size: .875rem; line-height: 1.4; font-weight: 500; }
-.matching-mode-options > button.selected { background: #fff; color: #174ea6; box-shadow: 0 2px 6px #294a7920; }
-.matching-mode-options > button:hover:not(.selected) { background: #f6f9ff; }
-.matching-mode-help, .resume-session-status { margin: 8px 0 0; color: #505c70; font-size: .875rem; line-height: 1.6; }
-.resume-session-status { color: #315280; }
-.resume-open { flex-shrink: 0; min-height: 44px; font-size: .875rem; }
-.filters-paused, .broaden-search { display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; color: #505c70; font-size: .875rem; line-height: 1.6; }
-.filters-paused { padding: 10px 14px; border-radius: 18px; background: #f5f8fe; border: 1px solid #dde5f1; }
-.broaden-search { justify-content: flex-start; margin: 0 0 4px; }
+/* A single search surface, with secondary information disclosed on demand. */
+.workspace-scene { opacity: .4; }
+.opportunities-page { padding-top: 34px; }
+.opportunities-page > .page-heading { margin-bottom: 22px; }
+.opportunities-page > .page-heading h1 { font-size: clamp(2rem, 3.1vw, 2.75rem); }
+.opportunities-page .search-profile-button { min-height: 52px; padding: 12px 20px; font-size: 1rem; }
+.opportunities-page .results-header { padding-bottom: 16px; }
+.opportunities-page .view-tabs > button { min-height: 50px; padding: 12px 22px; font-size: 1rem; }
+.discovery-workbench { padding: 16px; border: 1px solid #e0e6ef; border-radius: 24px; background: rgba(255,255,255,.88); box-shadow: 0 4px 18px #31477906; }
+.discovery-workbench .discovery-filters { display: grid; grid-template-columns: minmax(0,1fr) auto; margin: 0; gap: 12px; }
+.discovery-workbench .search-box { min-height: 58px; background: #f5f7fb; border-radius: 16px; box-shadow: none; border: 1px solid transparent; }
+.discovery-workbench .search-box:focus-within { border-color: #97b4e5; background: #fff; }
+.discovery-workbench .search-box input { min-height: 54px; font-size: 1.0625rem; }
+.discovery-workbench .filter-button { min-height: 58px; padding: 14px 24px; border-radius: 16px; font-size: 1rem; gap: 10px; }
+.discovery-workbench .filter-count { font-size: .875rem; min-width: 22px; }
+.discovery-options-row { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr) auto; align-items: end; gap: 14px; margin-top: 14px; }
+.discovery-options-row > :first-child.matching-toolbar { grid-column: 1 / 3; }
+.discovery-options-row .experience-controls, .matching-toolbar { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.discovery-options-row label { display: block; color: #586479; font-size: .875rem; line-height: 1.4; font-weight: 500; padding-left: 2px; }
+.discovery-options-row .experience-controls > select, .matching-mode-mobile { display: block; width: 100%; max-width: 100%; min-width: 0; min-height: 54px; padding: 12px 36px 12px 14px; border: 1px solid #dce3ee; border-radius: 14px; background: #fff; font-size: 1rem; color: #293a54; font-weight: 500; }
+.discovery-workbench .resume-open { min-height: 54px; padding: 12px 20px; border-radius: 14px; font-size: 1rem; gap: 8px; }
+.resume-ready { color: #245947; }
+.resume-session-status { margin: 12px 0 0; color: #505c70; font-size: .875rem; line-height: 1.5; }
+.filters-paused { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px 12px; color: #505c70; font-size: .875rem; line-height: 1.6; margin-top: 10px; }
+.results-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0 12px; margin: 14px 0; }
+.results-bar .listing-count { margin: 0; color: #35445b; font-size: 1rem; font-weight: 500; }
+.results-bar-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 14px; }
+.results-bar .sort-select { min-height: 48px; min-width: 0; max-width: 205px; padding: 10px 30px 10px 12px; border: 0; background-color: transparent; font-size: 1rem; }
+.results-bar .text-link { font-size: .875rem; }
+.results-footer { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin-top: 24px; border-top: 1px solid #e3e8f0; padding-top: 12px; font-size: .875rem; }
+.results-footer > .text-link { min-height: 48px; }
+.results-footer .experience-explainer { margin: 0; max-width: 100%; font-size: .875rem; }
+.results-footer .experience-explainer > summary { display: flex; align-items: center; gap: 8px; min-height: 48px; cursor: pointer; color: #505c70; }
+.results-footer .experience-explainer > summary::before { content: none; }
+.results-footer .experience-explainer > summary > svg { display: block; }
+.results-footer .experience-explainer[open] { flex: 1 1 100%; }
+.results-footer .experience-explainer p { max-width: 72ch; line-height: 1.65; }
+.opportunities-page .bookmark-button { min-width: 48px; min-height: 48px; }
+.opportunities-page .job-actions .button { min-height: 50px; padding: 12px 20px; font-size: 1rem; }
+.opportunities-page .application-link { min-width: 48px; min-height: 48px; }
+.opportunities-page .job-bottom { align-items: center; }
+.discovery-filter-fields .button, .resume-workspace .button { min-height: 52px; padding: 12px 20px; font-size: 1rem; }
+.discovery-filter-fields .filter-presets { padding-bottom: 8px; }
+.discovery-filter-fields .field > label { font-size: 1rem; }
+.discovery-filter-fields .filter-advanced > summary { font-size: 1rem; font-weight: 500; min-height: 54px; }
+.filter-advanced[open] > .filter-section { margin-left: 8px; }
+.modal:has(.discovery-filter-fields) .dialog-actions { position: sticky; bottom: -28px; padding: 16px 0 10px; z-index: 2; background: #fbfdff; gap: 12px; }
+.modal:has(.discovery-filter-fields) .dialog-actions > .button { min-height: 54px; padding: 12px 24px; font-size: 1rem; }
 .filter-error, .expanded-catalog-status { padding: 12px 14px; font-size: .875rem; line-height: 1.6; border-radius: 14px; background: #f1f5fd; border: 1px solid #dce4f1; margin: 10px 0; overflow-wrap: anywhere; }
 .filter-error { color: #8d3030; background: #fff4f1; border-color: #f0d4cd; }
-.discovery-filter-fields .filter-form { gap: 16px; }
+.discovery-filter-fields .filter-form { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; }
+.discovery-filter-fields > .filter-form > .field:nth-child(3) { grid-column: 1 / -1; }
 .discovery-filter-fields .filter-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .discovery-filter-fields fieldset, .resume-role-interests fieldset { min-width: 0; border: 0; padding: 0; margin: 18px 0 8px; }
 .discovery-filter-fields legend, .resume-role-interests legend { padding: 0; margin-bottom: 10px; font-size: .875rem; font-weight: 550; color: #354762; }
@@ -25,11 +61,13 @@
 .discovery-filter-fields .checkbox-label, .resume-workspace .checkbox-label { min-height: 44px; padding: 8px 0; font-size: .875rem; line-height: 1.6; align-items: flex-start; }
 .discovery-filter-fields .checkbox-label input, .resume-workspace .checkbox-label input { margin-top: 4px; flex-shrink: 0; }
 .discovery-filter-fields .field, .resume-workspace .field { min-width: 0; }
-.discovery-filter-fields :is(input:not([type=checkbox]),select,textarea), .resume-workspace :is(input:not([type=checkbox]),select,textarea) { max-width: 100%; width: 100%; min-width: 0; min-height: 46px; font-size: 1rem; }
+.discovery-filter-fields :is(input:not([type=checkbox]),select,textarea), .resume-workspace :is(input:not([type=checkbox]),select,textarea) { max-width: 100%; width: 100%; min-width: 0; min-height: 52px; font-size: 1rem; }
 .discovery-filter-fields input[type=checkbox], .resume-workspace input[type=checkbox] { width: 18px; height: 18px; min-height: 18px; flex-shrink: 0; }
 .discovery-filter-fields .hint, .resume-workspace .hint, .resume-workspace small { font-size: .875rem; line-height: 1.65; color: #505c70; }
 .resume-workspace { min-width: 0; font-size: 1rem; line-height: 1.6; }
-.resume-privacy { margin: 0 0 18px; padding: 14px 16px; border-radius: 16px; background: #ecf3ff; color: #304d75; font-size: .875rem; line-height: 1.65; }
+.resume-privacy { margin: 0 0 2px; color: #40516b; font-size: 1rem; line-height: 1.6; }
+.resume-privacy-details { margin: 0 0 18px; font-size: .875rem; }
+.resume-parsing-details { margin-top: 8px; }
 .resume-import-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .resume-file-control { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; font-size: .9375rem; }
 .resume-import-controls input[type=file] { flex: 1 1 260px; width: 100%; min-width: 0; max-width: 100%; padding: 4px; border: 1px solid #b6c3d8; border-radius: 13px; background: #fff; font-size: 1rem; }
@@ -38,7 +76,7 @@
 .resume-file-summary svg { flex-shrink: 0; margin-top: 3px; }
 .resume-text-review { margin-top: 18px; }
 .resume-text-review textarea { max-height: 320px; resize: vertical; padding: 14px; line-height: 1.6; }
-.resume-report, .resume-profile-review { margin-top: 28px; padding-top: 22px; border-top: 1px solid #dce3ee; }
+.resume-report, .resume-profile-review { margin-top: 22px; padding-top: 18px; border-top: 1px solid #dce3ee; }
 .resume-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; }
 .resume-workspace h3 { margin: 0 0 8px; font-size: 1.25rem; font-weight: 550; }
 .resume-section-heading > span { font-size: .875rem; color: #505c70; }
@@ -83,14 +121,38 @@
 .scope-warning p { margin: 4px 0 0; }
 .active-filters .filter-chip { white-space: normal; text-align: left; overflow-wrap: anywhere; max-width: 100%; }
 .active-filters .filter-chip > svg { flex-shrink: 0; }
-@media (max-width: 1100px) { .matching-toolbar-top { flex-wrap: wrap; } }
+@media (max-width: 1100px) {
+  .discovery-workbench .resume-open { padding-inline: 14px; }
+  .discovery-options-row { gap: 10px; }
+}
 @media (max-width: 600px) {
-  .matching-toolbar { padding: 10px; border-radius: 20px; }
-  .matching-toolbar-top { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; }
-  .matching-mode-options { display: none; }
-  .matching-mode-mobile { display: block; width: 100%; min-width: 0; min-height: 46px; padding: 10px 28px 10px 10px; border-radius: 13px; border-color: #cbd7e9; background: #fff; font-size: 1rem; color: #304765; }
-  .resume-open { width: auto; justify-content: center; padding-inline: 12px; }
-  .matching-mode-help { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .opportunities-page { padding-top: 22px; }
+  .opportunities-page > .page-heading { margin-bottom: 18px; gap: 10px; }
+  .opportunities-page > .page-heading h1 { font-size: 2rem; }
+  .opportunities-page .search-profile-button { width: 48px; min-width: 48px; min-height: 48px; padding: 12px; gap: 0; }
+  .opportunities-page .search-profile-button > span { display: none; }
+  .opportunities-page .search-profile-button svg { width: 20px; height: 20px; }
+  .opportunities-page .results-header { padding-bottom: 12px; }
+  .opportunities-page .results-header .view-tabs > button { min-height: 48px; padding: 10px 7px; font-size: .9375rem; }
+  .discovery-workbench { padding: 12px; border-radius: 20px; }
+  .discovery-workbench .discovery-filters { gap: 8px; }
+  .discovery-workbench .search-box { min-height: 54px; padding-inline: 12px; }
+  .discovery-workbench .search-box input { min-height: 50px; font-size: 1rem; }
+  .discovery-workbench .filter-button { min-width: 54px; min-height: 54px; padding: 12px; gap: 6px; }
+  .discovery-workbench .filter-button > span:not(.filter-count) { display: inline; }
+  .discovery-options-row { grid-template-columns: minmax(0,1fr) auto; margin-top: 12px; gap: 10px; }
+  .discovery-options-row .experience-controls { display: none; }
+  .discovery-filter-fields .filter-form { grid-template-columns: minmax(0,1fr); gap: 18px; }
+  .discovery-options-row > :first-child.matching-toolbar { grid-column: 1; }
+  .discovery-workbench .resume-open { padding-inline: 16px; }
+  .results-bar { margin: 10px 0 14px; gap: 0 6px; }
+  .results-bar .sort-select { max-width: 160px; padding-inline: 4px 25px; font-size: .9375rem; }
+  .results-bar .listing-count { font-size: .9375rem; }
+  .results-bar-actions { gap: 0 6px; }
+  .results-bar .clear-search-filters { padding-inline: 4px; }
+  .results-footer .experience-explainer { width: auto; padding: 0; }
+  .results-footer .experience-explainer > summary { width: auto; border-radius: 0; background: transparent; padding: 0; }
+  .results-footer .experience-explainer > summary > span { display: inline; }
   .filter-options, .resume-check-list, .resume-confirmed-fields, .resume-evidence-columns, .resume-role-interests fieldset { grid-template-columns: minmax(0,1fr); }
   .resume-confirmed-fields .field:last-child { grid-column: 1; }
   .resume-import-controls { flex-direction: column; align-items: stretch; }
@@ -98,7 +160,12 @@
   .resume-import-controls .button { width: 100%; }
   .resume-score-method dl > div { grid-template-columns: minmax(0,1fr); gap: 4px; }
   .resume-workspace .button { white-space: normal; }
-  .broaden-search { align-items: flex-start; gap: 0 8px; }
-  .broaden-search > span { display: none; }
+  .modal:has(.discovery-filter-fields) .dialog-actions { bottom: -24px; }
 }
-@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active) { .matching-toolbar { background: #fff; border-color: #dce3ee; } }
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more), (forced-colors: active) { .discovery-workbench { background: #fff; border-color: #dce3ee; } }
+
+@media (max-width: 370px) {
+  .discovery-workbench .filter-button > span:not(.filter-count) { display: none; }
+  .discovery-workbench .resume-open { width: 54px; min-width: 54px; padding: 12px; }
+  .discovery-workbench .resume-open > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}

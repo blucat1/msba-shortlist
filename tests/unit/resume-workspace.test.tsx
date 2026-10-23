@@ -16,7 +16,7 @@ async function pasteAndAnalyze() {
   fireEvent.change(screen.getByRole('textbox', { name: 'Or paste your resume text' }), { target: { value: text } });
   await userEvent.click(screen.getByRole('button', { name: 'Analyze resume' }));
 }
-const confirmation = () => screen.getByRole('checkbox', { name: /I reviewed this profile/ });
+const confirmation = () => screen.getByRole('checkbox', { name: 'I reviewed this profile. Use it for matches in this tab.' });
 
 describe('explicit local resume review', () => {
   it('focuses and reveals the completed report after explicit analysis without confirming the profile', async () => {
@@ -42,6 +42,10 @@ describe('explicit local resume review', () => {
     expect(screen.queryByRole('heading', { name: 'Local resume report' })).not.toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Analyze resume' }));
     expect(screen.getByRole('heading', { name: 'Local resume report' })).toBeVisible();
+    const parsingReport = screen.getByText(/^Parsing report ·/);
+    expect(parsingReport.closest('details')).not.toHaveAttribute('open');
+    expect(screen.getByText('Specific achievement evidence')).not.toBeVisible();
+    await userEvent.click(parsingReport);
     expect(screen.getByText('Specific achievement evidence')).toBeVisible();
     expect(screen.getByText(/not an employer ATS test/)).toBeVisible();
     expect(screen.getByRole('textbox', { name: 'Skills to compare' })).toHaveValue('sql, python, tableau');
