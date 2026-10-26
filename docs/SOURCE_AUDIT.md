@@ -2,6 +2,8 @@
 
 # Source audit
 
+Latest employer-only verification: [October 26 expansion audit](SOURCE_AUDIT.employer-boards.md), with all 73 employer boards passing. The current registry also retains Jobicy (74 enabled feeds total); this employer-only check did not poll Jobicy. Current live import/count evidence is recorded in [TEST_REPORT.md](TEST_REPORT.md). The combined-source report below is retained as dated historical evidence.
+
 This is the earlier direct audit of the 29 employer boards. The later 30-source production refresh, including the Jobicy market window, is recorded with actual import and browser evidence in [TEST_REPORT.md](TEST_REPORT.md). Jobicy was not polled again just to regenerate this document; production and verification must share its maximum hourly synchronization cadence.
 
 Actual public-feed verification at **2026-10-21T10:10:42.922Z** using `npm run sources:verify`. **29/29** configured sources returned complete, schema-valid snapshots. This report is generated from real public requests, without fixtures. Source verification does not write or verify the production Supabase catalog. Counts change as employers publish and close roles.

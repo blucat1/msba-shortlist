@@ -12,6 +12,13 @@ async function adjust(page: Page) {
   return dialog;
 }
 async function titles(page: Page) { return page.locator('.job-card h3').allTextContents(); }
+async function expectInitialRecommendations(page: Page) {
+  const summary = page.locator('.rec-page-count');
+  await expect(summary).toContainText(/^Showing \d+ of \d+ role groups$/);
+  const total = Number((await summary.innerText()).match(/ of (\d+) role groups$/)?.[1]);
+  await expect(page.locator('.job-card')).toHaveCount(Math.min(25, total));
+  return total;
+}
 async function update(page: Page) {
   const dialog = page.getByRole('dialog', { name: 'Adjust recommendations', exact: true });
   await dialog.getByRole('button', { name: 'Update matches', exact: true }).click();
@@ -24,22 +31,26 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Top matches for you', exact: true, level: 1 })).toBeVisible();
 });
 
-test('Shortlist starts with five ranked matches and recorded reasons, then reveals five more', async ({ page }) => {
+test('Shortlist shows new grads first with early-career roles included without repeated show-more clicks', async ({ page }) => {
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveCount(0);
   await expect(page.getByLabel('Matching method', { exact: true })).toHaveCount(0);
-  await expect(page.locator('.job-card')).toHaveCount(5);
-  const total = Number((await page.locator('.listing-count').innerText()).match(/^\d+/)?.[0]);
+  const total = await expectInitialRecommendations(page);
   expect(total).toBeGreaterThan(5);
-  for (const tier of ['experienced', 'early-career', 'unverified']) await expect(page.locator(`.job-card .experience-evidence.${tier}`)).toHaveCount(0);
+  expect(total).toBeLessThanOrEqual(25);
+  await expect(page.locator('.listing-count')).toBeVisible();
+  await expect(page.locator('.listing-count')).toContainText(/\d+ listings in \d+ groups · [\d,]+ catalog records/);
+  await expect(page.getByRole('button', { name: 'Show more recommendations', exact: true })).toHaveCount(0);
+  for (const tier of ['experienced', 'unverified']) await expect(page.locator(`.job-card .experience-evidence.${tier}`)).toHaveCount(0);
+  const tiers = await page.locator('.job-card .experience-evidence').evaluateAll(elements => elements.map(element => element.classList.contains('new-grad') ? 'new-grad' : 'early-career'));
+  const firstEarlyCareer = tiers.indexOf('early-career');
+  expect(firstEarlyCareer).toBeGreaterThan(0);
+  expect(tiers.slice(0, firstEarlyCareer).every(tier => tier === 'new-grad')).toBe(true);
+  expect(tiers.slice(firstEarlyCareer).every(tier => tier === 'early-career')).toBe(true);
+  await expect(page.getByText('New grads first · early career included', { exact: true })).toBeVisible();
   const reasons = page.locator('.recommendation-reasons').first();
   await expect(reasons).toBeVisible();
   await expect(reasons.locator('li').first()).toContainText(/matches|you listed|aligns|overlap|meets/i);
   await expect(reasons).not.toContainText(/outside your|differs from|experience stretch|missing/i);
-  const firstFive = await titles(page);
-  await page.getByRole('button', { name: 'Show more recommendations', exact: true }).click();
-  await expect(page.locator('.job-card')).toHaveCount(Math.min(10, total));
-  expect((await titles(page)).slice(0, 5)).toEqual(firstFive);
-  expect(Number((await page.locator('.listing-count').innerText()).match(/^\d+/)?.[0])).toBe(total);
 });
 
 test('recommendation edits preview without applying; Cancel discards and Update changes actual results', async ({ page }) => {
@@ -84,7 +95,7 @@ test('empty recommendations offer a draft reset while keeping All listings filte
   await reopened.getByRole('button', { name: 'Reset recommendations', exact: true }).click();
   expect(page.url()).toBe(beforeReset);
   await expect(reopened.getByLabel('Location', { exact: true })).toHaveValue('');
-  await expect(reopened.getByLabel('Experience', { exact: true })).toHaveValue('new-grad');
+  await expect(reopened.getByLabel('Experience', { exact: true })).toHaveValue('early-career');
   await update(page);
   await expect(page.locator('.job-card h3')).toHaveText(originalTitles);
   const params = new URL(page.url()).searchParams;
@@ -97,7 +108,7 @@ test('Shortlist preferences and matching mode stay independent from the All list
   await page.goto('/demo/opportunities?view=all&q=Principal&role=data-science&career=experienced&match=filters');
   await expect(page.locator('.job-card h3')).toHaveText(['Principal Data Scientist']);
   await page.getByRole('button', { name: 'Shortlist', exact: true }).click();
-  await expect(page.locator('.job-card')).toHaveCount(5);
+  await expectInitialRecommendations(page);
   const dialog = await adjust(page);
   await dialog.getByRole('checkbox', { name: 'Product analytics', exact: true }).check();
   await dialog.getByLabel('Location', { exact: true }).fill('San Francisco');
@@ -185,7 +196,7 @@ test('resume matching returns to the unchanged draft, requires review and suppor
   await expect(adjustment).toBeVisible();
   await expect(adjustment.getByRole('button', { name: /^Your resume/ })).toHaveAttribute('aria-pressed', 'true');
   expect(page.url()).toBe(originalUrl);
-  await expect(page.locator('.job-card')).toHaveCount(5);
+  await expectInitialRecommendations(page);
   await expect(page.locator('.resume-compatibility')).toHaveCount(0);
   await update(page);
   await expect(page.locator('.job-card .resume-score strong').first()).toHaveText(/\d+\/100/);
@@ -254,9 +265,9 @@ test('an empty preference profile uses an honest fallback instead of inventing p
     localStorage.setItem('msba-shortlist:demo:v1', JSON.stringify(envelope));
   });
   await page.reload();
-  await expect(page.locator('.job-card')).toHaveCount(5);
+  await expectInitialRecommendations(page);
   await expect(page.locator('.recommendation-reasons')).toHaveCount(0);
-  await expect(page.getByText('Profile requirements aren’t confirmed yet.', { exact: true })).toHaveCount(5);
+  await expect(page.getByText('Profile requirements aren’t confirmed yet.', { exact: true })).toHaveCount(await expectInitialRecommendations(page));
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();
   await page.goto('/demo/opportunities?rec-career=experienced');
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();

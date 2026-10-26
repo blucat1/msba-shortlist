@@ -1,7 +1,7 @@
 import type { EmploymentType, Evidence, Experience, Job, JobLocation, RoleFamily, SalaryBand, WorkArrangement } from '../domain/types';
 import { explicitGraduateTitle, isLeadershipTitle } from '../domain/experience';
 
-export const CLASSIFIER_VERSION = '2026-10-22.2';
+export const CLASSIFIER_VERSION = '2026-10-26.1';
 const QUANTITATIVE_CONSULTING = /\b(?:econometric|economic|statistical|quantitative|financial|data) (?:analysis|research|model(?:ing|s)?)|\b(?:Python|Stata|SAS|R programming|regression|econometrics|data analytics|statistical programs)\b/i;
 export const TAXONOMY: { family: RoleFamily; titles: RegExp; context?: RegExp }[] = [
   { family: 'product-management', titles: /\b(?:associate product manager|apm|product manager|technical product manager|product operations|product rotational)\b/i },
@@ -46,7 +46,7 @@ export function safePostingUrl(value: string | null | undefined): string | null 
 
 const US_CITIES = /\b(?:San Francisco|New York|New York City|NYC|Seattle|Austin|Boston|Chicago|Los Angeles|Denver|Atlanta|Washington,? DC|Washington D\.C\.|San Diego|San Jose|Palo Alto|Menlo Park|Mountain View|Sunnyvale|Redwood City|Bellevue|Portland,? OR|Philadelphia|Dallas|Miami|Salt Lake City)\b/i;
 const US_STATES = /(?:,|\bUS\s*-)\s*(?:AL|AK|AZ|AR|CA|CO|CT|DE|DC|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY)\b/;
-const FOREIGN = /\b(?:United Kingdom|London|Canada|Toronto|Vancouver|Montreal|Dublin|Ireland|India|Bengaluru|Bangalore|Germany|Berlin|France|Paris|Singapore|Australia|Sydney|Netherlands|Amsterdam|Japan|Tokyo|Israel|Tel Aviv|Brazil|Mexico|Poland|Warsaw|Spain|Barcelona|Serbia)\b/i;
+const FOREIGN = /\b(?:United Kingdom|London|Canada|Toronto|Vancouver|Montreal|Dublin|Ireland|India|Bengaluru|Bangalore|Germany|Berlin|France|Paris|Singapore|Australia|Sydney|Netherlands|Amsterdam|Japan|Tokyo|Israel|Tel Aviv|Brazil|Mexico|Poland|Warsaw|Spain|Barcelona|Serbia|China|Beijing|Shanghai)\b/i;
 
 export function location(label: string, country?: string | null, region?: string | null, city?: string | null): JobLocation {
   let normalized = country?.toUpperCase() || null;

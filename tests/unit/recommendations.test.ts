@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createDemoSnapshot } from '../../src/domain/fixtures';
 import { rankJob, type RankedJob } from '../../src/domain/ranking';
-import { recommendationHighlights } from '../../src/domain/recommendations';
+import { prioritizeNewGradRecommendations, recommendationHighlights } from '../../src/domain/recommendations';
 import { compareResumeToJob } from '../../src/domain/resume-matching';
 import type { ResumeProfile } from '../../src/domain/resume';
 import { DEFAULT_PREFERENCES, type Job, type Preferences } from '../../src/domain/types';
@@ -18,6 +18,36 @@ function job(changes: Partial<Job> = {}): Job {
 const preferences = (changes: Partial<Preferences> = {}): Preferences => ({ ...DEFAULT_PREFERENCES, graduationDate: null, graduationMonth: null, earliestStart: null, ...changes });
 const profile = (changes: Partial<ResumeProfile> = {}): ResumeProfile => ({ skills: ['SQL'], roleInterests: ['business-analytics'], yearsExperience: null, educationLevel: null, degreeField: null, ...changes });
 const row = (changes: Partial<Job> = {}, prefs: Partial<Preferences> = {}) => rankJob(job(changes), preferences(prefs), now);
+
+describe('new-grad-first recommendation ordering', () => {
+  it('prioritizes new grads while retaining the existing preference or resume order within each tier', () => {
+    const threeYears = row({ id: 'early-three', experience: { ...job().experience, minYears: 3 } });
+    const oneYear = row({ id: 'grad-one', experience: { ...job().experience, minYears: 1 } });
+    const twoYears = row({ id: 'early-two', experience: { ...job().experience, minYears: 2 } });
+    const zeroYears = row({ id: 'grad-zero' });
+    const input = [threeYears, oneYear, twoYears, zeroYears];
+    const before = JSON.stringify(input);
+    const ordered = prioritizeNewGradRecommendations(input, 'early-career');
+    expect(ordered.map(item => item.job.id)).toEqual(['grad-one', 'grad-zero', 'early-three', 'early-two']);
+    expect(ordered[0]).toBe(oneYear); expect(ordered[2]).toBe(threeYears);
+    expect(JSON.stringify(input)).toBe(before);
+  });
+
+  it('does not promote missing/conditional years, senior titles or explicit non-graduate roles as new grads', () => {
+    const uncertain = row({ id: 'unknown', experience: { ...job().experience, minYears: null } });
+    const conditional = row({ id: 'conditional', title: 'Graduate Analyst', experience: { ...job().experience, alternatives: ['Master’s + 0 years or bachelor’s + 3 years'] } });
+    const senior = row({ id: 'senior', title: 'Senior Analyst' });
+    const notGraduate = row({ id: 'not-grad', classification: { ...job().classification, reasons: [{ code: 'experience.not_new_grad', text: 'This is not a new-graduate role.' }] } });
+    const graduate = row({ id: 'graduate', title: 'Graduate Analyst', experience: { ...job().experience, minYears: null } });
+    const ordered = prioritizeNewGradRecommendations([uncertain, conditional, senior, notGraduate, graduate], 'early-career');
+    expect(ordered.map(item => item.job.id)).toEqual(['graduate', 'unknown', 'conditional', 'senior', 'not-grad']);
+  });
+
+  it.each(['new-grad', 'zero-experience', 'experienced', 'unverified', 'all'] as const)('preserves ranking for an explicitly selected %s view', view => {
+    const input = [row({ id: 'first', experience: { ...job().experience, minYears: 3 } }), row({ id: 'second' })];
+    expect(prioritizeNewGradRecommendations(input, view)).toEqual(input);
+  });
+});
 
 describe('shortlist evidence highlights without a new ranking', () => {
   it('selects at most two specific positives from actual role and skill overlap', () => {

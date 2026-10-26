@@ -1,5 +1,15 @@
 import type { MatchReason, RankedJob } from './ranking';
 import type { ResumeCompatibility } from './resume-matching';
+import { assessExperience, type ExperienceView } from './experience';
+
+/** Only the graduate-focused 0–3-year view promotes new-grad records. Stable
+ * partitioning retains the incoming preference/resume order within each tier. */
+export function prioritizeNewGradRecommendations(rows: readonly RankedJob[], experienceView: ExperienceView): RankedJob[] {
+  if (experienceView !== 'early-career') return [...rows];
+  const graduates: RankedJob[] = [], other: RankedJob[] = [];
+  for (const row of rows) (assessExperience(row.job).tier === 'new-grad' ? graduates : other).push(row);
+  return [...graduates, ...other];
+}
 
 export interface RecommendationHighlights {
   method: 'preferences' | 'resume';

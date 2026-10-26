@@ -59,6 +59,16 @@ describe('conservative classification and extraction', () => {
     expect(classify('Data Analyst', '', [location('Remote', 'US')], 'unknown', experience).classification.scope).toBe('needs-details'); expect(classify('Data Analyst', '', [location('Boston, MA')], 'internship', experience).classification.scope).toBe('excluded');
     expect(employment(null, 'Data Science Intern').type).toBe('internship'); expect(employment('Contract').type).toBe('contract'); expect(employment('Part-Time').type).toBe('part-time');
   });
+  it('keeps explicitly China-only locations out of the US catalog while preserving US multi-location roles', () => {
+    const experience = extractExperience('No prior experience required.');
+    for (const label of ['China', 'Beijing, China', 'Shanghai']) {
+      const classified = classify('Graduate Data Analyst', 'Full-time role.', [location(label)], 'full-time', experience);
+      expect(classified.classification.scope, label).toBe('excluded');
+      expect(classified.classification.reasons).toContainEqual(expect.objectContaining({ code: 'country.international_only' }));
+    }
+    expect(classify('Graduate Data Analyst', '', [location('China'), location('Boston, MA')], 'full-time', experience).classification.scope).toBe('included');
+    expect(classify('Graduate Data Analyst', '', [location('Remote')], 'full-time', experience).classification.scope).toBe('needs-details');
+  });
   it('requires actual experience language and preserves degree alternatives and preferred requirements', () => {
     expect(extractExperience('Our company was founded 20 years ago. We serve 3 million people.').minYears).toBeNull();
     expect(extractExperience('3 years of experience preferred.').preferredYears).toBe(3); expect(extractExperience('3 years of experience preferred.').minYears).toBeNull();
