@@ -1,0 +1,125 @@
+/* Shortlist is a recommendation workspace. Catalog controls keep their own layout. */
+.shortlist-recommendations { min-width: 0; }
+.recommendation-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 8px 0 18px; }
+.recommendation-eyebrow { display: inline-flex; align-items: center; gap: 7px; color: var(--muted); font-size: .875rem; margin-bottom: 10px; }
+.recommendation-heading h1 { font-size: clamp(1.75rem, 2.8vw, 2.5rem); line-height: 1.2; letter-spacing: -.035em; font-weight: 500; margin: 0; }
+.recommendation-heading p { margin: 10px 0 0; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.recommendation-adjust { min-height: 56px; font-size: 1rem; padding: 14px 22px; gap: 10px; flex-shrink: 0; }
+.recommendation-basis { display: flex; justify-content: space-between; align-items: center; gap: 0 16px; flex-wrap: wrap; padding: 0; }
+.recommendation-basis > .recommendation-basis-actions { gap: 12px; }
+.recommendation-basis-actions .text-link { min-height: 48px; }
+.recommendation-basis > div { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 18px; min-width: 0; }
+.recommendation-basis > div > span { font-size: .875rem; color: var(--muted); line-height: 1.6; overflow-wrap: anywhere; }
+.recommendation-basis > div > span:first-child { font-weight: 550; color: var(--primary); }
+.recommendation-basis .resume-open { min-height: 48px; font-size: 1rem; gap: 8px; }
+.recommendation-session { color: var(--muted); font-size: .875rem; margin: 10px 0 0; }
+.recommendation-result-count { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 10px 0 14px; }
+.rec-page-count { font-size: 1rem; font-weight: 500; color: var(--ink); }
+.recommendation-result-count .listing-count { margin: 0; font-size: .875rem; color: var(--muted); }
+.recommendation-list, .recommendation-variants { display: grid; grid-template-columns: minmax(0,1fr); gap: 14px; }
+.recommendation-card { padding: 24px 26px 0; box-shadow: 0 4px 16px var(--primary)06; border-color: var(--border); }
+.recommendation-card-intro { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: .875rem; margin-bottom: 10px; }
+.recommendation-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 26px; border-radius: 8px; background: #edf5ef; color: var(--primary); font-weight: 550; }
+.recommendation-card .job-top { align-items: flex-start; }
+.recommendation-card .company-line { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.recommendation-card .company-line .recommendation-rank { font-size: .75rem; margin-left: auto; }
+.recommendation-card .job-title h3, .recommendation-card .job-title h3 button { font-size: 1.25rem; line-height: 1.35; font-weight: 550; }
+.recommendation-card .company-mark { width: 44px; height: 44px; }
+.recommendation-card .job-meta { margin: 8px 0; font-size: .875rem; gap: 8px 20px; }
+.recommendation-why { margin-top: 14px; padding: 0; color: var(--ink); }
+.recommendation-why > strong { font-size: .875rem; font-weight: 550; }
+.recommendation-reasons { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px 24px; list-style: none; margin: 0; padding: 0; }
+.recommendation-reasons > li { display: flex; align-items: flex-start; gap: 8px; font-size: .875rem; line-height: 1.5; min-width: 0; overflow-wrap: anywhere; }
+.recommendation-reasons svg { flex-shrink: 0; margin-top: 4px; color: #2f6d5a; }
+.recommendation-why > p { font-size: 1rem; line-height: 1.6; margin: 8px 0 0; }
+.recommendation-why > .recommendation-watchouts { color: #79512d; font-size: .875rem; }
+.recommendation-evidence { display: block; color: var(--muted); font-size: .8125rem; margin-top: 6px; line-height: 1.5; }
+.recommendation-card .eligibility-compact { margin-top: 12px; margin-bottom: 0; }
+.recommendation-card .job-card-status { margin: 10px 0; }
+.recommendation-card .job-card-status > .experience-evidence { padding: 4px 8px; }
+.recommendation-card .job-bottom { margin-top: 12px; }
+.recommendation-card .job-bottom { flex-wrap: wrap; gap: 12px; padding-block: 10px; margin-top: 10px; }
+.recommendation-card .job-bottom .freshness-note { display: flex; font-size: .8125rem; }
+.recommendation-decision { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+.recommendation-score { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: var(--primary); }
+.recommendation-score strong { font-size: 1.25rem; font-weight: 550; color: var(--primary); }
+.recommendation-score.has-conflict strong, .recommendation-conflict-count { color: #8a4d27; }
+.recommendation-card .job-actions { margin-left: auto; gap: 8px; flex-wrap: wrap; }
+.recommendation-card .job-actions .button, .recommendation-card .card-dismiss { min-height: 44px; font-size: .875rem; }
+.recommendation-card .job-actions .recommendation-save { padding-inline: 20px; }
+.recommendation-card .job-supporting-details { margin-top: 14px; }
+.recommendation-more { display: flex; min-height: 54px; padding: 14px 24px; font-size: 1rem; margin: 24px auto 0; }
+.recommendation-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px 18px; margin-top: 22px; padding-top: 10px; border-top: 1px solid var(--border); color: var(--muted); font-size: .875rem; line-height: 1.6; }
+.recommendation-footer .text-link { min-height: 48px; }
+
+.rec-controls { min-width: 0; }
+.rec-controls fieldset { padding: 0; margin: 0 0 24px; border: 0; min-width: 0; }
+.rec-controls legend { font-size: 1rem; color: var(--ink); font-weight: 500; margin-bottom: 12px; padding: 0; }
+.rec-mode-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+.rec-mode-choice { position: relative; display: flex; align-items: flex-start; flex-direction: column; gap: 14px; min-height: 132px; padding: 18px; border: 1px solid var(--border); border-radius: 16px; background: #fff; color: var(--ink); text-align: left; }
+.rec-mode-choice.active { border-color: #75a68d; background: #edf5ef; color: var(--primary); box-shadow: inset 0 0 0 1px #75a68d; }
+.rec-mode-label { display: block; font-size: 1rem; font-weight: 550; line-height: 1.4; }
+.rec-mode-detail { display: block; font-size: .875rem; line-height: 1.5; color: var(--muted); margin-top: 4px; }
+.rec-mode-check { position: absolute; top: 18px; right: 14px; }
+.rec-controls .field { min-width: 0; }
+.rec-controls .field > label { font-size: 1rem; }
+.rec-controls :is(input:not([type=checkbox]),select) { width: 100%; min-width: 0; min-height: 54px; max-width: 100%; font-size: 1rem; padding: 12px 14px; }
+.rec-controls select { padding-right: 32px; }
+.rec-controls .rec-control-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px; margin-bottom: 24px; }
+.rec-interest-options { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin-top: 10px; }
+.rec-interest-choice, .rec-any-choice { display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 10px 14px; border-radius: 13px; border: 1px solid var(--border); background: #fff; color: var(--ink); font-size: 1rem; line-height: 1.4; cursor: pointer; overflow-wrap: anywhere; }
+.rec-interest-choice.active, .rec-any-choice.active { color: var(--primary); border-color: #90b79f; background: #edf5ef; }
+.rec-interest-choice input[type=checkbox] { width: 18px; height: 18px; min-height: 18px; flex-shrink: 0; margin: 0; }
+.rec-work-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.rec-more-roles > summary, .rec-more-options > summary { display: flex; align-items: center; min-height: 50px; color: var(--primary); font-size: 1rem; cursor: pointer; }
+.rec-more-roles > summary::before, .rec-more-options > summary::before { content: '›'; display: inline-block; margin-right: 10px; font-size: 1.25rem; }
+.rec-more-roles[open] > summary::before, .rec-more-options[open] > summary::before { transform: rotate(90deg); }
+.rec-more-options { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 8px; }
+.rec-more-options > .checkbox-label { min-height: 48px; font-size: 1rem; align-items: center; padding: 10px 0; gap: 10px; }
+.rec-more-options input[type=checkbox] { width: 18px; height: 18px; min-height: 18px; flex-shrink: 0; }
+.rec-resume-status { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 16px; border-radius: 16px; background: #f2f5f0; color: var(--muted); margin-bottom: 24px; font-size: 1rem; }
+.rec-resume-status.is-ready { background: #f0f7f4; color: #345c4d; }
+.rec-resume-status .button { min-height: 50px; font-size: 1rem; }
+.rec-preferences-paused { padding: 18px; background: #f2f5f0; border-radius: 14px; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.recommendation-preview { margin-top: 18px; padding: 14px 16px; background: #edf5ef; border-radius: 14px; color: var(--ink); font-size: 1rem; line-height: 1.6; }
+.recommendation-dialog-actions { justify-content: space-between; gap: 12px; background: var(--surface); }
+.recommendation-dialog-actions > div { display: flex; align-items: center; gap: 10px; }
+.recommendation-dialog-actions .button { min-height: 54px; padding: 12px 20px; font-size: 1rem; }
+.recommendation-dialog-actions > .text-link { font-size: 1rem; min-height: 48px; }
+
+@media (max-width: 1050px) {
+  .recommendation-heading { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .rec-interest-options { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 600px) {
+  .recommendation-heading { padding-top: 4px; padding-bottom: 18px; }
+  .recommendation-heading h1 { font-size: 1.75rem; }
+  .recommendation-heading p { font-size: .9375rem; margin-top: 8px; }
+  .recommendation-eyebrow { display: none; }
+  .recommendation-adjust { width: 100%; justify-content: center; min-height: 54px; }
+  .recommendation-basis { padding: 0; gap: 0 8px; }
+  .recommendation-basis > div { gap: 4px 12px; }
+  .recommendation-basis > div > span:nth-child(3) { display: none; }
+  .recommendation-result-count { gap: 4px; margin-top: 8px; }
+  .recommendation-card { padding: 18px 18px 0; }
+  .recommendation-card-intro { margin-bottom: 12px; }
+  .recommendation-card .job-title h3, .recommendation-card .job-title h3 button { font-size: 1.25rem; }
+  .recommendation-card .job-meta { font-size: .9375rem; }
+  .recommendation-reasons { grid-template-columns: minmax(0,1fr); gap: 8px; }
+  .recommendation-why { padding: 0; }
+  .recommendation-reasons > li, .recommendation-why > p { font-size: .9375rem; }
+  .recommendation-card .job-actions { margin-left: 0; width: 100%; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .recommendation-card .job-actions .button { justify-content: center; min-width: 0; padding-inline: 10px; }
+  .recommendation-card .card-dismiss { grid-row: 2; grid-column: 1; }
+  .recommendation-card .application-link { grid-row: 2; grid-column: 2; justify-self: end; }
+  .rec-mode-options { grid-template-columns: minmax(0,1fr); gap: 8px; }
+  .rec-mode-choice { flex-direction: row; align-items: center; min-height: 82px; padding: 14px 42px 14px 14px; gap: 12px; }
+  .rec-mode-choice > svg { flex-shrink: 0; }
+  .rec-mode-check { top: 30px; }
+  .rec-controls .rec-control-grid, .rec-interest-options { grid-template-columns: minmax(0,1fr); }
+  .rec-controls .rec-control-grid { gap: 16px; }
+  .rec-interest-choice { min-height: 50px; }
+  .recommendation-dialog-actions { align-items: stretch; flex-direction: column; }
+  .recommendation-dialog-actions > div { width: 100%; }
+  .recommendation-dialog-actions > div > .button { flex: 1; justify-content: center; padding-inline: 10px; }
+}

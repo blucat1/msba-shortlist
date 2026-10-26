@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,7 +11,8 @@ import { Opportunities } from '../../src/features/Opportunities';
 import { extractEligibility } from '../../src/ingestion/eligibility';
 import { createDemoRepository } from '../../src/repositories/demo';
 
-afterEach(cleanup);
+beforeEach(() => { vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-10-22T07:00:00Z')); });
+afterEach(() => { cleanup(); vi.useRealTimers(); });
 const now = new Date('2026-10-22T07:00:00Z');
 const sourceJob = () => ({ ...createDemoSnapshot(now).jobs[0], ...extractEligibility('Graduate Analyst', 'Join the team.') });
 describe('visible eligibility evidence', () => {
@@ -51,7 +52,7 @@ describe('visible eligibility evidence', () => {
     const save = vi.spyOn(repository, 'saveOpportunity');
     render(<QueryClientProvider client={new QueryClient()}><MemoryRouter initialEntries={['/demo/opportunities']}><WorkspaceContext.Provider value={context}><Opportunities /></WorkspaceContext.Provider></MemoryRouter></QueryClientProvider>);
     expect(screen.getByText(/2 listings in 1 group/)).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Preferences' })).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Profile preferences' })).toBeVisible();
     await user.click(screen.getByText(/2 listings.*more locations or requisitions/));
     const variants = document.querySelector('.listing-variants')!;
     await user.click(within(variants as HTMLElement).getByRole('button', { name: `Save ${second.title}` }));

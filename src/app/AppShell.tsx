@@ -10,7 +10,7 @@ import { Busy, dateToday, Empty, Modal, NoticeContext, safeUrl } from '../compon
 import { SettingsDialog, InformationDialog } from '../features/Settings';
 import { OpportunityForm } from '../features/OpportunityForm';
 import { createTask, opportunityFromJob } from '../domain/records';
-import { addDays, dateOnlyInTimezone } from '../domain/dates';
+import { addDays, dateOnlyInTimezone, isDateOnly } from '../domain/dates';
 import type { Job, Opportunity } from '../domain/types';
 import type { Repository } from '../repositories/types';
 import { appConfig } from '../config';
@@ -26,12 +26,15 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   const [application, setApplication] = useState<Job | Opportunity | null>(null);
   const [reviewSuggestion, setReviewSuggestion] = useState<Opportunity | null>(null);
   const [applicationDate, setApplicationDate] = useState(dateToday()); const applyKey = useRef(crypto.randomUUID()); const [applying, setApplying] = useState(false);
+  const [applicationError, setApplicationError] = useState('');
+  const applyingRef = useRef(false), reviewSavingRef = useRef(false), reviewTaskId = useRef(crypto.randomUUID());
+  const [reviewSaving, setReviewSaving] = useState(false);
   const [offline, setOffline] = useState(!navigator.onLine);
   const base = mode === 'demo' ? '/demo' : '';
   const configError = mode === 'live' ? getConfigurationError() : null;
   const repository = useMemo<Repository | null>(() => mode === 'demo' ? createDemoRepository() : configError ? null : createSupabaseRepository(), [mode, configError]);
   const queryKey = ['snapshot', mode, authId];
-  const query = useQuery({ queryKey, queryFn: () => repository!.getSnapshot(), enabled: !!repository });
+  const query = useQuery({ queryKey, queryFn: () => repository!.getSnapshot(), enabled: !!repository, refetchOnWindowFocus: mode === 'live' });
   useEffect(() => {
     if (mode === 'demo' || configError) return;
     const client = getSupabaseClient();
@@ -51,21 +54,43 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
   function openApplication(job: Job) {
     if (mode === 'live') { const url = safeUrl(job.applicationUrl || job.postingUrl); if (url) window.open(url, '_blank', 'noopener,noreferrer'); else { notify('The source has not provided a safe application link.'); return; } }
     if (mode === 'demo' || query.data?.userId) {
-      setApplication(job); applyKey.current = crypto.randomUUID(); setApplicationDate(dateOnlyInTimezone(new Date(), query.data?.preferences.timezone));
+      setApplication(job); setApplicationError(''); applyKey.current = crypto.randomUUID(); setApplicationDate(dateOnlyInTimezone(new Date(), query.data?.preferences.timezone));
       const tracked = query.data?.opportunities.find(o => o.catalogJobId === job.id);
       if (tracked) void run(() => repository!.recordApplicationOpened(tracked.id, crypto.randomUUID())).catch(() => {});
     } else notify('Application opened. Sign in to track it after you submit.');
   }
   async function confirmApplied() {
-    if (!application || !repository || !query.data?.userId || !applicationDate || applying) return;
+    if (!application || !repository || !query.data?.userId || applyingRef.current) return;
+    if (!isDateOnly(applicationDate)) { setApplicationError('Choose a valid application date.'); return; }
+    if (applicationDate > dateOnlyInTimezone(new Date(), query.data.preferences.timezone)) { setApplicationError('The application date cannot be in the future.'); return; }
+    applyingRef.current = true;
     setApplying(true);
+    setApplicationError('');
     try {
-      let tracked: Opportunity;
-      if ('sourceId' in application) { tracked = query.data.opportunities.find(o => o.catalogJobId === application.id) ?? await repository.saveOpportunity(opportunityFromJob(application, query.data.userId)); }
-      else tracked = application;
-      const confirmed = await run(() => repository.changeStage(tracked.id, 'Applied', { applicationDate, idempotencyKey: applyKey.current }), 'Application confirmed.');
-      setApplication(null); setReviewSuggestion(confirmed);
-    } catch { /* Keep confirmation open so the date is not lost. */ } finally { setApplying(false); }
+      const userId = query.data.userId;
+      const confirmed = await run(async () => {
+        const tracked = 'sourceId' in application
+          ? query.data.opportunities.find(o => o.catalogJobId === application.id) ?? await repository.saveOpportunity(opportunityFromJob(application, userId))
+          : application;
+        return repository.changeStage(tracked.id, 'Applied', { applicationDate, idempotencyKey: applyKey.current });
+      }, 'Application confirmed.');
+      setApplication(null); reviewTaskId.current = crypto.randomUUID(); setReviewSuggestion(confirmed);
+    } catch (error) {
+      setApplicationError(error instanceof Error ? error.message : 'Your application could not be saved. Please try again.');
+    } finally { applyingRef.current = false; setApplying(false); }
+  }
+  async function acceptReviewReminder() {
+    if (!reviewSuggestion || !query.data?.userId || !repository || reviewSavingRef.current) return;
+    const opportunity = reviewSuggestion, snapshot = query.data;
+    if (snapshot.tasks.some(t => t.opportunityId === opportunity.id && t.type === 'review' && t.origin === 'suggested')) {
+      notify('A review reminder already exists for this role.'); setReviewSuggestion(null); return;
+    }
+    reviewSavingRef.current = true; setReviewSaving(true);
+    try {
+      await run(() => repository.saveTask({ ...createTask(opportunity.id, snapshot.userId!, 'Review application status'), id: reviewTaskId.current, type: 'review', origin: 'suggested', dueDate: addDays(dateOnlyInTimezone(new Date(), snapshot.preferences.timezone), 10) }), 'Review reminder accepted. No email will be sent.');
+      setReviewSuggestion(null);
+    } catch { /* The suggestion stays available for retry with the same task ID. */ }
+    finally { reviewSavingRef.current = false; setReviewSaving(false); }
   }
   const navigation = [{ path: '/opportunities', label: 'Opportunities', icon: Compass }, { path: '/my-search', label: 'My Search', icon: Bookmark }, { path: '/insights', label: 'Insights', icon: BarChart3 }];
   const snapshot = query.data;
@@ -95,14 +120,14 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
         </Link>
         <nav className="desktop-navigation" aria-label="Main navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`} className={({ isActive }) => `desktop-nav-link ${isActive ? 'active' : ''}`}><Icon size={18} strokeWidth={1.8} aria-hidden="true" /><span>{label}</span></NavLink>)}</nav>
         <div className="topbar-actions">
-          {mode === 'live' && !authId ? <button className="button button-primary small" onClick={() => void signInWithGoogle().catch(e => notify(e.message))}>Sign in with Google <ArrowRight size={15} aria-hidden="true" /></button> : <button className="button button-primary small" onClick={() => { if (requireUser()) setManual('new'); }}><Plus size={16} aria-hidden="true" /> Add opportunity</button>}
+          {mode === 'live' && !authId ? <button className="button button-primary small" aria-label="Sign in with Google" disabled={!!configError} onClick={() => void signInWithGoogle().catch(e => notify(e.message))}><span className="header-signin-label">Sign in with Google</span><span className="header-signin-short" aria-hidden="true">Sign in</span><ArrowRight size={15} aria-hidden="true" /></button> : <button className="button button-primary small" aria-label="Add opportunity" onClick={() => { if (requireUser()) setManual('new'); }}><Plus size={16} aria-hidden="true" /><span className="header-add-label">Add opportunity</span><span className="header-add-short" aria-hidden="true">Add role</span></button>}
           <button className="icon-button header-settings" aria-label="Settings" onClick={openSettings}><Settings2 size={20} aria-hidden="true" /><span className="header-settings-label">Settings</span></button>
         </div>
       </header>
       {offline && <div className="offline-banner" role="status"><WifiOff size={16} /> You’re offline. {mode === 'demo' ? 'Your demo changes still stay in this browser.' : 'Cloud changes need a connection. Retry when you’re back online.'}</div>}
-      {reviewSuggestion && snapshot?.userId && <div className="followup-suggestion"><span>Application confirmed. Would a review reminder in 10 days help?</span><button onClick={() => { const opportunity = reviewSuggestion; if (snapshot.tasks.some(t => t.opportunityId === opportunity.id && t.type === 'review' && t.origin === 'suggested')) { notify('A review reminder already exists for this role.'); setReviewSuggestion(null); return; } void run(() => repository!.saveTask({ ...createTask(opportunity.id, snapshot.userId!, 'Review application status'), type: 'review', origin: 'suggested', dueDate: addDays(dateOnlyInTimezone(new Date(), snapshot.preferences.timezone), 10) }), 'Review reminder accepted. No email will be sent.').then(() => setReviewSuggestion(null)).catch(() => {}); }}>Accept reminder <Plus size={13} /></button><button aria-label="Dismiss reminder suggestion" onClick={() => setReviewSuggestion(null)}><X size={15} /></button></div>}
+      {reviewSuggestion && snapshot?.userId && <div className="followup-suggestion"><span>Application confirmed. Would a review reminder in 10 days help?</span><button disabled={reviewSaving} onClick={() => void acceptReviewReminder()}>{reviewSaving ? 'Saving reminder…' : 'Accept reminder'} <Plus size={13} aria-hidden="true" /></button><button disabled={reviewSaving} aria-label="Dismiss reminder suggestion" onClick={() => setReviewSuggestion(null)}><X size={15} aria-hidden="true" /></button></div>}
       <main id="main-content" tabIndex={-1}>
-        {configError ? <div className="config-state"><span className="eyebrow">LIVE CATALOG</span><h1>The live workspace needs setup.</h1><p role="alert">{configError}</p><p>You can explore every workflow in the separate demo while the owner connects Supabase.</p><Link className="button button-primary" to="/demo">Try the demo <ArrowRight size={17} /></Link><button className="button button-quiet" onClick={() => setInformation('privacy')}>Privacy & storage</button></div> : query.isPending ? <Busy /> : query.isError || !snapshot || !repository ? <Empty title="Your workspace couldn’t load" action={<div className="inline-actions"><button className="button button-primary" onClick={() => void query.refetch()}>Try again</button>{mode === 'demo' && <button className="button button-secondary" onClick={() => void run(() => repository!.resetDemo!(), 'Demo reset.').catch(() => {})}>Reset demo</button>}</div>}>{query.error?.message || 'Check your connection and try again. The demo remains available at /demo.'}</Empty> : <WorkspaceContext.Provider value={{ snapshot, repository, mode, base, run, notify, requireUser, showSettings: () => setSettings(true), showCoverage: () => setInformation('coverage'), showManual: o => { if (requireUser()) setManual(o ?? 'new'); }, openApplication, confirmApplication: o => { setApplication(o); applyKey.current = crypto.randomUUID(); setApplicationDate(o.applicationDate || dateOnlyInTimezone(new Date(), snapshot.preferences.timezone)); } }}>
+        {configError ? <div className="config-state"><span className="eyebrow">LIVE CATALOG</span><h1>The live workspace needs setup.</h1><p role="alert">{configError}</p><p>You can explore every workflow in the separate demo while the owner connects Supabase.</p><Link className="button button-primary" to="/demo">Try the demo <ArrowRight size={17} /></Link><button className="button button-quiet" onClick={() => setInformation('privacy')}>Privacy & storage</button></div> : query.isPending ? <Busy /> : query.isError || !snapshot || !repository ? <Empty title="Your workspace couldn’t load" action={<div className="inline-actions"><button className="button button-primary" onClick={() => void query.refetch()}>Try again</button>{mode === 'demo' && <button className="button button-secondary" onClick={() => void run(() => repository!.resetDemo!(), 'Demo reset.').catch(() => {})}>Reset demo</button>}</div>}>{query.error?.message || 'Check your connection and try again. The demo remains available at /demo.'}</Empty> : <WorkspaceContext.Provider value={{ snapshot, repository, mode, base, run, notify, requireUser, showSettings: () => setSettings(true), showCoverage: () => setInformation('coverage'), showManual: o => { if (requireUser()) setManual(o ?? 'new'); }, openApplication, confirmApplication: o => { setApplication(o); setApplicationError(''); applyKey.current = crypto.randomUUID(); setApplicationDate(o.applicationDate || dateOnlyInTimezone(new Date(), snapshot.preferences.timezone)); } }}>
           <ResumeWorkspaceProvider key={`${mode}:${snapshot.userId || 'guest'}`} mode={mode}>
           <Outlet />
           <SettingsDialog open={settings} onClose={() => setSettings(false)} onSignOut={async () => { cache.clear(); setApplication(null); await signOut(); }} />
@@ -112,10 +137,16 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
       </main>
       <footer className="page-footer"><span>{appConfig.name}</span><div><button onClick={() => setInformation('coverage')}>Coverage</button><button onClick={() => setInformation('privacy')}>Privacy</button><button onClick={() => setInformation('terms')}>Terms</button><a href="/licenses/" target="_blank" rel="noopener noreferrer">Credits</a><span>Independent. Not affiliated with Cal Poly.</span></div></footer>
     </div>
-    <nav className="mobile-nav studio-surface" aria-label="Mobile navigation"><StudioGlass tone="chrome" />{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} /><span>{label}</span></NavLink>)}<button onClick={openSettings} aria-label="Settings"><Settings2 size={21} aria-hidden="true" /><span>Settings</span></button></nav>
+    <nav className="mobile-nav studio-surface" aria-label="Mobile navigation"><StudioGlass tone="chrome" />{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`}><Icon size={21} aria-hidden="true" /><span>{label}</span></NavLink>)}</nav>
     <InformationDialog kind={information} sources={snapshot?.sources ?? []} snapshot={snapshot} onClose={() => setInformation(null)} />
-    <Modal open={application !== null} onClose={() => setApplication(null)} title="Did you submit this application?" description={mode === 'demo' ? 'Demo interaction — no real vacancy was opened. Opening an application never counts as a submission.' : 'The employer page opened in a new tab. Only confirm after you have submitted your application.'}>
-      <div className="application-confirm"><span className="confirmation-icon"><Check size={24} /></span><h3>{application?.title}</h3><p>{application?.company}</p></div><label className="field"><span>Application date</span><input type="date" value={applicationDate} max={dateOnlyInTimezone(new Date(), snapshot?.preferences.timezone)} onChange={e => setApplicationDate(e.target.value)} /></label><p className="hint">Confirmation adds an application event to your private search. You can correct the date later.</p><div className="dialog-actions"><button className="button button-quiet" onClick={() => setApplication(null)}>Not yet</button><button className="button button-primary" disabled={applying || !applicationDate} onClick={() => void confirmApplied()}>{applying ? 'Saving…' : 'Yes, I applied'}<ArrowRight size={16} /></button></div><button className="dismiss-link" onClick={() => setApplication(null)}>Dismiss</button>
+    <Modal open={application !== null} onClose={() => { if (!applyingRef.current) setApplication(null); }} title="Did you submit this application?" description={mode === 'demo' ? 'Demo interaction — no real vacancy was opened. Opening an application never counts as a submission.' : 'The employer page opened in a new tab. Only confirm after you have submitted your application.'}>
+      <form noValidate onSubmit={event => { event.preventDefault(); void confirmApplied(); }}>
+        <div className="application-confirm"><span className="confirmation-icon"><Check size={24} aria-hidden="true" /></span><h3>{application?.title}</h3><p>{application?.company}</p></div>
+        <label className="field"><span>Application date</span><input type="date" required disabled={applying} value={applicationDate} max={dateOnlyInTimezone(new Date(), snapshot?.preferences.timezone)} aria-invalid={!!applicationError} aria-describedby={applicationError ? 'application-date-error' : 'application-date-hint'} onChange={e => { setApplicationDate(e.target.value); setApplicationError(''); }} /></label>
+        {applicationError && <p className="form-error" id="application-date-error" role="alert">{applicationError}</p>}
+        <p className="hint" id="application-date-hint">Confirmation adds an application event to your private search. You can correct the date later.</p>
+        <div className="dialog-actions"><button type="button" className="button button-quiet" disabled={applying} onClick={() => setApplication(null)}>Not yet</button><button type="submit" className="button button-primary" disabled={applying}>{applying ? 'Saving…' : 'Yes, I applied'}<ArrowRight size={16} aria-hidden="true" /></button></div>
+      </form>
     </Modal>
     {toast && <div className="toast" role="status"><ShieldCheck size={18} /><span>{toast}</span><button className="icon-button" aria-label="Dismiss notification" onClick={() => setToast('')}><X size={16} /></button></div>}
   </div></NoticeContext.Provider>;

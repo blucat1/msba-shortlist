@@ -31,7 +31,7 @@ export function ResumeWorkspace({ onUseResume }: { onUseResume?: () => void } = 
     const id = ++requestId.current;
     reading.current?.abort();
     const controller = new AbortController(); reading.current = controller;
-    setBusy(true); setError(''); setReviewed(false);
+    setBusy(true); setError('');
     try {
       const imported = await importResumeFile(file, { signal: controller.signal });
       if (id !== requestId.current) return;
@@ -101,9 +101,9 @@ export function ResumeWorkspace({ onUseResume }: { onUseResume?: () => void } = 
         <ResumeProfileEditor key={analysisVersion} profile={profile} setProfile={setProfile} />
         {!!analysis.educationEvidence.length && <details className="resume-detected-education"><summary>Education evidence</summary><ul>{analysis.educationEvidence.map((item, index) => <li key={`${index}:${item.evidence}`}><span>{item.status === 'in-progress' ? 'In progress' : item.status === 'completed' ? 'Completion wording found' : 'Completion unverified'}</span><p>{item.evidence}</p></li>)}</ul></details>}
         {!!analysis.skillEvidence.length && <details className="resume-detected-skills"><summary>Skill evidence</summary><ul>{analysis.skillEvidence.map(item => <li key={item.skill}><strong>{item.skill}</strong><ul>{item.evidence.map((evidence, index) => <li key={`${index}:${evidence}`}>{evidence}</li>)}</ul></li>)}</ul></details>}
-        <label className="checkbox-label resume-confirm-profile"><input type="checkbox" checked={reviewed} onChange={event => setReviewed(event.target.checked)} />I reviewed this profile. Use it for matches in this tab.</label>
+        <label className="checkbox-label resume-confirm-profile"><input type="checkbox" checked={reviewed} disabled={busy} onChange={event => setReviewed(event.target.checked)} />I reviewed this profile. Use it for matches in this tab.</label>
         <p className="resume-review-status" role="status">{reviewed ? <><Check size={16} aria-hidden="true" />Ready to compare</> : 'Confirm to compare. Editing requires review again.'}</p>
-        {onUseResume && <button type="button" className="button button-primary" disabled={!reviewed} onClick={onUseResume}>Use this resume <Check size={16} aria-hidden="true" /></button>}
+        {onUseResume && <button type="button" className="button button-primary" disabled={!reviewed || busy} onClick={onUseResume}>Use this resume <Check size={16} aria-hidden="true" /></button>}
       </section>
     </>}
   </section>;

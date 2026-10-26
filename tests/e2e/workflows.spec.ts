@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
+import { addDays, dateOnlyInTimezone } from '../../src/domain/dates';
 
-test.beforeEach(async ({ page }) => { await page.goto('/demo'); await expect(page.getByRole('heading', { name: 'Opportunities', exact: true, level: 1 })).toBeVisible(); });
+const strictCatalog = '/demo/opportunities?view=all&career=new-grad&show-saved=0&details=0';
+test.beforeEach(async ({ page }) => { await page.goto(strictCatalog); await expect(page.getByRole('heading', { name: 'Opportunities', exact: true, level: 1 })).toBeVisible(); });
 
 test('discovery saves, dismisses, restores, filters, deep links, and persists', async ({ page }) => {
   await expect(page.getByText('— sample jobs; changes stay in this browser.', { exact: false })).toBeVisible();
@@ -11,11 +13,11 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
   await page.reload();
   await page.goto('/demo/my-search');
   await expect(page.locator('.tracker-role').filter({ hasText: title })).toBeVisible();
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   const dismissedTitle = await page.locator('.job-card').first().locator('h3').innerText();
   await page.locator('.job-card').first().getByRole('button', { name: `Dismiss ${dismissedTitle}`, exact: true }).click();
   await expect(page.locator('.job-card').filter({ hasText: dismissedTitle })).toHaveCount(0);
-  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
   const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
   await filters.locator('.filter-advanced > summary').click();
   await filters.locator('summary').filter({ hasText: /^Listing options/ }).click();
@@ -37,7 +39,7 @@ test('discovery saves, dismisses, restores, filters, deep links, and persists', 
 test('opening an application never submits; explicit confirmation updates history and insights once', async ({ page }) => {
   await page.goto('/demo/insights');
   const original = Number(await page.locator('.metric-card').first().locator('strong').innerText());
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   const title = await page.locator('.job-card').first().locator('h3').innerText();
   await page.getByRole('button', { name: `Open application for ${title}`, exact: true }).click();
   await expect(page.getByRole('dialog')).toContainText('Demo interaction');
@@ -46,7 +48,7 @@ test('opening an application never submits; explicit confirmation updates histor
   await page.getByRole('button', { name: 'Not yet', exact: true }).click();
   await page.goto('/demo/insights');
   await expect(page.locator('.metric-card').first().locator('strong')).toHaveText(String(original));
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   await page.getByRole('button', { name: `Open application for ${title}`, exact: true }).click();
   await page.getByRole('button', { name: 'Yes, I applied', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
@@ -88,7 +90,8 @@ test('manual roles edit, group by exact company, create/snooze/complete tasks, a
   await page.getByRole('button', { name: /^Next steps/ }).click();
   await page.getByRole('button', { name: 'Review the analytics team', exact: true }).click();
   await page.getByLabel('State', { exact: true }).selectOption('snoozed');
-  await page.getByLabel('Snooze until', { exact: true }).fill('2026-10-25');
+  const trackerTimezone = await page.evaluate(() => JSON.parse(localStorage.getItem('msba-shortlist:demo:v1')!).backup.preferences.timezone as string);
+  await page.getByLabel('Snooze until', { exact: true }).fill(addDays(dateOnlyInTimezone(new Date(), trackerTimezone), 3));
   await page.getByRole('button', { name: 'Save next step', exact: true }).click();
   await expect(page.locator('.task-list-row').filter({ hasText: 'Review the analytics team' })).toContainText('Snoozed');
   await page.getByRole('button', { name: 'Complete Review the analytics team', exact: true }).click();
@@ -136,7 +139,7 @@ test('mobile/tablet/desktop, keyboard, honest live configuration and empty state
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     }
   }
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   await page.keyboard.press('Tab');
   await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
   await page.getByLabel('Search opportunities').fill('nothing-will-match-this-unique-query');
@@ -151,11 +154,12 @@ test('mobile/tablet/desktop, keyboard, honest live configuration and empty state
 });
 
 test('corrupt demo storage has an honest recovery path', async ({ page }) => {
+  await page.goto('/demo/opportunities');
   await page.evaluate(() => localStorage.setItem('msba-shortlist:demo:v1', '{broken'));
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Your workspace couldn’t load' })).toBeVisible();
   await page.getByRole('button', { name: 'Reset demo', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Opportunities', exact: true, level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Top matches for you', exact: true, level: 1 })).toBeVisible();
 });
 
 test('new-grad discovery separates experienced and unverified jobs while preserving a saved role', async ({ page }) => {
@@ -204,6 +208,9 @@ test('wider market search preserves queries, labels unverified results, and trac
     await page.setViewportSize({ width, height: 960 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
-  await page.getByRole('button', { name: 'Top matches for you', exact: true }).click();
-  await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('new-grad');
+  await page.getByRole('button', { name: 'Shortlist', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Top matches for you', exact: true, level: 1 })).toBeVisible();
+  await expect(page.locator('.job-card .experience-evidence.experienced')).toHaveCount(0);
+  await expect(page.locator('.job-card .experience-evidence.early-career')).toHaveCount(0);
+  await expect(page.locator('.job-card .experience-evidence.unverified')).toHaveCount(0);
 });

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 const fixture = (name: string) => fileURLToPath(new URL(`../fixtures/resume/${name}`, import.meta.url));
 const privateMarkers = ['RESUME_ONLY_SYNTHETIC_9517', 'resume-synthetic-9517@example.test', 'private-synthetic-9517'];
 const reviewName = 'I reviewed this profile. Use it for matches in this tab.';
+const strictCatalog = '/demo/opportunities?view=all&career=new-grad&show-saved=0&details=0';
 
 async function openResume(page: Page) {
   await page.locator('.resume-open').click();
@@ -48,7 +49,7 @@ async function loadAll(page: Page) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   await expect(page.getByRole('heading', { name: 'Opportunities', level: 1, exact: true })).toBeVisible();
 });
 
@@ -94,7 +95,7 @@ test('matching modes keep filters independent and resume-only pauses rather than
   await expect(page.locator('.resume-session-status')).toContainText('Not used in results');
   await method.selectOption('combined');
   await page.getByLabel('Search opportunities', { exact: true }).fill('NO_MATCH_QUERY_48219');
-  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
   const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
   await filters.getByLabel('Role family', { exact: true }).selectOption('machine-learning');
   await filters.getByLabel('Experience focus', { exact: true }).selectOption('zero-experience');
@@ -121,7 +122,7 @@ test('matching modes keep filters independent and resume-only pauses rather than
   await expect(page.locator('.job-card')).toHaveCount(0);
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveValue('NO_MATCH_QUERY_48219');
   await expect(page.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
-  await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
+  await page.getByRole('button', { name: 'Filters', exact: true }).click();
   await expect(filters.getByLabel('Role family', { exact: true })).toHaveValue('machine-learning');
   await expect(filters.getByLabel('Experience focus', { exact: true })).toHaveValue('zero-experience');
   await page.keyboard.press('Escape');
@@ -215,6 +216,7 @@ test('phone resume review keeps text and controls within the dialog and keyboard
 });
 
 test('the broader catalog exposes more records than the strict shortlist and show-more expands real cards', async ({ page }) => {
+  await page.goto('/demo/opportunities');
   const strict = await listingCount(page);
   await page.getByRole('button', { name: 'All listings', exact: true }).click();
   await expect.poll(() => listingCount(page)).toBeGreaterThan(strict);

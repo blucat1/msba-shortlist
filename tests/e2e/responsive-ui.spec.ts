@@ -1,5 +1,7 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
 
+const strictCatalog = '/demo/opportunities?view=all&career=new-grad&show-saved=0&details=0';
+
 async function expectReadable(locator: Locator, minimum = 14) {
   const failures = await locator.evaluateAll((elements, threshold) => elements.flatMap(element => {
     const style = getComputedStyle(element), bounds = element.getBoundingClientRect();
@@ -12,10 +14,12 @@ async function expectReadable(locator: Locator, minimum = 14) {
 
 async function expectWithinViewport(locator: Locator, page: Page) {
   await expect(locator).toBeVisible();
-  const bounds = await locator.boundingBox();
-  expect(bounds).not.toBeNull();
-  expect(bounds!.x).toBeGreaterThanOrEqual(-1);
-  expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(page.viewportSize()!.width + 1);
+  // A newly opened drawer can still be in its entrance animation. Keep the
+  // same bounds, but wait for the rendered position rather than sampling it once.
+  await expect.poll(async () => {
+    const bounds = await locator.boundingBox();
+    return !!bounds && bounds.x >= -1 && bounds.x + bounds.width <= page.viewportSize()!.width + 1;
+  }).toBe(true);
 }
 
 async function expectTouchTarget(locator: Locator) {
@@ -54,8 +58,8 @@ test('critical discovery, tracker and Insights text stays readable across suppor
       const navigation = page.getByRole('navigation', { name: 'Mobile navigation' });
       await expect(navigation.getByRole('link')).toHaveCount(3);
       for (const action of await navigation.locator('a,button').all()) await expectTouchTarget(action);
-      await page.goto('/demo/opportunities');
-      await page.getByRole('button', { name: 'Adjust matches', exact: true }).click();
+      await page.goto(strictCatalog);
+      await page.getByRole('button', { name: 'Filters', exact: true }).click();
       const filters = page.getByRole('dialog', { name: 'Filter opportunities', exact: true });
       const family = filters.getByLabel('Role family', { exact: true });
       await family.selectOption('business-intelligence');
@@ -135,7 +139,7 @@ test('mobile forms retain a reachable close button, readable inputs and trapped 
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
   await expect(trigger).toBeFocused();
-  await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('button', { name: 'Settings', exact: true }).click();
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await dialog.getByRole('button', { name: /Your preferences/ }).click();
   await expectReadable(dialog.locator('input:not([type=checkbox]),select,textarea'), 16);
   const brokenWords = await dialog.locator('.step-indicator button').evaluateAll(buttons => buttons.flatMap(button => {
@@ -199,7 +203,7 @@ test('Insights keeps its readable table locally scrollable by keyboard at narrow
 
 test('compact cards keep evidence and the original description reachable by keyboard on a phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 844 });
-  await page.goto('/demo/opportunities');
+  await page.goto(strictCatalog);
   const experienceExplanation = page.locator('.experience-explainer');
   await experienceExplanation.locator('summary').focus();
   await page.keyboard.press('Enter');
