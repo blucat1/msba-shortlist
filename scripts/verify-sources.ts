@@ -68,11 +68,11 @@ Actual public-feed verification at **${checkedAt}** using \`npm run sources:veri
 
 Totals across successful sources:
 
-- **${cohortCount} actual May 15, 2027 cohort-default listings**, including **${zeroCount} confirmed zero-year listings**, after known timing/eligibility/source-review conflicts are withheld. Other unspecified requirements remain unknown.
+- **${cohortCount} strict new-grad May 15, 2027 cohort listings**, including **${zeroCount} confirmed zero-year listings**, after known timing/eligibility/source-review conflicts are withheld. Other unspecified requirements remain unknown.
 
 - **${totals.raw} raw / ${totals.listed} publicly listed** postings across all roles and countries.
 - **${totals.inScope} all-experience in scope / ${totals.needsDetails} all-experience needing details**: broad MSBA role-family coverage, including experienced individual contributors. These are **not new-grad counts**.
-- **${totals.strictNewGrad} strict New grad & 0–1 years / ${totals.strictNewGradNeedsDetails} additional strict-tier listings needing details**: uses the same \`assessExperience\` function as the app, before individual eligibility/source-review filtering. The per-listing table distinguishes the actual cohort default. The second group has unknown US eligibility or employment type and is excluded from the strict default.
+- **${totals.strictNewGrad} strict New grad & 0–1 years / ${totals.strictNewGradNeedsDetails} additional strict-tier listings needing details**: uses the same \`assessExperience\` function as the app, before individual eligibility/source-review filtering. The per-listing table distinguishes the strict new-grad cohort view. The second group has unknown US eligibility or employment type and is excluded from the strict new-grad tier.
 
 | Employer/source | Provider/board | Result | Raw | Public listed | All-experience in scope | All-experience needs details | Strict new-grad / 0–1 | Strict tier needs details | Identity evidence |
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
@@ -82,7 +82,7 @@ ${table}
 
 All-experience in scope means a supported role with explicit US location and full-time evidence; it includes roles shown only in the separate Experienced or Experience unverified views. All-experience needs details means a supported role with unknown country or employment type. Neither category establishes graduate suitability or individual eligibility. Unlisted Ashby jobs are excluded. Leadership, international-only, internship, contract and unrelated roles are excluded by classifier version **${CLASSIFIER_VERSION}**. Greenhouse often omits employment type, so otherwise relevant listings conservatively need details checked. A zero graduate count is an honest result, not a feed failure.
 
-The strict default requires explicit graduate/entry-level evidence or a parsed requirement of zero or one year. A one-year requirement remains visible and labeled; it is not a claim that someone with zero years meets it. Missing requirements, conditional education paths, experienced titles, 2–3 year requirements and 4+ year requirements do not count toward this strict default. An employer explicitly saying a role is not new-grad overrides a positive title signal. Graduate wording does not waive skills, work authorization, degree, location, timing or other employer requirements. The employer posting remains authoritative.
+The strict new-grad tier requires explicit graduate/entry-level evidence or a parsed requirement of zero or one year. A one-year requirement remains visible and labeled; it is not a claim that someone with zero years meets it. Missing requirements, conditional education paths, experienced titles, 2–3 year requirements and 4+ year requirements do not count toward this strict new-grad tier. An employer explicitly saying a role is not new-grad overrides a positive title signal. Graduate wording does not waive skills, work authorization, degree, location, timing or other employer requirements. The employer posting remains authoritative.
 
 ## Strict-tier listings found in this run
 

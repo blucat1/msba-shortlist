@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_PREFERENCES, type Preferences } from '../../src/domain/types';
 import type { ResumeProfile } from '../../src/domain/resume';
 import { filtersFromParams } from '../../src/features/discovery-options';
-import { readRecommendationOptions, recommendationMode, recommendationPreferences, recommendationResumePreferences, writeRecommendationOptions } from '../../src/features/recommendation-options';
+import { DEFAULT_RECOMMENDATION_EXPERIENCE, readRecommendationOptions, recommendationFilters, recommendationMode, recommendationPreferences, recommendationResumePreferences, writeRecommendationOptions } from '../../src/features/recommendation-options';
 
 const base = (): Preferences => ({ ...structuredClone(DEFAULT_PREFERENCES), roleFamilies: ['business-analytics', 'data-science'], primaryRoleFamilies: ['data-science'],
   locations: ['Boston'], workArrangements: ['hybrid'], desiredSalary: 95_000, salaryCurrency: 'EUR', skills: ['SQL'], yearsExperience: 1,
@@ -42,10 +42,24 @@ describe('recommendation URL isolation', () => {
     expect(filtersFromParams(result)).toMatchObject({ roleFamilies: [], locations: [], workArrangements: [], minAnnualBaseUsd: 0, maxRequiredYears: 0, includeUnknownSalary: false, includeUnknownExperience: false, includeNeedsDetails: false });
   });
 
-  it('defaults recommendations to strict new-grad scope independently of broader All listings settings', () => {
+  it('includes early career in recommendations without importing broader All listings settings', () => {
     const options = readRecommendationOptions(new URLSearchParams('view=all&career=all&details=1&excluded=1&conflicts=1&stale=1&availability=closed&rec-excluded=1&rec-conflicts=1&rec-stale=1&rec-availability=closed&rec-show-saved=1'));
     expect(recommendationMode(options)).toBe('filters');
-    expect(filtersFromParams(options)).toMatchObject({ mode: 'shortlist', experienceView: 'new-grad', availability: ['open'], includeNeedsDetails: false, includeExcluded: false, includeKnownConflicts: false, includeStale: false, includeTracked: false, includeDismissed: false });
+    expect(DEFAULT_RECOMMENDATION_EXPERIENCE).toBe('early-career');
+    expect(recommendationFilters(options)).toMatchObject({ mode: 'shortlist', experienceView: 'early-career', availability: ['open'], includeNeedsDetails: false, includeExcluded: false, includeKnownConflicts: false, includeStale: false, includeTracked: false, includeDismissed: false });
+    expect(options.toString()).toBe('');
+    expect(filtersFromParams(new URLSearchParams()).experienceView).toBe('new-grad');
+  });
+
+  it.each(['new-grad', 'zero-experience', 'experienced', 'unverified', 'all'] as const)('preserves an explicit recommendation experience view: %s', career => {
+    const options = new URLSearchParams({ career });
+    expect(recommendationFilters(options).experienceView).toBe(career);
+    expect(options.get('career')).toBe(career);
+  });
+
+  it('applies the same early-career default to empty/reset selections and rejects invalid explicit selections', () => {
+    expect(recommendationFilters(new URLSearchParams('career=')).experienceView).toBe('early-career');
+    expect(() => recommendationFilters(new URLSearchParams('career=not-a-view'))).toThrow();
   });
 
   it('supports only explicit resume/combined modes and safely defaults unknown method names', () => {

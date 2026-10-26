@@ -9,7 +9,7 @@ MSBA Shortlist combines an imported catalog with wider external search. It does 
 | Search the market | Editable searches on Google, Indeed and LinkedIn, including employers outside connected feeds | Safe search links only; results open on those services and are not imported, counted, or verified by MSBA Shortlist |
 | Manual tracking | Any suitable role found elsewhere | Owner-entered link/details and private application history; no scraping or automatic submission |
 
-The catalog's default remains explicit graduate/entry-level hiring or a stated 0–1-year requirement. A one-year minimum is labeled. Required 2–3 years, senior roles and unknown experience have separate views. External platform tags and search keywords do not establish that a role meets this policy. Full-time status, degree, timing, location and work authorization still need to match the employer's actual requirements.
+Shortlist defaults to new grads plus early-career roles through three years, with new grads first and 25 groups per batch. New-grad evidence means explicit graduate/entry-level hiring or a stated 0–1-year requirement. A one-year minimum and 2–3-year experience stretches are labeled. Senior roles and unknown experience remain separate unless explicitly selected. External platform tags and search keywords do not establish that a role meets this policy. Full-time status, degree, timing, location and work authorization still need to match the employer's actual requirements.
 
 ## Jobicy source boundaries
 
@@ -32,3 +32,14 @@ The imported catalog cannot cover all onsite/hybrid employers, every ATS, closed
 Current counts are dated observations in [SOURCE_AUDIT.md](SOURCE_AUDIT.md) and [TEST_REPORT.md](TEST_REPORT.md), not a market-size estimate. Distinguish total source listings, supported roles, experience tiers and the number of employers in a rolling discovery window. Multiple locations/program requisitions can also share a title.
 
 The completed cohort release at **07:43 UTC on October 22, 2026** finalized all **38 enabled sources**: 37 employer boards and Jobicy; two candidate boards remain disabled. The anonymous read found **459 retained supported records**, **15 default listings in 14 groups across 8 companies**, and **3 confirmed-zero requirements**. The source run processed 5,183 all-level rows; those are not graduate-job counts. Jobicy supplied 581 all-level window rows and 40 supported records across 29 companies, with **zero** default graduate matches after the CertiK employer-conflict review. Wider onsite/hybrid discovery still depends on verified additions, external search and manual tracking. See the [successful import](https://github.com/blucat1/msba-shortlist/actions/runs/39742281857), [supply/qualification review](SUPPLY_REVIEW.md) and [test report](TEST_REPORT.md) for the exact constraints and acceptance boundaries.
+
+## Why catalog counts differ from recommendations
+
+The connected catalog is a subset of the market. The importer reads every publicly listed role from a fixed set of verified Greenhouse, Lever and Ashby employer boards, plus the attributed Jobicy rolling remote feed. External Google/Indeed/LinkedIn searches are not imported or counted.
+
+1. **Source rows** include unrelated occupations, international roles, internships and experienced jobs. Source totals may overlap.
+2. **Supported catalog records** have analytics/product/strategy/BI/data/ML relevance. Explicit leadership, international-only and non-full-time roles are outside the ordinary catalog. Missing US or employment evidence stays in Needs details, separate from the default shortlist. Retained closed records/history can remain in this total.
+3. **Recommendations** additionally require open availability, recent source verification, the selected experience range and no known profile/source/deadline conflicts. Saved and dismissed roles are hidden by default. Further location, role, salary or keyword choices can narrow results.
+4. **Role groups** combine equivalent requisitions/locations for reading; their separate original records and application links remain available.
+
+The October 26 pre-expansion anonymous check observed 5,379 source rows, 511 supported records and 18 strict new-grad listings in 17 groups. The combined new-grad/early-career range yielded 67 listings in 59 groups before personal search filters. Those are dated public-default diagnostics, not the signed-in owner's exact count. The verified expansion adds 36 employer boards (73 employer boards plus Jobicy in total). Final import and live counts are recorded in TEST_REPORT.md; proposed or raw feed totals are not substituted for actual hosted results.

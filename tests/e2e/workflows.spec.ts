@@ -211,6 +211,8 @@ test('wider market search preserves queries, labels unverified results, and trac
   await page.getByRole('button', { name: 'Shortlist', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Top matches for you', exact: true, level: 1 })).toBeVisible();
   await expect(page.locator('.job-card .experience-evidence.experienced')).toHaveCount(0);
-  await expect(page.locator('.job-card .experience-evidence.early-career')).toHaveCount(0);
+  expect(await page.locator('.job-card .experience-evidence.early-career').count()).toBeGreaterThan(0);
+  const tiers = await page.locator('.job-card .experience-evidence').evaluateAll(elements => elements.map(element => element.classList.contains('new-grad') ? 'new-grad' : 'early-career'));
+  expect(tiers.lastIndexOf('new-grad')).toBeLessThan(tiers.indexOf('early-career'));
   await expect(page.locator('.job-card .experience-evidence.unverified')).toHaveCount(0);
 });

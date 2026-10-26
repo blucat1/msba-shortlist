@@ -3,6 +3,7 @@ import { Field } from '../components/ui';
 import { EXPERIENCE_VIEWS } from '../domain/experience';
 import { ROLE_FAMILIES, ROLE_LABELS } from '../domain/types';
 import type { MatchingMode } from './discovery-options';
+import { DEFAULT_RECOMMENDATION_EXPERIENCE } from './recommendation-options';
 
 const matchingChoices = [
   { value: 'filters', label: 'Your preferences', detail: 'Roles, location and experience', icon: SlidersHorizontal },
@@ -66,7 +67,7 @@ export function RecommendationControls({ value, onChange, resumeReady, onReviewR
 
     {mode === 'resume' ? <p className="rec-preferences-paused">Preferences paused. Comparing open roles across all experience levels.</p> : <div className="rec-preferences">
       <div className="rec-control-grid">
-        <Field label="Experience"><select value={params.get('career') || 'new-grad'} onChange={event => set('career', event.target.value)}>
+        <Field label="Experience" hint={(params.get('career') || DEFAULT_RECOMMENDATION_EXPERIENCE) === 'early-career' ? 'New-grad roles come first. Roles requiring 2–3 years stay labeled as experience stretches.' : undefined}><select value={params.get('career') || DEFAULT_RECOMMENDATION_EXPERIENCE} onChange={event => set('career', event.target.value)}>
           {EXPERIENCE_VIEWS.map(view => <option value={view.value} key={view.value}>{view.label}</option>)}
         </select></Field>
         <Field label="Location"><input value={params.get('location') || ''} onChange={event => set('location', event.target.value)} placeholder="Any location" maxLength={500} /></Field>

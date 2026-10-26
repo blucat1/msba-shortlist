@@ -1,6 +1,17 @@
 import { DEFAULT_PREFERENCES, type Preferences } from '../domain/types';
 import type { ResumeProfile } from '../domain/resume';
+import type { ExperienceView } from '../domain/experience';
 import { filtersFromParams, type MatchingMode } from './discovery-options';
+
+export const DEFAULT_RECOMMENDATION_EXPERIENCE: ExperienceView = 'early-career';
+
+/** Recommendations include supported 0–3-year roles; explicit views and All
+ * listings keep their own controls. Empty/reset options use this default. */
+export function recommendationFilters(options: URLSearchParams) {
+  const effective = new URLSearchParams(options);
+  if (!effective.get('career')) effective.set('career', DEFAULT_RECOMMENDATION_EXPERIENCE);
+  return filtersFromParams(effective);
+}
 
 // Only public search criteria belong in shareable recommendation URLs.
 // Resume text, extracted skills and confirmed profile fields are never accepted.
@@ -25,7 +36,7 @@ export function recommendationMode(options: URLSearchParams): MatchingMode {
 }
 
 export function recommendationPreferences(base: Preferences, options: URLSearchParams): Preferences {
-  const filters = filtersFromParams(options);
+  const filters = recommendationFilters(options);
   return { ...base,
     ...(options.has('role') ? { roleFamilies: filters.roleFamilies, primaryRoleFamilies: base.primaryRoleFamilies.filter(role => filters.roleFamilies.includes(role)) } : {}),
     ...(options.has('location') ? { locations: filters.locations } : {}),

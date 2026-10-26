@@ -1,10 +1,10 @@
 # Company logo assets
 
-Reviewed **October 26, 2026**. These local images identify the actual hiring employer in job cards and related views. They cover the 37 enabled employer boards in `data/employers.json` plus Precision Medicine Group, which appeared in the live catalog. The Jobicy publisher logo is deliberately excluded: publisher identity is not employer identity. Fictional demo employers and unknown companies retain an initials fallback.
+Reviewed **October 26, 2026**. These local images identify the actual hiring employer in job cards and related views. The current 74-asset set covers the 73 enabled employer boards in `data/employers.json` plus Precision Medicine Group, which appeared in the live catalog. The Jobicy publisher logo is deliberately excluded: publisher identity is not employer identity. Fictional demo employers and unknown companies retain an initials fallback.
 
 Images were obtained from the companies’ public websites or the icon assets explicitly linked by those sites. The originals are served from this application’s own `/logos/` directory; a visitor does not contact a logo service or an employer domain to display them. No runtime URL guessing, arbitrary posting-URL fetch, paid logo service or generated imitation is used. File formats follow the actual image bytes, including WebP responses returned for some `.png` URLs. HTTP gzip transport encoding was decoded where necessary; image contents were not redrawn or recolored.
 
-All 38 image files loaded successfully in a local Chromium image-grid check, and the grid was visually inspected. Precision Medicine Group’s generic `/favicon.ico` response redirected to a WordPress icon and was rejected; its explicitly linked branded favicon is used instead. Lake Partners’ header logo was selected from its official homepage stylesheet because it did not publish an icon link.
+The initial 38 image files loaded successfully in a local Chromium image-grid check, and the grid was visually inspected. Precision Medicine Group’s generic `/favicon.ico` response redirected to a WordPress icon and was rejected; its explicitly linked branded favicon is used instead. Lake Partners’ header logo was selected from its official homepage stylesheet because it did not publish an icon link.
 
 Logos and brand marks remain the property of their respective owners. Their use identifies listings and does not imply employer endorsement. Public retrieval is documented here; it is not a claim of a blanket trademark or redistribution license.
 
@@ -52,3 +52,46 @@ Logos and brand marks remain the property of their respective owners. Their use 
 | Webflow | [`/logos/webflow.ico`](../public/logos/webflow.ico) | [https://webflow.com/favicon.ico](https://webflow.com/favicon.ico) | 4,286 |
 
 The UI lookup should use the fixed employer/name mapping rather than infer a domain from a company name or a job URL. Update this provenance record whenever an asset is refreshed, and retain the initials fallback if the image cannot load.
+
+## Catalog expansion — October 26, 2026
+
+The following 36 verified employers were added with the source expansion. Their icons remain locally served. For three sites with unavailable favicons, the employer-owned GitHub organization avatar was used only after its public organization website matched the verified corporate domain; these are downloaded assets, not runtime third-party requests.
+
+| Employer | Local asset | Original public source | Bytes |
+| --- | --- | --- | ---: |
+| SoFi | [`/logos/sofi.ico`](../public/logos/sofi.ico) | [https://www.sofi.com/favicon.ico](https://www.sofi.com/favicon.ico) | 85886 |
+| Affirm | [`/logos/affirm.png`](../public/logos/affirm.png) | [https://www.affirm.com/favicon.ico](https://www.affirm.com/favicon.ico) | 2808 |
+| Coinbase | [`/logos/coinbase.png`](../public/logos/coinbase.png) | [https://www.coinbase.com/favicon.ico](https://www.coinbase.com/favicon.ico) | 870 |
+| Cloudflare | [`/logos/cloudflare.png`](../public/logos/cloudflare.png) | [https://www.cloudflare.com/favicon.ico](https://www.cloudflare.com/favicon.ico) | 908 |
+| Datadog | [`/logos/datadog.ico`](../public/logos/datadog.ico) | [https://careers.datadoghq.com/favicon.ico](https://careers.datadoghq.com/favicon.ico) | 40436 |
+| MongoDB | [`/logos/mongodb.ico`](../public/logos/mongodb.ico) | [https://www.mongodb.com/favicon.ico](https://www.mongodb.com/favicon.ico) | 32988 |
+| Elastic | [`/logos/elastic.png`](../public/logos/elastic.png) | [https://avatars.githubusercontent.com/u/6764390?v=4&s=128](https://avatars.githubusercontent.com/u/6764390?v=4&s=128) | 9005 |
+| Stripe | [`/logos/stripe.ico`](../public/logos/stripe.ico) | [https://stripe.com/favicon.ico](https://stripe.com/favicon.ico) | 15086 |
+| BILL | [`/logos/bill.png`](../public/logos/bill.png) | [https://cdn.prod.website-files.com/63e3da3df35cd62f54751985/63efaae11991984d7d4d021a_Logo-Mark-Color%201.png](https://cdn.prod.website-files.com/63e3da3df35cd62f54751985/63efaae11991984d7d4d021a_Logo-Mark-Color%201.png) | 3308 |
+| Toast | [`/logos/toast.ico`](../public/logos/toast.ico) | [https://careers.toasttab.com/favicon.ico](https://careers.toasttab.com/favicon.ico) | 22254 |
+| Plaid | [`/logos/plaid.png`](../public/logos/plaid.png) | [https://plaid.com/assets/img/favicons/apple-touch-icon.png](https://plaid.com/assets/img/favicons/apple-touch-icon.png) | 15186 |
+| Gusto | [`/logos/gusto.png`](../public/logos/gusto.png) | [https://avatars.githubusercontent.com/u/3697270?v=4&s=128](https://avatars.githubusercontent.com/u/3697270?v=4&s=128) | 2531 |
+| OpenAI | [`/logos/openai.png`](../public/logos/openai.png) | [https://avatars.githubusercontent.com/u/14957082?v=4&s=128](https://avatars.githubusercontent.com/u/14957082?v=4&s=128) | 3547 |
+| Anthropic | [`/logos/anthropic.ico`](../public/logos/anthropic.ico) | [https://www.anthropic.com/favicon.ico](https://www.anthropic.com/favicon.ico) | 15086 |
+| Airbnb | [`/logos/airbnb.ico`](../public/logos/airbnb.ico) | [https://careers.airbnb.com/favicon.ico](https://careers.airbnb.com/favicon.ico) | 198 |
+| Samsara | [`/logos/samsara.ico`](../public/logos/samsara.ico) | [https://www.samsara.com/favicon.ico](https://www.samsara.com/favicon.ico) | 15086 |
+| Verkada | [`/logos/verkada.ico`](../public/logos/verkada.ico) | [https://www.verkada.com/favicon.ico](https://www.verkada.com/favicon.ico) | 15086 |
+| Scale AI | [`/logos/scale-ai.ico`](../public/logos/scale-ai.ico) | [https://scale.com/favicon.ico](https://scale.com/favicon.ico) | 846 |
+| Axon | [`/logos/axon.png`](../public/logos/axon.png) | [https://www.axon.com/favicon/apple-touch-icon.png](https://www.axon.com/favicon/apple-touch-icon.png) | 3160 |
+| Oscar Health | [`/logos/oscar-health.ico`](../public/logos/oscar-health.ico) | [https://oscarhealth.com/favicon.ico](https://oscarhealth.com/favicon.ico) | 2734 |
+| Motive | [`/logos/motive.ico`](../public/logos/motive.ico) | [https://gomotive.com/favicon.ico](https://gomotive.com/favicon.ico) | 15086 |
+| Instacart | [`/logos/instacart.ico`](../public/logos/instacart.ico) | [https://www.instacart.careers/favicon.ico](https://www.instacart.careers/favicon.ico) | 15086 |
+| Discord | [`/logos/discord.png`](../public/logos/discord.png) | [https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/62fddf0fde45a8baedcc7ee5_847541504914fd33810e70a0ea73177e%20(2)-1.png](https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/62fddf0fde45a8baedcc7ee5_847541504914fd33810e70a0ea73177e%20(2)-1.png) | 557 |
+| Pinterest | [`/logos/pinterest.ico`](../public/logos/pinterest.ico) | [https://www.pinterestcareers.com/favicon.ico](https://www.pinterestcareers.com/favicon.ico) | 15086 |
+| GitLab | [`/logos/gitlab.ico`](../public/logos/gitlab.ico) | [https://about.gitlab.com/favicon.ico](https://about.gitlab.com/favicon.ico) | 15086 |
+| Okta | [`/logos/okta.ico`](../public/logos/okta.ico) | [https://www.okta.com/favicon.ico](https://www.okta.com/favicon.ico) | 15406 |
+| Fivetran | [`/logos/fivetran.png`](../public/logos/fivetran.png) | [https://cdn.prod.website-files.com/6130fa1501794ed4d11867ba/6a10657efae8d58934eddd4b_Webclip%20%5BLight%5D.png](https://cdn.prod.website-files.com/6130fa1501794ed4d11867ba/6a10657efae8d58934eddd4b_Webclip%20%5BLight%5D.png) | 10363 |
+| Intercom | [`/logos/intercom.png`](../public/logos/intercom.png) | [https://fin.ai/favicons/favicon-black-96x96.png](https://fin.ai/favicons/favicon-black-96x96.png) | 2980 |
+| Braze | [`/logos/braze.ico`](../public/logos/braze.ico) | [https://www.braze.com/favicon.ico](https://www.braze.com/favicon.ico) | 15406 |
+| Zscaler | [`/logos/zscaler.webp`](../public/logos/zscaler.webp) | [https://www.zscaler.com/favicons/apple-touch-icon.png](https://www.zscaler.com/favicons/apple-touch-icon.png) | 1476 |
+| Spotify | [`/logos/spotify.png`](../public/logos/spotify.png) | [https://www.lifeatspotify.com/icons/icon-48x48.png](https://www.lifeatspotify.com/icons/icon-48x48.png) | 2388 |
+| Cohere | [`/logos/cohere.ico`](../public/logos/cohere.ico) | [https://cohere.com/favicon.ico](https://cohere.com/favicon.ico) | 15406 |
+| Glean | [`/logos/glean.png`](../public/logos/glean.png) | [https://cdn.prod.website-files.com/6127a84dfe068e153ef20572/67189bfac8da27b3a70ddd93_256%20x%20256%20Glean%20Favicon.png](https://cdn.prod.website-files.com/6127a84dfe068e153ef20572/67189bfac8da27b3a70ddd93_256%20x%20256%20Glean%20Favicon.png) | 7375 |
+| Runway | [`/logos/runway.png`](../public/logos/runway.png) | [https://runway.com/icon.png?icon.35ps9bmugbe1e.png](https://runway.com/icon.png?icon.35ps9bmugbe1e.png) | 4846 |
+| Anyscale | [`/logos/anyscale.png`](../public/logos/anyscale.png) | [https://www.anyscale.com/static/favicon-new.ico](https://www.anyscale.com/static/favicon-new.ico) | 1244 |
+| Perplexity | [`/logos/perplexity.ico`](../public/logos/perplexity.ico) | [https://www.perplexity.ai/favicon.ico](https://www.perplexity.ai/favicon.ico) | 15086 |

@@ -11,18 +11,19 @@ import { compareResumeToJob } from '../domain/resume-matching';
 import { opportunityFromJob } from '../domain/records';
 import { EXPERIENCE_VIEWS } from '../domain/experience';
 import { ROLE_LABELS, type Job } from '../domain/types';
-import { filtersFromParams } from './discovery-options';
 import { RecommendationControls } from './RecommendationControls';
-import { readRecommendationOptions, recommendationMode, recommendationPreferences, recommendationResumePreferences, writeRecommendationOptions } from './recommendation-options';
+import { DEFAULT_RECOMMENDATION_EXPERIENCE, readRecommendationOptions, recommendationFilters, recommendationMode, recommendationPreferences, recommendationResumePreferences, writeRecommendationOptions } from './recommendation-options';
+import { prioritizeNewGradRecommendations } from '../domain/recommendations';
 
 const ResumeWorkspace = lazy(() => import('./ResumeWorkspace').then(module => ({ default: module.ResumeWorkspace })));
+const RECOMMENDATION_BATCH_SIZE = 25;
 
 export function ShortlistRecommendations() {
   const { snapshot, repository, requireUser, run, notify, openApplication, showCoverage, showSettings } = useWorkspace();
   const resume = useResumeWorkspace();
   const [query, setQuery] = useSearchParams(), location = useLocation();
   const options = readRecommendationOptions(query), mode = recommendationMode(options);
-  const [limit, setLimit] = useState(5), [adjusting, setAdjusting] = useState(false), [draft, setDraft] = useState('');
+  const [limit, setLimit] = useState(RECOMMENDATION_BATCH_SIZE), [adjusting, setAdjusting] = useState(false), [draft, setDraft] = useState('');
   const [resumeOpen, setResumeOpen] = useState(false);
   const returnToAdjustment = useRef(false);
   const ready = !!resume.profile && resume.reviewed;
@@ -32,7 +33,7 @@ export function ShortlistRecommendations() {
     const selections = new URLSearchParams(value), method = recommendationMode(selections), usesResume = method !== 'filters';
     try {
       const preferences = method === 'resume' && ready ? recommendationResumePreferences(resume.profile!, snapshot.preferences.timezone) : recommendationPreferences(snapshot.preferences, selections);
-      const filters = method === 'resume' ? createDiscoveryFilters('catalog') : filtersFromParams(selections);
+      const filters = method === 'resume' ? createDiscoveryFilters('catalog') : recommendationFilters(selections);
       // Resume-only keeps qualifications in its explanation, rather than
       // secretly filtering them through the account's saved preferences.
       const filterProfile = method === 'resume' ? { ...preferences, educationLevel: null, degreeField: null } : preferences;
@@ -45,7 +46,8 @@ export function ShortlistRecommendations() {
       if (usesResume) rows.sort((a, b) => (compatibility.get(a.job.id)?.conflicts.length ?? 0) - (compatibility.get(b.job.id)?.conflicts.length ?? 0)
         || (compatibility.get(b.job.id)?.score ?? -1) - (compatibility.get(a.job.id)?.score ?? -1)
         || (compatibility.get(b.job.id)?.coverage ?? 0) - (compatibility.get(a.job.id)?.coverage ?? 0) || a.job.id.localeCompare(b.job.id));
-      return { rows, groups: groupSimilarListings(rows), compatibility, preferences, error: '', needsResume: usesResume && !ready };
+      const ordered = prioritizeNewGradRecommendations(rows, filters.experienceView);
+      return { rows: ordered, groups: groupSimilarListings(ordered), compatibility, preferences, error: '', needsResume: usesResume && !ready };
     } catch (cause) {
       return { rows: [], groups: [], compatibility: new Map<string, ReturnType<typeof compareResumeToJob>>(), preferences: snapshot.preferences,
         error: cause instanceof Error ? cause.message : 'Check your preferences.', needsResume: usesResume && !ready };
@@ -56,7 +58,7 @@ export function ShortlistRecommendations() {
   const current = useMemo(() => evaluate(optionKey), [optionKey, evaluate]);
   const preview = useMemo(() => adjusting ? evaluate(draft) : current, [adjusting, draft, evaluate, current]);
   const latestQuery = () => window.location.pathname === location.pathname ? new URLSearchParams(window.location.search) : new URLSearchParams(location.search);
-  const apply = (value: string) => { setLimit(5); setQuery(writeRecommendationOptions(latestQuery(), new URLSearchParams(value)), { replace: true }); };
+  const apply = (value: string) => { setLimit(RECOMMENDATION_BATCH_SIZE); setQuery(writeRecommendationOptions(latestQuery(), new URLSearchParams(value)), { replace: true }); };
   const openAdjustment = () => { setDraft(optionKey); setAdjusting(true); };
   const openResume = (fromAdjustment = false) => { returnToAdjustment.current = fromAdjustment; if (fromAdjustment) setAdjusting(false); setResumeOpen(true); };
   const closeResume = () => { setResumeOpen(false); if (returnToAdjustment.current) { returnToAdjustment.current = false; setAdjusting(true); } };
@@ -80,7 +82,8 @@ export function ShortlistRecommendations() {
   const personalized = mode !== 'filters' || !!(current.preferences.roleFamilies.length || current.preferences.locations.length || current.preferences.workArrangements.length || current.preferences.skills.length || current.preferences.yearsExperience !== null || current.preferences.desiredSalary !== null);
   const interestRoles = options.get('role')?.split(',').filter(Boolean) ?? current.preferences.roleFamilies;
   const roleText = interestRoles.length ? interestRoles.slice(0, 2).map(role => ROLE_LABELS[role as keyof typeof ROLE_LABELS] || role).join(' · ') : 'All roles';
-  const scope = mode === 'resume' ? 'All experience levels' : EXPERIENCE_VIEWS.find(item => item.value === (options.get('career') || 'new-grad'))?.label ?? 'New grad';
+  const experienceView = options.get('career') || DEFAULT_RECOMMENDATION_EXPERIENCE;
+  const scope = mode === 'resume' ? 'All experience levels' : experienceView === 'early-career' ? 'New grads first · early career included' : EXPERIENCE_VIEWS.find(item => item.value === experienceView)?.label ?? 'Choose an experience view';
   const renderCard = (row: typeof current.rows[number], rank: number) => <JobCard key={row.job.id} result={row} profile={current.preferences} recommendationRank={rank}
     resumeMatch={current.compatibility.get(row.job.id)} saved={snapshot.opportunities.some(item => item.catalogJobId === row.job.id)} dismissed={false}
     onSave={() => save(row.job)} onDismiss={() => dismiss(row.job)} onView={() => view(row.job.id)} onApply={() => openApplication(row.job)} />;
@@ -91,9 +94,9 @@ export function ShortlistRecommendations() {
     {mode !== 'filters' && ready && <p className="recommendation-session">Reviewed resume · This tab only</p>}
     {current.error && <p role="alert" className="filter-error">{current.error}</p>}
     {current.needsResume ? <Empty title="Add your resume to get matches" action={<button type="button" className="button button-primary" onClick={() => openResume()}>Add resume</button>}>Review your extracted profile before using it for recommendations.</Empty> : current.groups.length ? <>
-      <div className="recommendation-result-count"><strong className="rec-page-count">Showing {Math.min(limit, current.groups.length)} of {current.groups.length} role groups</strong><p className="listing-count sr-only" aria-live="polite">{current.rows.length} listing{current.rows.length === 1 ? '' : 's'} in {current.groups.length} group{current.groups.length === 1 ? '' : 's'}</p></div>
+      <div className="recommendation-result-count"><strong className="rec-page-count">Showing {Math.min(limit, current.groups.length)} of {current.groups.length} role groups</strong><p className="listing-count" aria-live="polite">{current.rows.length} listing{current.rows.length === 1 ? '' : 's'} in {current.groups.length} group{current.groups.length === 1 ? '' : 's'} · {snapshot.jobs.length.toLocaleString()} catalog records</p></div>
       <div className="recommendation-list">{current.groups.slice(0, limit).map((group, index) => <div className="listing-group" key={group.key}>{renderCard(group.representative, index + 1)}{!!group.variants.length && <details className="listing-variants"><summary>{group.listingCount} listings · {group.variants.length} more locations or requisitions</summary><p>Each listing keeps its own source and application link.</p><div className="recommendation-variants">{group.variants.map(row => renderCard(row, index + 1))}</div></details>}</div>)}</div>
-      {current.groups.length > limit && <button type="button" className="button button-secondary recommendation-more" onClick={() => setLimit(value => value + 5)}>Show more recommendations <ChevronDown size={18} aria-hidden="true" /></button>}
+      {current.groups.length > limit && <button type="button" className="button button-secondary recommendation-more" onClick={() => setLimit(value => value + RECOMMENDATION_BATCH_SIZE)}>Show more recommendations <ChevronDown size={18} aria-hidden="true" /></button>}
     </> : !current.error && <Empty title={mode === 'resume' ? 'No roles available to compare.' : 'No matches for these preferences.'} action={<div className="inline-actions"><button type="button" className="button button-primary" onClick={openAdjustment}>Change preferences</button><button type="button" className="button button-secondary" onClick={browseAll}>Browse all listings</button></div>}>Try a broader preference when you’re ready. Your current settings stay in place.</Empty>}
     {snapshot.catalogTruncated && <p className="warning-text">Recommendations use {snapshot.jobs.length} loaded catalog records; the catalog is limited.</p>}
     <div className="recommendation-footer"><span>Evidence-based comparisons, not hiring predictions.</span><button type="button" className="text-link" onClick={showCoverage}>Coverage & sources <ArrowUpRight size={16} aria-hidden="true" /></button></div>
