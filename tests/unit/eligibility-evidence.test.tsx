@@ -18,8 +18,8 @@ const sourceJob = () => ({ ...createDemoSnapshot(now).jobs[0], ...extractEligibi
 describe('visible eligibility evidence', () => {
   it('shows uncertainty beside a role even when no hard conflict was found', async () => {
     render(<EligibilityEvidence profile={DEFAULT_PREFERENCES} job={sourceJob()} />);
-    expect(screen.getByText('Requirements need checking')).toBeVisible(); expect(screen.getByText('7 unknown')).toBeVisible();
-    await userEvent.click(screen.getByText('Requirements need checking'));
+    expect(screen.getByText('What aligns')).toBeVisible(); expect(screen.getByText('Profile requirements aren’t confirmed yet.')).toBeVisible(); expect(screen.getByText('7 unknown')).toBeVisible();
+    await userEvent.click(screen.getByText('What to check'));
     expect(screen.getByText('Unknown means unverified. Preference overlap does not confirm eligibility.')).toBeVisible();
     expect(screen.getAllByText('Needs checking')).toHaveLength(7);
   });
@@ -88,7 +88,8 @@ describe('requirements disclosures preserve critical warnings', () => {
 
   it('summarizes unknown requirements without implying eligibility and retains every check', () => {
     const { container } = render(<EligibilityEvidence profile={DEFAULT_PREFERENCES} job={makeJob()} />);
-    expect(screen.getByText('Requirements need checking')).toBeVisible();
+    expect(screen.getByText('What aligns')).toBeVisible();
+    expect(screen.getByText('Profile requirements aren’t confirmed yet.')).toBeVisible();
     expect(screen.getByText('7 unknown')).toBeVisible();
     expect(container.querySelectorAll('.eligibility-check')).toHaveLength(7);
     expect(container.querySelectorAll('.eligibility-check.pass')).toHaveLength(0);
@@ -105,5 +106,65 @@ describe('requirements disclosures preserve critical warnings', () => {
     fireEvent.click(screen.getByText('Read the full source comparison'));
     expect(comparison).toBeVisible();
     expect(screen.getByRole('link', { name: 'Review employer evidence (opens in a new tab)' })).toHaveAttribute('href', job.sourceReview.evidenceUrl);
+  });
+});
+
+describe('alignment-first requirements presentation', () => {
+  it('combines preference and requirement matches before review items without duplicating reasons', () => {
+    const job = makeJob();
+    job.timing.latestStart = '2027-07-01';
+    const { container } = render(<EligibilityEvidence profile={DEFAULT_PREFERENCES} job={job}
+      alignmentReasons={['Your recorded SQL skill matches.', 'Your recorded SQL skill matches.', 'Business analytics matches your interests.']}
+      checkReasons={['Location differs from your preferences.']}
+      checkIntro={<p>One year of experience is required.</p>} />);
+    const alignment = container.querySelector('.eligibility-alignment')!;
+    const reasons = within(alignment as HTMLElement).getAllByRole('listitem');
+    expect(reasons).toHaveLength(3);
+    expect(reasons[0]).toHaveTextContent('Your recorded SQL skill matches.');
+    expect(reasons[1]).toHaveTextContent('Business analytics matches your interests.');
+    expect(reasons[2]).toHaveTextContent('Start date: You are available by the stated start window.');
+    expect(screen.queryByText('Profile requirements aren’t confirmed yet.')).not.toBeInTheDocument();
+    const intro = screen.getByText('One year of experience is required.');
+    const watchout = screen.getByText('Location differs from your preferences.');
+    expect(alignment.compareDocumentPosition(intro) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(intro.compareDocumentPosition(watchout) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(watchout.closest('details')).toBeNull();
+    expect(container.querySelectorAll('.eligibility-check')).toHaveLength(7);
+  });
+
+  it.each([false, true])('shows confirmed matches before conflicts and unknowns (full=%s)', full => {
+    const job = makeJob();
+    job.timing.graduationEnd = '2027-05-01';
+    job.timing.latestStart = '2027-07-01';
+    const { container } = render(<EligibilityEvidence profile={DEFAULT_PREFERENCES} job={job} full={full} />);
+    const alignment = container.querySelector('.eligibility-alignment')!;
+    const conflict = container.querySelector('.eligibility-known-conflict')!;
+    expect(alignment).toHaveTextContent('What aligns');
+    expect(alignment).toHaveTextContent('1 confirmed');
+    expect(alignment).toHaveTextContent('Start date');
+    expect(alignment).not.toHaveTextContent('Graduation');
+    expect(alignment.compareDocumentPosition(conflict) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(conflict.closest('details')).toBeNull();
+    expect(conflict).toBeVisible();
+    fireEvent.click(screen.getByText(full ? 'Compare all 7 requirements' : 'What to check'));
+    const rows = container.querySelectorAll('.eligibility-check');
+    expect(rows).toHaveLength(7);
+    expect(rows[0]).toHaveClass('pass');
+    expect(rows[0]).toHaveTextContent('Start date');
+    expect(rows[1]).toHaveClass('conflict');
+    expect(rows[1]).toHaveTextContent('Graduation');
+    expect(rows[2]).toHaveClass('unknown');
+    expect(screen.queryByText('Eligible', { exact: true })).not.toBeInTheDocument();
+  });
+
+  it('does not invent a match when a complete profile has no verified source requirement', () => {
+    const profile = { ...DEFAULT_PREFERENCES, educationLevel: 'masters' as const, degreeField: 'Business analytics', gpa: 3.8, gpaScale: 4, workAuthorization: 'authorized' as const, requiresSponsorshipNowOrFuture: false };
+    const { container } = render(<EligibilityEvidence profile={profile} job={makeJob()} />);
+    expect(screen.getByText('Profile requirements aren’t confirmed yet.')).toBeVisible();
+    expect(screen.getByText('7 unknown')).toBeVisible();
+    expect(container.querySelectorAll('.eligibility-check.pass')).toHaveLength(0);
+    const alignment = container.querySelector('.eligibility-alignment')!;
+    const disclosure = container.querySelector('.eligibility-compact > details')!;
+    expect(alignment.compareDocumentPosition(disclosure) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 });

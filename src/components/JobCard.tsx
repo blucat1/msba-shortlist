@@ -35,7 +35,7 @@ export function JobCard({ result, profile, resumeMatch, saved, dismissed, onSave
   const pay = formatCompensation(job.salary);
   const sourceUnknowns = [job.employmentType === 'unknown' ? 'Full-time status unverified' : null, !job.locations.some(location => location.country === 'US') ? 'US location unverified' : null, job.availability === 'availability_unconfirmed' ? 'Availability unconfirmed' : job.availability === 'closed' ? 'Listing closed' : null].filter(Boolean);
 
-  const highlights = recommendationRank ? recommendationHighlights(result, resumeMatch) : null;
+  const highlights = recommendationHighlights(result, resumeMatch);
   const actions = <div className="job-bottom">
       <span className={`freshness-note ${stale ? 'warning-text' : ''}`}><span className={stale ? 'stale-dot' : 'fresh-dot'} />{job.isDemo ? 'Sample · simulated dates' : stale ? `Feed stale · checked ${formatDate(job.lastVerifiedAt)}` : `Feed checked ${formatDate(job.lastVerifiedAt)}`}</span>
       <div className="job-actions">{recommendationRank && <button type="button" className="button button-primary recommendation-save" onClick={() => void act('save')} disabled={saved || pending !== null} aria-label={saved ? `${job.title} is saved` : `Save ${job.title}`} aria-busy={pending === 'save'}><Bookmark size={17} aria-hidden="true" />{saved ? 'Saved' : pending === 'save' ? 'Saving…' : 'Save role'}</button>}<button type="button" className="card-dismiss" aria-label={dismissed ? `Restore ${job.title}` : `Dismiss ${job.title}`} disabled={pending !== null} onClick={() => void act('dismiss')}>{pending === 'dismiss' ? 'Updating…' : dismissed ? 'Restore' : 'Dismiss'}</button><button type="button" className={`button ${recommendationRank ? 'button-secondary' : 'button-quiet small'}`} onClick={onView}>View role <ArrowRight size={16} aria-hidden="true" /></button><button type="button" className="application-link" onClick={onApply} aria-label={`Open application for ${job.title}`} title="Open application — confirm submission separately"><ArrowUpRight size={18} aria-hidden="true" /></button></div>
@@ -52,15 +52,13 @@ export function JobCard({ result, profile, resumeMatch, saved, dismissed, onSave
         <span className="job-meta-item"><Banknote size={16} aria-hidden="true" /><span>{pay.length > 110 ? <button type="button" className="text-link" onClick={onView}>See published pay details</button> : pay}</span></span>
         {job.timing.deadlineVerified && job.timing.deadline && <span className="job-meta-item job-deadline"><Clock3 size={16} aria-hidden="true" />Apply by {profileDate(job.timing.deadline)}</span>}
       </div>
-      <div className="job-card-status"><ExperienceEvidence job={job} />{(label === 'Experience stretch' || label === 'Known conflict') && <span className="alignment-label stretch">{label}</span>}</div>
-      {!!sourceUnknowns.length && <p className="job-source-summary warning-text">{sourceUnknowns.join(' · ')}</p>}
-      {highlights && <section className="recommendation-why" aria-label="Why this recommendation">
-        <strong className="sr-only">Matches</strong>
-        {highlights.reasons.length ? <ul className="recommendation-reasons">{highlights.reasons.map(reason => <li key={reason}><Check size={16} aria-hidden="true" /><span>{reason}</span></li>)}</ul> : <p>{highlights.fallback}</p>}
-        {!!highlights.watchouts.length && <p className="recommendation-watchouts">{highlights.watchouts.join(' · ')}</p>}
-        <span className="recommendation-evidence" title={highlights.coverageLabel}>{highlights.method === 'resume' ? `Resume evidence coverage: ${highlights.coverage}%` : highlights.coverage === 100 ? 'Source evidence covers all your selected preferences' : `Source evidence covers ${highlights.coverage}% of your selected preferences`}{highlights.unknownCount > 0 ? ` · ${highlights.unknownLabel}` : ''}</span>
-      </section>}
-      <EligibilityEvidence profile={profile} job={job} />
+      <section className="recommendation-why" aria-label="Role alignment">
+        <EligibilityEvidence profile={profile} job={job} alignmentReasons={highlights.reasons} checkReasons={highlights.watchouts} checkIntro={<>
+          <div className="job-card-status"><ExperienceEvidence job={job} />{(label === 'Experience stretch' || label === 'Known conflict') && <span className="alignment-label stretch">{label}</span>}</div>
+          {!!sourceUnknowns.length && <p className="job-source-summary warning-text">{sourceUnknowns.join(' · ')}</p>}
+        </>} />
+        {recommendationRank && <span className="recommendation-evidence" title={highlights.coverageLabel}>{highlights.method === 'resume' ? `Resume evidence coverage: ${highlights.coverage}%` : highlights.coverage === 100 ? 'Source evidence covers all your selected preferences' : `Source evidence covers ${highlights.coverage}% of your selected preferences`}{highlights.unknownCount > 0 ? ` · ${highlights.unknownLabel}` : ''}</span>}
+      </section>
       <SourceAttribution job={job} />
       {job.classification.scope === 'excluded' && <div className="scope-warning"><strong>Outside the graduate catalog</strong><p>{job.classification.reasons.map(reason => reason.text).join(' · ') || 'Check employment type, location and seniority before applying.'}</p></div>}
       {resumeMatch && <ResumeCompatibility result={resumeMatch} />}

@@ -10,7 +10,7 @@ This revision addresses those problems while preserving existing work, the three
 
 The review combined the brief and implementation with local Chromium workflows at desktop and phone sizes, focused failure and persistence checks, existing regression suites and an anonymous inspection of the hosted site. The hosted inspection opened all three primary routes, observed zero browser runtime errors and made no personal-record writes.
 
-The public hosted release and the working checkout are distinct evidence. The checkout already contained unfinished recommendation changes when this review began. Local findings and screenshots refer to that working implementation; an anonymous first visit to the hosted site cannot establish that the local changes have shipped. No deployment was performed as part of this task.
+The public hosted release and the working checkout were distinct evidence during the initial review. The checkout already contained unfinished recommendation changes when that review began. The owner subsequently authorized a live release: PR #14 passed both required CI jobs, merged and deployed successfully, followed by seven passing anonymous hosted check groups. [TEST_REPORT.md](TEST_REPORT.md) records the exact commit, deployment and verification boundaries.
 
 ## Priority problems addressed
 
@@ -73,7 +73,7 @@ Visible keyboard focus, meaningful field labels, dialog focus return, sufficient
 
 Final local verification passed **499 unit tests across 34 files**, all **41 Chromium browser tests against the production bundle**, lint, strict type checking, production build and the existing **101-record** quality benchmark. Browser assertions were repaired to wait for rendered state and animation completion, and a snooze scenario now derives a future date rather than expiring with the calendar. See [TEST_REPORT.md](TEST_REPORT.md) for executed commands, screenshots, repairs and verification boundaries.
 
-Before wider rollout, deploy the verified local state through the established release process and verify the resulting hosted version. This task does not claim a new deployment, new signed-in two-account OAuth acceptance, same-browser account-switch acceptance, second-device persistence, or an independent user study. Earlier hosted and database evidence retains its original date and scope; PostgreSQL smoke tests are not hosted Supabase or Google OAuth acceptance.
+The reviewed state is now live through the established protected release process, with real-catalog browsing and anonymous save protection verified on the hosted version. This does not establish new signed-in two-account OAuth acceptance, same-browser account-switch acceptance, second-device persistence, or an independent user study. Earlier hosted and database evidence retains its original date and scope; PostgreSQL smoke tests are not hosted Supabase or Google OAuth acceptance.
 
 The next useful product evidence is a small observed study of the existing core loop: find a suitable role, understand its evidence, save it, confirm a submission and schedule a next step. Record hesitation, errors and whether the user can explain the match and its uncertainties. The existing deferred pilot materials can support that work without inventing participants or feedback.
 

@@ -1,5 +1,20 @@
 /* Discovery controls use the shared workspace tokens. */
 /* A single search surface, with secondary information disclosed on demand. */
+.eligibility-alignment { padding: 12px; color: var(--ink); }
+.eligibility-alignment .eligibility-heading { color: #245b42; font-size: .875rem; gap: 6px 12px; }
+.eligibility-alignment .eligibility-heading > span { font-weight: 450; }
+.eligibility-alignment > p { margin: 5px 0 0; color: var(--muted); font-size: .875rem; line-height: 1.6; }
+.eligibility-alignment .recommendation-reasons { margin-top: 8px; }
+.eligibility-alignment .recommendation-reasons > li { color: #315c40; font-size: .875rem; line-height: 1.6; }
+.eligibility-check-intro { padding: 0 12px 10px; }
+.eligibility-evidence > .recommendation-watchouts { margin: 0 0 10px; padding-inline: 12px; color: #79512d; font-size: .875rem; line-height: 1.6; }
+.eligibility-compact > details { border-top: 1px solid var(--border); }
+.eligibility-compact > details > summary { min-height: 44px; }
+.eligibility-known-conflict { padding: 10px 12px 0; color: #855029; font-size: .875rem; border-top: 1px solid #e6d7c4; }
+.eligibility-known-conflict > .eligibility-conflict-list { margin: 6px 0 10px; padding-left: 18px; color: inherit; }
+.eligibility-full > .eligibility-alignment { padding: 12px 0; }
+.eligibility-full > .eligibility-known-conflict { padding-inline: 0; }
+.eligibility-full > .eligibility-check-intro, .eligibility-full > .recommendation-watchouts { padding-inline: 0; }
 .opportunities-page { padding-top: 34px; }
 .opportunities-page > .page-heading { margin-bottom: 22px; }
 .opportunities-page > .page-heading h1 { font-size: clamp(2rem, 3.1vw, 2.75rem); }
