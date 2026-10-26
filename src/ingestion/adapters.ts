@@ -22,6 +22,20 @@ function url(value: string): string { const safe = safePostingUrl(value); if (!s
 function uniqueLocations(values: JobLocation[]): JobLocation[] { return [...new Map(values.filter(v => v.label).map(v => [`${v.label}:${v.country}`, v])).values()]; }
 function uniqueIds(postings: ProviderPosting[]): void { if (new Set(postings.map(p => p.externalId)).size !== postings.length) throw new Error('Duplicate provider posting IDs; snapshot completeness cannot be established.'); }
 
+function greenhouseEmployment(metadata: z.infer<typeof greenhouseJob>['metadata']): string | null {
+  // Employers expose different custom-field names. Read only commitment/type
+  // fields, retaining their labels and every value so a contract or internship
+  // marker cannot be hidden by an earlier Full time value.
+  const evidence = (metadata || []).flatMap(field => {
+    const name = field.name.trim().toLowerCase().replace(/[\s_-]+/g, ' ');
+    if (!/^(?:(?:employment|employee|job|time|worker)(?: sub)? type|commitment|early career time type)$/.test(name)) return [];
+    const values = typeof field.value === 'string' ? [field.value]
+      : Array.isArray(field.value) && field.value.every(value => typeof value === 'string') ? field.value as string[] : [];
+    return values.map(value => plainText(value)).filter(Boolean).map(value => `${field.name}: ${value}`);
+  });
+  return evidence.length ? [...new Set(evidence)].join('; ') : null;
+}
+
 export async function fetchBoard(source: JobSource, fetchJson: Fetcher, now = new Date().toISOString()): Promise<BoardSnapshot> {
   if (source.provider === 'jobicy') {
     if (source.board !== 'usa' || source.region === 'eu') throw new Error('Unsupported Jobicy market identity.');
@@ -32,7 +46,7 @@ export async function fetchBoard(source: JobSource, fetchJson: Fetcher, now = ne
     const endpoint = `https://boards-api.greenhouse.io/v1/boards/${board}/jobs?content=true`;
     const parsed = schemas.greenhouse.parse(await fetchJson(endpoint));
     if (parsed.meta.total !== parsed.jobs.length) throw new Error('Greenhouse meta.total differs from received jobs: incomplete snapshot.');
-    const postings = parsed.jobs.map(j => ({ externalId: j.id, title: plainText(j.title), postingUrl: url(j.absolute_url), applicationUrl: url(j.absolute_url), locations: uniqueLocations([...(j.location?.name ? [location(j.location.name)] : []), ...(j.offices || []).filter(o => o.location).map(o => location(o.location!))]), description: plainText(j.content || ''), employment: (j.metadata || []).find(m => /employment type|commitment|job type/i.test(m.name) && typeof m.value === 'string')?.value as string | undefined || null, workMode: null, sourcePostedAt: timestamp(j.first_published), sourceUpdatedAt: timestamp(j.updated_at), sourcePublishedAt: null, salary: [] }));
+    const postings = parsed.jobs.map(j => ({ externalId: j.id, title: plainText(j.title), postingUrl: url(j.absolute_url), applicationUrl: url(j.absolute_url), locations: uniqueLocations([...(j.location?.name ? [location(j.location.name)] : []), ...(j.offices || []).filter(o => o.location).map(o => location(o.location!))]), description: plainText(j.content || ''), employment: greenhouseEmployment(j.metadata), workMode: null, sourcePostedAt: timestamp(j.first_published), sourceUpdatedAt: timestamp(j.updated_at), sourcePublishedAt: null, salary: [] }));
     uniqueIds(postings); return { postings, rawCount: parsed.jobs.length, complete: true, checkedAt: now, endpoint };
   }
   if (source.provider === 'lever') {

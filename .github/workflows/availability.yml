@@ -1,0 +1,28 @@
+name: Live site availability
+on:
+  schedule:
+    - cron: '47 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: live-site-availability
+  cancel-in-progress: false
+jobs:
+  public-readiness:
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+      ((github.event_name == 'schedule' && github.run_attempt == 1) ||
+       (github.event_name == 'workflow_dispatch' && github.actor == 'blucat1' && github.triggering_actor == 'blucat1') ||
+       (github.run_attempt > 1 && github.triggering_actor == 'blucat1'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+      # Native Node TypeScript: no dependency install or production secrets.
+      # Checks real public routes, catalog access and signup; no feed polling.
+      - run: node scripts/check-live.ts

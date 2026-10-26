@@ -64,7 +64,7 @@ const pathSuffix = selected ? `.${selected}` : employerOnly ? '.employer-boards'
 await writeFile(`docs/source-results${pathSuffix}.json`, JSON.stringify({ checkedAt, classifierVersion: CLASSIFIER_VERSION, totals, results }, null, 2) + '\n');
 await writeFile(`docs/SOURCE_AUDIT${pathSuffix}.md`, `# Source audit
 
-Actual public-feed verification at **${checkedAt}** using \`npm run sources:verify${selected ? ` -- --source ${selected}` : ''}\`. **${success}/${sources.length}** configured sources returned schema-valid employer boards or complete API discovery windows. This report is generated from real public requests, without fixtures. Source verification does not write or verify the production Supabase catalog. Counts change as publishers update listings; these sources do not represent the entire market.
+Actual public-feed verification at **${checkedAt}** using \`npm run sources:verify${selected ? ` -- --source ${selected}` : employerOnly ? ' -- --employer-only' : ''}\`. **${success}/${sources.length}** configured sources returned schema-valid employer boards or complete API discovery windows. This report is generated from real public requests, without fixtures. Source verification does not write or verify the production Supabase catalog. Counts change as publishers update listings; these sources do not represent the entire market.
 
 Totals across successful sources:
 
