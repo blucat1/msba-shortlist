@@ -103,6 +103,20 @@ describe('explicit local resume review', () => {
     expect(screen.queryByText('fictional-resume.txt · TXT')).not.toBeInTheDocument();
   });
 
+  it('preserves a reviewed resume after a replacement file fails, while preventing use during the read', async () => {
+    mount(); await pasteAndAnalyze(); await userEvent.click(confirmation());
+    let reject!: (reason: Error) => void;
+    importer.importResumeFile.mockImplementationOnce(() => new Promise<ImportedResume>((_resolve, fail) => { reject = fail; }));
+    await userEvent.upload(screen.getByLabelText('Choose resume file'), new File(['%PDF'], 'protected.pdf', { type: 'application/pdf' }));
+    expect(confirmation()).toBeChecked(); expect(confirmation()).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Use this resume' })).toBeDisabled();
+    await act(async () => { reject(new Error('Password-protected PDFs are not supported.')); });
+    expect(await screen.findByRole('alert')).toHaveTextContent('Password-protected PDFs');
+    expect(screen.getByRole('textbox', { name: 'Review and edit extracted resume text' })).toHaveValue(text.trim());
+    expect(confirmation()).toBeChecked(); expect(confirmation()).not.toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Use this resume' })).not.toBeDisabled();
+  });
+
   it('clears in-memory documents across mode changes and auth identity remounts', async () => {
     const view = render(<ResumeWorkspaceProvider key="demo:user-a" mode="demo"><ResumeWorkspace /></ResumeWorkspaceProvider>);
     await pasteAndAnalyze(); expect(screen.getByRole('heading', { name: 'Local resume report' })).toBeVisible();

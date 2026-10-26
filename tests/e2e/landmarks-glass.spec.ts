@@ -61,7 +61,7 @@ test('Landmarks composition adapts its three routes and uses the actual locally 
   page.on('request', request => { if (/\.woff2(?:\?|$)/.test(request.url())) fontRequests.push(request.url()); });
   for (const width of [1440, 1024, 900, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 844 });
-    await page.goto('/demo/opportunities'); await expect(page.getByRole('heading', { name: 'Opportunities', level: 1, exact: true })).toBeVisible();
+    await page.goto('/demo/opportunities'); await expect(page.getByRole('heading', { name: 'Top matches for you', level: 1, exact: true })).toBeVisible();
     await page.evaluate(() => document.fonts.ready);
     const wide = width > 900;
     const navigation = page.getByRole('navigation', { name: wide ? 'Main navigation' : 'Mobile navigation' });

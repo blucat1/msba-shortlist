@@ -1,5 +1,46 @@
 # Observed implementation checks
 
+## Live release preparation — October 26, 2026
+
+The owner requested publishing the reviewed changes to the existing live site. The release uses the protected pull-request path to `main`, which is already connected to Cloudflare Pages and the real Supabase project. Production variables, database migrations, source imports and authorization policies are unchanged. The supplementary `npm run test:db:smoke` check passed all **183 PostgreSQL-WASM assertions** on Node 24.22.0. This is distinct from the required disposable real-Supabase CI job and hosted OAuth acceptance. Exact-head GitHub checks, deployment and hosted browser results will be recorded after execution.
+
+## Full product and workflow review — October 26, 2026
+
+Reviewed the three primary routes, recommendation and resume flows, manual tracking, tasks, Insights, preferences/imports, failure recovery, and the inherited visual system against the master brief. Existing uncommitted recommendation work was retained. [PRODUCT_REVIEW.md](PRODUCT_REVIEW.md) records the critique, implemented improvements and remaining priorities.
+
+Changes include warm neutral/forest-green styling, shorter recommendation cards with evidence before actions and visible provenance, compact phone metrics, exactly three mobile route links with header Settings, guarded save/dismiss/reminder actions, date validation and inline submission failures, timed/snoozed task presentation, filtered tracker recovery, stable manual-company grouping, preserved preference drafts, import-read race protection, safe URL reuse, route titles/focus and a rendering recovery boundary. Live snapshots refresh on returning to the tab. Independent listing/recommendation filters and browser-local resume privacy remain intact; hidden tabs avoid duplicate catalog ranking.
+
+Final observed checks used the checkout's **Node 24.22.0**, npm and existing locked dependencies:
+
+| Check | Observed result |
+| --- | --- |
+| `npm run lint` | PASS |
+| `npm run typecheck` | PASS |
+| `npm run test:unit` | PASS — **499 tests across 34 files** |
+| `npm run quality:check` | PASS — **101 reviewed records, zero mismatches**; bounded existing benchmark, not market-wide validation |
+| `npm run build` | PASS — production static bundle built |
+| `PLAYWRIGHT_BASE_URL=http://127.0.0.1:4173 npm run test:e2e` | PASS — **41/41 Chromium tests in 54.3 seconds**, against `npm run preview -- --port 4173` serving that bundle |
+| Additional route/layout capture | PASS — Opportunities, My Search and Insights at **320, 390, 768 and 1440 px**, no document overflow and **zero runtime errors** |
+| `git diff --check` | PASS |
+
+Regressions exercise future application dates leaving persistent storage unchanged; corrected-date retry producing one submission; rapid reminder acceptance and interrupted-response retries producing one task; preference drafts surviving refresh/failure; obsolete import reads not replacing the current preview; exact-time tasks; manual/custom/catalog company grouping; independent filter reset; failed resume replacement; and route/query focus behavior. The full browser suite retains real local PDF/DOCX parsing, demo persistence, import/export, unknown-data handling, reduced preferences and rendering fallback checks.
+
+Earlier runs found test reliability issues: a hardcoded snooze date had passed, a result assertion sampled before the URL-driven update rendered, a single-element assertion encountered the previous multi-card state, and a viewport measurement sampled an entrance animation. Tests now derive a future snooze date in the profile timezone and wait for the expected rendered text or unchanged viewport bounds. No size tolerance, acceptance assertion or timeout was loosened. A unit grouping fixture was also given a fixed clock so freshness rules cannot expire its scenario.
+
+Inspected local fictional-demo screenshots: [Opportunities desktop](screenshots/review-opportunities-desktop.png), [phone](screenshots/review-opportunities-phone.png), [My Search desktop](screenshots/review-my-search-desktop.png), [phone](screenshots/review-my-search-phone.png), [Insights desktop](screenshots/review-insights-desktop.png), [phone](screenshots/review-insights-phone.png). At a 1440 × 1000 viewport, the same initial five-group demo recommendation page measured **4,004 px before / 2,821 px after**, approximately 30% less vertical space. This is a local layout measurement. Selected text/background contrast calculations: primary button **6.46:1**, main text **15.09:1**, secondary text **6.08:1**, selected navigation **7.01:1**. These samples and Chromium checks are not a complete accessibility certification or physical-device study.
+
+A separate read-only anonymous inspection of the **existing hosted release** opened all three routes with no overflow or runtime errors. It did not validate this revision in production. **No commit, push, deployment, production data mutation, new source import, migration or authorization-policy change was performed.** PostgreSQL/Supabase authorization and Google OAuth, account-switching and second-device acceptance were **not rerun** for this frontend revision; earlier evidence below retains its original scope and date. Local live configuration continues to show its setup state, separately from the explicitly fictional demo.
+
+## Dedicated Shortlist recommendation workspace — October 23, 2026 UTC
+
+Replaced the shared catalog-style Shortlist body with a dedicated recommendation experience. The tab is again Shortlist; its page heading is Top matches for you. It starts with five ranked groups, visible source-supported reasons or an honest limited-evidence fallback, explicit coverage/unknowns, and Save/View actions before lower details. Show more adds five groups; exact requisition variants keep their own IDs/actions. No new ranking formula or hiring-probability claim was added.
+
+Adjust recommendations is a separate draft/preview/apply workflow with preferences, resume, or both. Cancel discards the draft; Reset prepares strict new-grad defaults but requires Update. Resume review returns to the same unapplied adjustment draft. Whitelisted public `rec-*` options are independent of All listings' unprefixed controls, which retain their catalog interface. No resume text, extracted skills or confirmed profile fields enter URLs/storage/cloud writes. Detail comparisons use the same effective profile as the recommendation card. Source exclusions, conflicts, deadlines and unknown requirements remain explicit.
+
+Observed final local static verification: **482 unit tests across 29 files**, lint, strict TypeScript and build passed. This includes **17 evidence/highlight regressions** and **18 recommendation-option/isolation regressions**. All **eight new recommendation browser cases** passed, including Apply/Cancel/Reset, preview, five-at-a-time results, Save/View/requisition actions, resume review/privacy, strict defaults, mode/All-listings isolation and 48 px/16 px phone controls. Existing generic discovery tests now explicitly exercise All listings. The complete browser run passed **37/38**; one existing GPU lifecycle test encountered an execution-context destruction and then passed unchanged on a focused rerun in 3.5 seconds. No waits, assertions or timeouts were weakened. Required exact-head CI runs all 38 together and is recorded with hosted acceptance in the release pull request.
+
+The first visual pass found excessive phone header/card height and actions below lower evidence; the duplicate heading and summary panel were removed, the count/why copy compacted, and Save/View moved above those disclosures. A measured 14 px reset control was increased to 16 px. The final nine-state visual review at 1440/390/320 px found no document/modal overflow, JavaScript errors, visible text below 14 px, fields below 16 px or interactive targets below 44 px. Unverified requirements and the compact resume score precede Save/View; after scrolling the first card into view, phone actions measured 50 px tall and stayed above the dock (390 px: y442–492; 320 px: y489–539). Screenshots were inspected: [desktop](screenshots/shortlist-recommendations-desktop.png), [phone card](screenshots/shortlist-recommendations-phone.png), [phone adjustments](screenshots/shortlist-adjustments-phone.png). These bounded Chromium observations do not certify physical Safari/Firefox or the deferred human pilot. No feed, database, RLS, provider, billing or collaboration-access changes were made.
+
 ## Top matches wording — October 23, 2026 UTC
 
 Renamed the personalized Shortlist tab to **Top matches for you** and its existing filter action to **Adjust matches**. Phone labels shorten to Top matches and Adjust while their full accessible names remain. All listings retains its current Filters action and discovery behavior; no domain or backend behavior changed.

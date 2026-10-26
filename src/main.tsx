@@ -6,19 +6,23 @@ import { AppShell } from './app/AppShell';
 import { Opportunities } from './features/Opportunities';
 import { MySearch } from './features/MySearch';
 import { AuthCallback } from './app/AuthCallback';
+import { PageNavigation } from './app/PageNavigation';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import './styles.css';
 import './styles/apple.css';
 import './styles/studio.css';
 import './styles/typography.css';
 import './styles/landmarks.css';
 import './styles/discovery.css';
+import './styles/recommendations.css';
+import './styles/workflows.css';
 import { appConfig } from './config';
 document.title = `${appConfig.name} · Find your next step`;
 const Insights = lazy(() => import('./features/Insights'));
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1, refetchOnWindowFocus: false } } });
 const defaultRoute = import.meta.env.VITE_APP_MODE === 'production' ? '/opportunities' : '/demo/opportunities';
-createRoot(document.getElementById('root')!).render(
-  <React.StrictMode><QueryClientProvider client={queryClient}><BrowserRouter><Suspense fallback={<div className="page-loading">Opening your workspace…</div>}><Routes>
+createRoot(document.getElementById('root')!, { onCaughtError: () => { /* Recovery UI handles rendering failures without logging private state. */ } }).render(
+  <React.StrictMode><ErrorBoundary><QueryClientProvider client={queryClient}><BrowserRouter><Suspense fallback={<div className="page-loading" role="status">Opening your workspace…</div>}><PageNavigation /><Routes>
     <Route path="/" element={<Navigate to={defaultRoute} replace />} />
     <Route path="/demo" element={<Navigate to="/demo/opportunities" replace />} />
     <Route element={<AppShell key="demo" mode="demo" />}>
@@ -33,5 +37,5 @@ createRoot(document.getElementById('root')!).render(
     </Route>
     <Route path="/auth/callback" element={<AuthCallback />} />
     <Route path="*" element={<Navigate to={defaultRoute} replace />} />
-  </Routes></Suspense></BrowserRouter></QueryClientProvider></React.StrictMode>,
+  </Routes></Suspense></BrowserRouter></QueryClientProvider></ErrorBoundary></React.StrictMode>,
 );
