@@ -36,7 +36,8 @@ describe('discovery card decisions', () => {
     const decisionActions = container.querySelector('.job-bottom')!;
     expect(reasons.compareDocumentPosition(decisionActions) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(container.querySelectorAll('.recommendation-reasons li').length).toBeLessThanOrEqual(3);
-    expect(screen.getByText('Requirements need checking')).toBeVisible();
+    expect(screen.getByText('What aligns')).toBeVisible();
+    expect(screen.getByText('What to check')).toBeVisible();
   });
 
   it('shows one resume score with its evidence coverage instead of duplicate score blocks', () => {

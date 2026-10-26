@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+import { Check } from 'lucide-react';
 import { assessEligibility, type EligibilityCriterion, type EligibilityProfile } from '../domain/eligibility';
 import type { Job } from '../domain/types';
 import { safeUrl } from './ui';
@@ -13,30 +15,48 @@ function dateRange(low: string | null, high: string | null): string {
   return low ? `On or after ${calendarDate(low)}` : high ? `On or before ${calendarDate(high)}` : 'No required date verified';
 }
 
-export function EligibilityEvidence({ profile, job, full = false }: { profile: EligibilityProfile; job: Job; full?: boolean }) {
+export function EligibilityEvidence({ profile, job, full = false, alignmentReasons = [], checkReasons = [], checkIntro }: { profile: EligibilityProfile; job: Job; full?: boolean; alignmentReasons?: string[]; checkReasons?: string[]; checkIntro?: ReactNode }) {
   const checks = assessEligibility(profile, job);
   const unknowns = checks.filter(check => check.status === 'unknown').length;
   const conflicts = checks.filter(check => check.status === 'conflict');
-  const matched = checks.filter(check => check.status === 'pass').length;
+  const aligned = checks.filter(check => check.status === 'pass');
+  const matched = aligned.length;
+  const unique = (values: string[]) => [...new Map(values.map(value => value.trim()).filter(Boolean).map(value => [value.normalize('NFKC').toLowerCase(), value])).values()];
+  const positiveReasons = unique([...alignmentReasons, ...aligned.map(check => `${labels[check.criterion]}: ${check.reason}`)]).slice(0, 3);
+  const watchouts = unique(checkReasons);
   const sourceLink = job.sourceReview && safeUrl(job.sourceReview.evidenceUrl);
-  const heading = conflicts.length || job.sourceReview ? 'Known requirements conflict' : unknowns ? 'Requirements need checking' : 'Recorded checks match';
   const countSummary = [
+    matched ? `${matched} match${matched === 1 ? '' : 'es'}` : null,
     conflicts.length ? `${conflicts.length} conflict${conflicts.length === 1 ? '' : 's'}` : null,
     unknowns ? `${unknowns} unknown` : null,
-    matched ? `${matched} match${matched === 1 ? '' : 'es'}` : null,
   ].filter(Boolean).join(' · ');
-  const rows = <ul className="eligibility-checks">{checks.map(check => <li key={check.criterion} className={`eligibility-check ${check.status}`}>
+  const checkSummary = [
+    conflicts.length ? `${conflicts.length} conflict${conflicts.length === 1 ? '' : 's'}` : null,
+    unknowns ? `${unknowns} unknown` : null,
+  ].filter(Boolean).join(' · ');
+  const order = { pass: 0, conflict: 1, unknown: 2 };
+  const rows = <ul className="eligibility-checks">{[...checks].sort((a, b) => order[a.status] - order[b.status]).map(check => <li key={check.criterion} className={`eligibility-check ${check.status}`}>
     <div><strong>{labels[check.criterion]}</strong><span>{statusLabels[check.status]}</span></div>
     <p>{check.reason}</p>
     {!!check.evidence.length && <details className="eligibility-source-details"><summary>Source evidence for {labels[check.criterion].toLowerCase()}</summary><blockquote>{[...new Set(check.evidence)].map((excerpt, index) => <p key={index}>{excerpt}</p>)}</blockquote></details>}
   </li>)}</ul>;
-  const conflictSummary = !!conflicts.length && <ul className="eligibility-conflict-list">{conflicts.map(check => <li key={check.criterion}><strong>{labels[check.criterion]}:</strong> {check.reason}</li>)}</ul>;
+  const alignmentSummary = <div className="eligibility-alignment">
+    <div className="eligibility-heading"><strong>What aligns</strong>{matched > 0 && <span>{matched} confirmed</span>}</div>
+    {positiveReasons.length ? <ul className="recommendation-reasons">{positiveReasons.map(reason => <li key={reason}><Check size={16} aria-hidden="true" /><span>{reason}</span></li>)}</ul> : <p>Profile requirements aren’t confirmed yet.</p>}
+  </div>;
+  const checkContext = <>
+    {checkIntro && <div className="eligibility-check-intro">{checkIntro}</div>}
+    {!!watchouts.length && <p className="recommendation-watchouts">{watchouts.join(' · ')}</p>}
+  </>;
+  const conflictSummary = !!conflicts.length && <div className="eligibility-known-conflict"><strong>Known requirements conflict</strong><ul className="eligibility-conflict-list">{conflicts.map(check => <li key={check.criterion}><strong>{labels[check.criterion]}:</strong> {check.reason}</li>)}</ul></div>;
   const sourceSummary = job.sourceReview?.reason.split(/(?<=[.!?])\s+(?=[A-Z])/)[0];
 
   return <section className={`eligibility-evidence ${full ? 'eligibility-full' : 'eligibility-compact'} ${conflicts.length || job.sourceReview ? 'has-conflict' : ''}`} aria-label="Requirements evidence">
     {full ? <>
       <h3>Requirements & your profile</h3>
-      <p className="eligibility-summary"><strong>{heading}.</strong> {countSummary}. These checks do not confirm overall eligibility.</p>
+      {alignmentSummary}
+      <p className="eligibility-summary"><strong>{checkSummary || job.sourceReview ? 'What to check.' : 'Recorded checks match.'}</strong> {countSummary}. These checks do not confirm overall eligibility.</p>
+      {checkContext}
       {conflictSummary}
       <details className="eligibility-check-details"><summary>Compare all {checks.length} requirements</summary>{rows}</details>
       <dl className="eligibility-timing">
@@ -47,8 +67,10 @@ export function EligibilityEvidence({ profile, job, full = false }: { profile: E
       {!!job.timing.evidence.length && <details className="eligibility-source-details"><summary>Original timing evidence</summary>{job.timing.evidence.map((excerpt, index) => <blockquote key={index}>{excerpt}</blockquote>)}</details>}
       <p className="hint">Month-only dates show calendar bounds. Preferred criteria are not hard conflicts. Check the original posting for other requirements and deadline times.</p>
     </> : <>
+      {alignmentSummary}
+      <details><summary><strong>{checkSummary || job.sourceReview ? 'What to check' : 'Review all requirements'}</strong><span>{checkSummary || `${matched} matches`}</span></summary><p className="eligibility-summary">Unknown means unverified. Preference overlap does not confirm eligibility.</p>{rows}</details>
+      {checkContext}
       {conflictSummary}
-      <details><summary><strong>{heading}</strong><span>{countSummary}</span></summary><p className="eligibility-summary">Unknown means unverified. Preference overlap does not confirm eligibility.</p>{rows}</details>
     </>}
     {job.sourceReview && <aside className="eligibility-source-conflict">
       <strong>Employer source conflict</strong>

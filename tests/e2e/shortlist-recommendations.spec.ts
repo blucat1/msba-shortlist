@@ -256,7 +256,7 @@ test('an empty preference profile uses an honest fallback instead of inventing p
   await page.reload();
   await expect(page.locator('.job-card')).toHaveCount(5);
   await expect(page.locator('.recommendation-reasons')).toHaveCount(0);
-  await expect(page.getByText('No specific overlap recorded yet.', { exact: true })).toHaveCount(5);
+  await expect(page.getByText('Profile requirements aren’t confirmed yet.', { exact: true })).toHaveCount(5);
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();
   await page.goto('/demo/opportunities?rec-career=experienced');
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();
