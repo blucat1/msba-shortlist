@@ -1,4 +1,4 @@
-# Contributing to MSBA Shortlist
+# Contributing to Draft Board
 
 Teammates can improve the code through branches and pull requests. `blucat1` keeps the production accounts, billing, and final merge. Owner controls are applied and verified; no teammates have been invited. The owner can grant selected teammates **Write** access later. See the [owner guide](docs/COLLABORATION.md) for the verified settings and their limits.
 

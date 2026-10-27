@@ -1,10 +1,14 @@
-# MSBA Shortlist
+# Draft Board
 
 Repository: https://github.com/blucat1/msba-shortlist
 
 Hosted site: https://msba-shortlist.pages.dev · Isolated sample demo: https://msba-shortlist.pages.dev/demo
 
 Find worthwhile US full-time analytics, product, strategy, and data opportunities, understand their fit, then keep the next step moving. Independent of Cal Poly; no university affiliation or endorsement. The working product name is configurable in `src/config.ts`.
+
+## Use the live site
+
+Open [Draft Board](https://msba-shortlist.pages.dev/opportunities) in a browser; no installation is needed. Browse public opportunities, then sign in with Google to save roles and use your private My Search tracker. Adjust your graduation/start dates and preferences to your own search. The site uses free hosting and backend plans, with provider usage and availability limits described below.
 
 ## Run the demo
 
@@ -37,7 +41,7 @@ Opportunities includes **Search the market**, with editable searches on Google, 
 
 The registry includes 154 verified employer boards and the Jobicy remote market feed; ID.me’s university board and WisdomTree remain disabled pending, respectively, stronger official linkage and resolution of a source-use restriction. Current source/import counts and release checks are dated in [TEST_REPORT.md](docs/TEST_REPORT.md). Broad source or employer totals are never presented as graduate-job counts. Owner-only releases remain active; no teammates have been invited.
 
-The hosted acceptance on **October 22, 2026 at 07:43 UTC** found **459 retained supported records**, **15 default listings in 14 groups across 8 companies**, and **3 confirmed-zero listings**. All **38 enabled source imports** succeeded. These are dated connected-catalog counts, not the entire market or a promise that every requirement matches an individual applicant.
+The public audit on **October 27, 2026 at 21:26 UTC** found **1,805 supported catalog records** and **162 default new-grad/early-career listings in 144 groups**, including 60 new-grad listings in 50 groups, before personal filters. The latest observed scheduled import succeeded for **155/155 enabled feeds**. These dated counts cover connected sources; catalog totals include experienced roles and listings needing details checked, and do not establish that every requirement matches an individual applicant.
 
 ## Experience focus
 
@@ -53,7 +57,7 @@ The [source review](docs/SUPPLY_REVIEW.md) and `npm run quality:check` measure b
 
 ## Live setup
 
-The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All four hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
+The public GitHub repository, Git-integrated Cloudflare Pages site, and a separate Free Supabase project are connected. All five hosted migrations, exact callback configuration, account deletion, server-only Actions secrets and the first production import are complete.
 
 Google sign-in is enabled with basic identity permissions. The owner confirmed that signing in, saving a job and refreshing My Search worked; server counts corroborated a Google account and saved opportunity. Hosted backend authorization/deletion passed 23 checks with two disposable users, both removed afterward. Two independent Google accounts, same-browser account switching, second-device persistence and wider audience availability still need pilot acceptance.
 

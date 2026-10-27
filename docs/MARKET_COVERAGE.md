@@ -1,12 +1,12 @@
 # Discovery coverage
 
-MSBA Shortlist combines an imported catalog with wider external search. It does not claim to index every vacancy or verify an entire platform's results.
+Draft Board combines an imported catalog with wider external search. It does not claim to index every vacancy or verify an entire platform's results.
 
 | Discovery option | Coverage | What is checked |
 | --- | --- | --- |
 | Employer feeds | The verified Greenhouse, Lever and Ashby boards in the registry | Complete public boards, supported roles, location/employment evidence, experience requirements and freshness |
 | Jobicy remote market feed | Remote jobs across employers, without a company whitelist; free API discovery window of seven days | Complete cursor traversal, actual company names, source requirements, canonical Jobicy links and subsequent listing-status checks |
-| Search the market | Editable searches on Google, Indeed and LinkedIn, including employers outside connected feeds | Safe search links only; results open on those services and are not imported, counted, or verified by MSBA Shortlist |
+| Search the market | Editable searches on Google, Indeed and LinkedIn, including employers outside connected feeds | Safe search links only; results open on those services and are not imported, counted, or verified by Draft Board |
 | Manual tracking | Any suitable role found elsewhere | Owner-entered link/details and private application history; no scraping or automatic submission |
 
 Shortlist defaults to new grads plus early-career roles through three years, with new grads first and 25 groups per batch. New-grad evidence means explicit graduate/entry-level hiring or a stated 0–1-year requirement. A one-year minimum and 2–3-year experience stretches are labeled. Senior roles and unknown experience remain separate unless explicitly selected. External platform tags and search keywords do not establish that a role meets this policy. Full-time status, degree, timing, location and work authorization still need to match the employer's actual requirements.

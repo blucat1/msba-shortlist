@@ -1,6 +1,6 @@
 # Architecture
 
-MSBA Shortlist is a static React/TypeScript Vite application with three primary routes: Opportunities, My Search and lazy-loaded Insights. React Router handles navigation, TanStack Query caches server state, Zod validates boundaries, and Radix dialog primitives/Tailwind styles support the interface. System fonts and local assets avoid an external font dependency.
+Draft Board is a static React/TypeScript Vite application with three primary routes: Opportunities, My Search and lazy-loaded Insights. React Router handles navigation, TanStack Query caches server state, Zod validates boundaries, and Radix dialog primitives/Tailwind styles support the interface. System fonts and local assets avoid an external font dependency.
 
 ```mermaid
 flowchart TD

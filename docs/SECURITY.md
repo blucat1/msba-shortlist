@@ -1,6 +1,6 @@
 # Security boundaries
 
-MSBA Shortlist is a small pilot implementation. It has no security certification. Real Supabase SQL tests and hosted REST/RPC/deletion checks have passed within the scope recorded below. Google client/provider setup is complete and enablement verified; the owner reports successful live Google sign-in and save/refresh. Independent Google accounts, same-browser private-cache/account switching and second-device acceptance remain owner checks in `DEPLOYMENT.md` and `DATABASE.md`.
+Draft Board is a small pilot implementation. It has no security certification. Real Supabase SQL tests and hosted REST/RPC/deletion checks have passed within the scope recorded below. Google client/provider setup is complete and enablement verified; the owner reports successful live Google sign-in and save/refresh. Independent Google accounts, same-browser private-cache/account switching and second-device acceptance remain owner checks in `DEPLOYMENT.md` and `DATABASE.md`.
 
 ## Private records
 
