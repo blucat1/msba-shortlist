@@ -1,4 +1,4 @@
-# MSBA Shortlist pilot protocol
+# Draft Board pilot protocol
 
 **Status: prepared; human testing deferred at the owner's request.** No classmates have been recruited, invited, observed or counted by this protocol. Choose dates only when the owner resumes the pilot. The protocol is a plan, not evidence that the product is useful or that Google account isolation has passed.
 
@@ -16,7 +16,7 @@ The target cohort graduates **May 15, 2027** and can start work **May 16, 2027 o
 
 Suggested invitation/consent wording for the owner to use **later**, after the pilot is resumed:
 
-> This optional test checks whether MSBA Shortlist helps students graduating May 15, 2027 find suitable roles and maintain their own search. You control your Google sign-in and private tracker. I will collect only a participant alias, task outcomes/times, counts of suitable or missed roles, ratings and any brief feedback you choose to share. Please omit passwords, email addresses, resumes, application notes and sensitive employer details from feedback. There is no hidden analytics or screen recording. You may skip any task, stop, or ask me to remove your identifiable pilot responses before aggregate results are published. Participation has no effect on coursework or access to the app.
+> This optional test checks whether Draft Board helps students graduating May 15, 2027 find suitable roles and maintain their own search. You control your Google sign-in and private tracker. I will collect only a participant alias, task outcomes/times, counts of suitable or missed roles, ratings and any brief feedback you choose to share. Please omit passwords, email addresses, resumes, application notes and sensitive employer details from feedback. There is no hidden analytics or screen recording. You may skip any task, stop, or ask me to remove your identifiable pilot responses before aggregate results are published. Participation has no effect on coursework or access to the app.
 
 Use aliases `P01`–`P04`, not initials or email addresses. Record consent as a boolean and date; never copy a signed document into this public repository. Participant-specific entries stay private for at most **30 days after the pilot ends**, then are deleted after producing consented aggregate findings. Participants control their app data and backups independently; app account deletion is not the same as withdrawing owner-collected pilot feedback. If consent is not given, collect no participant measurements.
 
@@ -48,7 +48,7 @@ Count each task attempted, successful, failed or skipped. A skip is not a pass. 
 
 ## Time comparison
 
-Counterbalance order: odd aliases use their usual search method first; even aliases use MSBA Shortlist first. Give each condition the same role/location/cohort-start target and a **10-minute maximum** to find three roles the participant would seriously consider. Avoid repeating the identical job across both conditions. Record elapsed seconds, qualifying-role count and whether the condition hit the time cap. Do not ask for logins to another service or automate external applications.
+Counterbalance order: odd aliases use their usual search method first; even aliases use Draft Board first. Give each condition the same role/location/cohort-start target and a **10-minute maximum** to find three roles the participant would seriously consider. Avoid repeating the identical job across both conditions. Record elapsed seconds, qualifying-role count and whether the condition hit the time cap. Do not ask for logins to another service or automate external applications.
 
 Compare paired sessions only when both conditions produced three qualifying roles; separately report time-capped/unfinished conditions and useful-role counts. Report median within-person change with the number of valid pairs. A smaller workload or fewer useful results is not evidence of time saved.
 

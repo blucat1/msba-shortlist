@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, ArrowUpRight, BarChart3, Bookmark, Check, Compass, Layers2, Plus, Settings2, ShieldCheck, WifiOff, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, BarChart3, Bookmark, Check, Compass, Plus, Settings2, ShieldCheck, WifiOff, X } from 'lucide-react';
 import { createDemoRepository } from '../repositories/demo';
 import { createSupabaseRepository } from '../repositories/supabase';
 import { getConfigurationError, getSupabaseClient, signInWithGoogle, signOut } from '../lib/supabase';
@@ -115,8 +115,8 @@ export function AppShell({ mode }: { mode: 'demo' | 'live' }) {
       <header className="topbar glass-header studio-surface">
         <StudioGlass tone="chrome" />
         <Link to={`${base}/opportunities`} className="brand shell-brand" aria-label={appConfig.name}>
-          <span className="brand-mark"><Layers2 size={22} strokeWidth={1.7} aria-hidden="true" /></span>
-          <span className="brand-wordmark mobile-brand">{appConfig.name.split(' ').at(-1)}<small className="brand-caption">{appConfig.name.split(' ').slice(0, -1).join(' ')}</small></span>
+          <span className="brand-mark"><img src={appConfig.logoPath} alt="" width={38} height={38} aria-hidden="true" /></span>
+          <span className="brand-wordmark mobile-brand">{appConfig.name}</span>
         </Link>
         <nav className="desktop-navigation" aria-label="Main navigation">{navigation.map(({ path, label, icon: Icon }) => <NavLink key={path} to={`${base}${path}`} className={({ isActive }) => `desktop-nav-link ${isActive ? 'active' : ''}`}><Icon size={18} strokeWidth={1.8} aria-hidden="true" /><span>{label}</span></NavLink>)}</nav>
         <div className="topbar-actions">

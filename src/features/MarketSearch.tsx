@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import { ArrowUpRight, Plus } from 'lucide-react';
 import { Field } from '../components/ui';
+import { appConfig } from '../config';
 import {
   buildMarketSearchLinks, DEFAULT_MARKET_LOCATION, DEFAULT_MARKET_QUERY,
 } from '../domain/market-search';
@@ -36,7 +37,7 @@ export function MarketSearch({ initialQuery, initialLocation, onAddOpportunity }
         <p className="hint market-provider-copy">{link.description}</p>
       </li>)}
     </ul>
-    <p className="hint market-search-disclosure market-search-note">Searches open in a new tab with your keywords and location. External results are unverified by MSBA Shortlist and are not added to this catalog.</p>
+    <p className="hint market-search-disclosure market-search-note">Searches open in a new tab with your keywords and location. External results are unverified by {appConfig.name} and are not added to this catalog.</p>
     <div className="market-search-save">
       <div><strong>Track an external role</strong><p>Add its original link and details to My Search.</p></div>
       <button type="button" className="button button-primary" onClick={onAddOpportunity}><Plus size={17} aria-hidden="true" /> Track a job you found</button>

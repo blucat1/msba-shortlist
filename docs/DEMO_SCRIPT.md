@@ -1,4 +1,4 @@
-# Two-minute MSBA Shortlist demo
+# Two-minute Draft Board demo
 
 Preparation: open the [hosted demo](https://msba-shortlist.pages.dev/demo), or run `npm ci`, then `npm run dev`, and open the local `/demo` route printed by Vite (normally `http://127.0.0.1:5173/demo`). No cloud credentials are needed. For a clean sample, open Settings & preferences → Data & account → Reset demo and confirm. Close Settings. The sample has 30 fictional jobs, 12 tracked opportunities, and simulated dates generated relative to the first demo visit. Browser storage preserves those dates and edits across refreshes; the hosted and local origins have separate demo storage.
 

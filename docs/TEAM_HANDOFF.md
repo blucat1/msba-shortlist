@@ -1,6 +1,6 @@
 # Four-person handoff
 
-MSBA Shortlist has a [live frontend](https://msba-shortlist.pages.dev), a credential-free [isolated demo](https://msba-shortlist.pages.dev/demo), a [public repository](https://github.com/blucat1/msba-shortlist), and a real hosted Supabase backend. Cloudflare production public configuration/contact are set; previews remain demo mode. Keep fictional demo records out of production. The product name lives in `src/config.ts`; the configured public owner contact is `nwr0110@gmail.com` through `VITE_OWNER_CONTACT`.
+Draft Board has a [live frontend](https://msba-shortlist.pages.dev), a credential-free [isolated demo](https://msba-shortlist.pages.dev/demo), a [public repository](https://github.com/blucat1/msba-shortlist), and a real hosted Supabase backend. Cloudflare production public configuration/contact are set; previews remain demo mode. Keep fictional demo records out of production. The product name lives in `src/config.ts`; the configured public owner contact is `nwr0110@gmail.com` through `VITE_OWNER_CONTACT`.
 
 | Review area | Start here | Review outcome |
 | --- | --- | --- |

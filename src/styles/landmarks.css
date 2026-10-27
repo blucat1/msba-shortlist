@@ -39,7 +39,8 @@ h2, h3, h4 { font-weight: 550; letter-spacing: -.015em; }
   margin: 0; padding: 24px 14px 14px; display: flex; flex-direction: column; align-items: stretch; gap: 28px; border-radius: 16px;
 }
 .shell-brand { gap: 10px; margin: 0 8px 4px; min-height: 48px; }
-.shell-brand .brand-mark { width: 38px; height: 38px; border-radius: 14px; color: #176b4e; background: rgba(255, 255, 255, .8); border-color: #fff; }
+.shell-brand .brand-mark { display: grid; width: 38px; height: 38px; flex-shrink: 0; border: 0; border-radius: 10px; background: transparent; box-shadow: none; }
+.shell-brand .brand-mark img { display: block; width: 100%; height: 100%; }
 .shell-brand .brand-wordmark { font-size: 1.375rem; font-weight: 550; letter-spacing: -.035em; gap: 5px; }
 .brand-caption { font-size: .875rem; letter-spacing: .07em; color: #526159; font-weight: 450; }
 .desktop-navigation { display: flex; flex-direction: column; align-items: stretch; padding: 0; gap: 8px; background: transparent; border: 0; border-radius: 0; }
@@ -161,8 +162,9 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
 }
 @media (max-width: 600px) {
   .glass-header.studio-surface { top: 10px; width: calc(100% - 24px); min-height: 64px; padding: 8px 10px; margin-top: 10px; gap: 8px; border-radius: 14px; }
-  .shell-brand .brand-mark { display: none; }
-  .shell-brand .brand-wordmark { font-size: 1.25rem; }
+  .shell-brand { gap: 8px; padding: 4px 0; flex-shrink: 0; }
+  .shell-brand .brand-mark { display: grid; width: 28px; height: 28px; border-radius: 7px; }
+  .shell-brand .brand-wordmark { font-size: 1.125rem; white-space: nowrap; }
   .brand-caption { display: none; }
   .topbar-actions { max-width: none; gap: 6px; }
   .header-add-label, .header-signin-label { display: none; }
@@ -229,3 +231,8 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
   .discovery-controls { background: #f0f5ee; border-color: #cedccc; }
 }
 @media (prefers-reduced-motion: reduce) { .workspace-scene { background-attachment: scroll; } }
+
+@media (max-width: 360px) {
+  .shell-brand .brand-wordmark { font-size: 1rem; }
+  .topbar-actions .button { padding-inline: 8px; }
+}
