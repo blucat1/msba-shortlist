@@ -8,7 +8,7 @@ import { classify, employment, extractExperience, extractSkills, parseSalaryText
 export function normalizePosting(posting: ProviderPosting, source: JobSource, now: string): Job {
   const experience = extractExperience(posting.description); const skills = extractSkills(posting.description);
   const type = employment(posting.employment, posting.title, posting.description);
-  const classification = classify(posting.title, posting.description, posting.locations, type.type, experience);
+  const classification = classify(posting.title, posting.description, posting.locations, type.type, experience, posting.companyName || source.company);
   const { eligibility, timing } = extractEligibility(posting.title, posting.description);
   const review = listingReviews.find(item => item.sourceId === source.id && item.externalId === posting.externalId && item.publisherTitle === posting.title);
   const sourceReview: Job['sourceReview'] = review ? { status: 'employer-conflict', reason: review.reason, evidenceUrl: review.evidenceUrl, checkedAt: review.checkedAt } : undefined;

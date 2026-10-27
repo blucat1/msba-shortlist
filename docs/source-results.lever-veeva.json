@@ -1,0 +1,246 @@
+{
+  "checkedAt": "2026-10-26T23:45:01.911Z",
+  "classifierVersion": "2026-10-26.2",
+  "totals": {
+    "raw": 910,
+    "listed": 910,
+    "inScope": 96,
+    "needsDetails": 0,
+    "strictNewGrad": 5,
+    "strictNewGradNeedsDetails": 0
+  },
+  "results": [
+    {
+      "sourceId": "lever-veeva",
+      "company": "Veeva Systems",
+      "provider": "lever",
+      "board": "veeva",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.veeva.com/job-search-results/",
+      "checkedAt": "2026-10-26T23:45:01.911Z",
+      "endpoint": "https://api.lever.co/v0/postings/veeva",
+      "status": "passed",
+      "raw": 910,
+      "listed": 910,
+      "employersInWindow": 1,
+      "inScope": 96,
+      "needsDetails": 0,
+      "strictNewGrad": 5,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
+          "company": "Veeva Systems",
+          "title": "Associate Business Consultant - Life Sciences Consulting",
+          "postingUrl": "https://jobs.lever.co/veeva/c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "The anticipated start date is July 2027.",
+              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "e2f879c3-cfdd-4d1b-b866-7f0987576865",
+          "company": "Veeva Systems",
+          "title": "Associate Business Consultant - Life Sciences Consulting",
+          "postingUrl": "https://jobs.lever.co/veeva/e2f879c3-cfdd-4d1b-b866-7f0987576865",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "The anticipated start date is July 2027.",
+              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+        },
+        {
+          "externalId": "2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
+          "company": "Veeva Systems",
+          "title": "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
+          "postingUrl": "https://jobs.lever.co/veeva/2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
+              "The anticipated start date is July 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0,
+          "explicitGraduate": true,
+          "experienceLabel": "No prior experience required"
+        },
+        {
+          "externalId": "28c47d34-3ad6-4485-85a9-686b4239b9ea",
+          "company": "Veeva Systems",
+          "title": "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
+          "postingUrl": "https://jobs.lever.co/veeva/28c47d34-3ad6-4485-85a9-686b4239b9ea",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": "2027-07-01",
+            "latestStart": "2027-07-31",
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
+              "The anticipated start date is July 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0,
+          "explicitGraduate": true,
+          "experienceLabel": "No prior experience required"
+        },
+        {
+          "externalId": "e91100ea-a47e-436c-be31-c26503d0fa29",
+          "company": "Veeva Systems",
+          "title": "Strategy Associate - Veeva Link",
+          "postingUrl": "https://jobs.lever.co/veeva/e91100ea-a47e-436c-be31-c26503d0fa29",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor’s degree required",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required · check your experience"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import type { EmploymentType, Evidence, Experience, Job, JobLocation, RoleFamily, SalaryBand, WorkArrangement } from '../domain/types';
 import { explicitGraduateTitle, isLeadershipTitle } from '../domain/experience';
 
-export const CLASSIFIER_VERSION = '2026-10-26.1';
+export const CLASSIFIER_VERSION = '2026-10-26.2';
 const QUANTITATIVE_CONSULTING = /\b(?:econometric|economic|statistical|quantitative|financial|data) (?:analysis|research|model(?:ing|s)?)|\b(?:Python|Stata|SAS|R programming|regression|econometrics|data analytics|statistical programs)\b/i;
 export const TAXONOMY: { family: RoleFamily; titles: RegExp; context?: RegExp }[] = [
   { family: 'product-management', titles: /\b(?:associate product manager|apm|product manager|technical product manager|product operations|product rotational)\b/i },
@@ -61,8 +61,9 @@ export function location(label: string, country?: string | null, region?: string
 export function employment(value?: string | null, title = '', description = ''): { type: EmploymentType; evidence: string | null } {
   const text = [value || '', title].join(' ');
   if (/\bintern(?:ship)?\b/i.test(text)) return { type: 'internship', evidence: value || title };
-  if (/\b(?:contract(?:or)?|temporary|freelance)\b/i.test(text)) return { type: 'contract', evidence: value || title };
+  if (/\b(?:contract(?:or)?|temporary|freelance|fixed[ -]term)\b/i.test(text)) return { type: 'contract', evidence: value || title };
   if (/part[ -]?time/i.test(text)) return { type: 'part-time', evidence: value || title };
+  if (/\b(?:not|non)[ -]+full[ -]?time\b/i.test(text)) return { type: 'unknown', evidence: null };
   if (/full[ -]?time/i.test(text)) return { type: 'full-time', evidence: value || title };
   const roleType = description.match(/\b(full[ -]?time|part[ -]?time|contract|internship)[,\s]+(?:[a-z]+\s+){0,2}(?:position|role|opportunity)\b/i);
   if (roleType) return { type: employment(roleType[1]).type, evidence: roleType[0] };
@@ -233,7 +234,7 @@ export function parseSalaryText(text: string): SalaryBand[] {
   return bands.slice(0, 8);
 }
 
-export function classify(title: string, text: string, locations: JobLocation[], employmentType: EmploymentType, experience: Experience): Pick<Job, 'roleFamilies' | 'primaryRoleFamily' | 'classification'> {
+export function classify(title: string, text: string, locations: JobLocation[], employmentType: EmploymentType, experience: Experience, employerName?: string): Pick<Job, 'roleFamilies' | 'primaryRoleFamily' | 'classification'> {
   const reasons: Evidence[] = [];
   const negative = /\b(?:store manager|construction|clinical|laboratory analyst|sales representative|account executive|recruiter|customer support|executive assistant)\b/i.test(title);
   const leadership = isLeadershipTitle(title);
@@ -289,7 +290,14 @@ export function classify(title: string, text: string, locations: JobLocation[], 
   const graduateTarget = text.match(/\b(?:this|the|our)\s+(?:role|position|program(?:me)?)\b[^.\n]{0,100}\b(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\b/i);
   const graduateIdeal = text.match(/[^.\n]*\b(?:ideal|suitable|intended|designed)\s+for\s+(?:a\s+)?(?:new|recent)\s+(?:(?:college|university)\s+)?grad(?:uate)?s?\b[^.\n]*/i);
   const graduateHiring = text.match(/[^.\n]*\b(?:we(?:['’]re| are)?|(?:our|the)\s+(?:company|team)(?:\s+is)?)\s+(?:actively\s+)?(?:hiring|accepting|recruiting)\s+(?:applications?\s+from\s+)?(?:(?:new|recent)\s+)?(?:(?:college|university)\s+)?grad(?:uate)?s?\b[^.\n]*/i);
-  if (!notGraduate && (explicitGraduateTitle(title) || graduateWelcome || graduateTarget || graduateIdeal || graduateHiring)) reasons.push({ code: 'experience.entry_level_explicit', text: explicitGraduateTitle(title) ? title : (graduateWelcome?.[0] || graduateTarget?.[0] || graduateIdeal?.[0] || graduateHiring![0]).trim() });
+  // Direct recruitment of entry-level candidates is evidence even when the
+  // title omits "graduate". Require a sentence-leading hiring subject and our
+  // team destination; references to mentoring juniors or another employer do
+  // not establish the current role's level. The exact employer is regex-escaped.
+  const escapedEmployer = employerName?.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const hiringSubject = `(?:we(?:['’]re| are)|our (?:company|team) is${escapedEmployer ? `|${escapedEmployer} is` : ''})`;
+  const entryLevelHiring = text.match(new RegExp(`(?:^|[.!?]\\s+|\\n)\\s*(${hiringSubject}\\s+(?:actively\\s+)?(?:seeking|hiring|recruiting)\\s+entry[ -]level\\s+(?:analysts?|consultants?|engineers?|data scientists?|product managers?|candidates?|applicants?)\\s+to\\s+join\\s+our\\b[^.\\n]{0,500})`, 'i'));
+  if (!notGraduate && (explicitGraduateTitle(title) || graduateWelcome || graduateTarget || graduateIdeal || graduateHiring || entryLevelHiring)) reasons.push({ code: 'experience.entry_level_explicit', text: explicitGraduateTitle(title) ? title : (graduateWelcome?.[0] || graduateTarget?.[0] || graduateIdeal?.[0] || graduateHiring?.[0] || entryLevelHiring![1]).trim() });
   const scope = !roleFamilies.length || internationalOnly || explicitlyExcluded || leadership ? 'excluded' : !us || employmentType === 'unknown' ? 'needs-details' : 'included';
   return { roleFamilies, primaryRoleFamily: roleFamilies[0] || null, classification: { scope, seniority, confidence: scope === 'included' ? 'high' : roleFamilies.length ? 'medium' : 'low', reasons, version: CLASSIFIER_VERSION } };
 }

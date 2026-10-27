@@ -21,6 +21,7 @@
     "ingest": "tsx scripts/ingest.ts",
     "setup:check": "tsx scripts/setup-check.ts",
     "doctor": "tsx scripts/doctor.ts",
+    "health:check": "node scripts/check-live.ts",
     "maintenance": "tsx scripts/maintenance.ts",
     "test:db:smoke": "node scripts/db-smoke.mjs"
   },

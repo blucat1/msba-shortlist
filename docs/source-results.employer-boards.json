@@ -1,13 +1,13 @@
 {
-  "checkedAt": "2026-10-26T22:57:05.895Z",
-  "classifierVersion": "2026-10-26.1",
+  "checkedAt": "2026-10-26T23:41:40.324Z",
+  "classifierVersion": "2026-10-26.2",
   "totals": {
-    "raw": 13869,
-    "listed": 13869,
-    "inScope": 381,
-    "needsDetails": 688,
-    "strictNewGrad": 18,
-    "strictNewGradNeedsDetails": 12
+    "raw": 21312,
+    "listed": 21312,
+    "inScope": 703,
+    "needsDetails": 894,
+    "strictNewGrad": 52,
+    "strictNewGradNeedsDetails": 22
   },
   "results": [
     {
@@ -17,7 +17,7 @@
       "board": "robinhood",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.robinhood.com/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/robinhood/jobs?content=true",
       "status": "passed",
       "raw": 155,
@@ -37,7 +37,7 @@
       "board": "ramp",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://ramp.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/ramp?includeCompensation=true",
       "status": "passed",
       "raw": 173,
@@ -57,7 +57,7 @@
       "board": "duolingo",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.duolingo.com/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/duolingo/jobs?content=true",
       "status": "passed",
       "raw": 60,
@@ -77,7 +77,7 @@
       "board": "figma",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.figma.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/figma/jobs?content=true",
       "status": "passed",
       "raw": 140,
@@ -97,7 +97,7 @@
       "board": "palantir",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.palantir.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/palantir",
       "status": "passed",
       "raw": 307,
@@ -134,7 +134,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -146,7 +146,7 @@
       "board": "notion",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.notion.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/notion?includeCompensation=true",
       "status": "passed",
       "raw": 140,
@@ -166,7 +166,7 @@
       "board": "amplitude",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://amplitude.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/amplitude?includeCompensation=true",
       "status": "passed",
       "raw": 39,
@@ -186,14 +186,14 @@
       "board": "reddit",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://redditinc.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/reddit/jobs?content=true",
       "status": "passed",
       "raw": 161,
       "listed": 161,
       "employersInWindow": 1,
-      "inScope": 0,
-      "needsDetails": 36,
+      "inScope": 33,
+      "needsDetails": 3,
       "strictNewGrad": 0,
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
@@ -206,7 +206,7 @@
       "board": "webflow",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://webflow.com/company/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/webflow?includeCompensation=true",
       "status": "passed",
       "raw": 17,
@@ -226,11 +226,11 @@
       "board": "benchling",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.benchling.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/benchling?includeCompensation=true",
       "status": "passed",
-      "raw": 56,
-      "listed": 56,
+      "raw": 58,
+      "listed": 58,
       "employersInWindow": 1,
       "inScope": 9,
       "needsDetails": 0,
@@ -246,7 +246,7 @@
       "board": "vanta",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.vanta.com/company/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/vanta?includeCompensation=true",
       "status": "passed",
       "raw": 84,
@@ -266,7 +266,7 @@
       "board": "asana",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://asana.com/jobs/all",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/asana/jobs?content=true",
       "status": "passed",
       "raw": 111,
@@ -286,7 +286,7 @@
       "board": "mercury",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://mercury.com/jobs",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/mercury/jobs?content=true",
       "status": "passed",
       "raw": 77,
@@ -306,7 +306,7 @@
       "board": "mural",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.mural.co/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/mural?includeCompensation=true",
       "status": "passed",
       "raw": 13,
@@ -326,7 +326,7 @@
       "board": "flexport",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.flexport.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/flexport/jobs?content=true",
       "status": "passed",
       "raw": 188,
@@ -346,7 +346,7 @@
       "board": "thumbtack",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.thumbtack.com/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/thumbtack?includeCompensation=true",
       "status": "passed",
       "raw": 49,
@@ -366,7 +366,7 @@
       "board": "ro",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://ro.co/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/ro",
       "status": "passed",
       "raw": 50,
@@ -386,7 +386,7 @@
       "board": "calendly",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://calendly.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/calendly/jobs?content=true",
       "status": "passed",
       "raw": 9,
@@ -406,7 +406,7 @@
       "board": "lattice",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://lattice.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/lattice/jobs?content=true",
       "status": "passed",
       "raw": 9,
@@ -426,7 +426,7 @@
       "board": "Linear",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://linear.app/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Linear?includeCompensation=true",
       "status": "passed",
       "raw": 33,
@@ -446,7 +446,7 @@
       "board": "brex",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.brex.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/brex/jobs?content=true",
       "status": "passed",
       "raw": 266,
@@ -466,7 +466,7 @@
       "board": "ironcladhq",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://ironcladapp.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/ironcladhq?includeCompensation=true",
       "status": "passed",
       "raw": 28,
@@ -486,7 +486,7 @@
       "board": "betterup",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.betterup.com/about-us/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/betterup?includeCompensation=true",
       "status": "passed",
       "raw": 8,
@@ -506,7 +506,7 @@
       "board": "teachablecareers",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.teachable.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/teachablecareers/jobs?content=true",
       "status": "passed",
       "raw": 4,
@@ -526,7 +526,7 @@
       "board": "wealthfront",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.wealthfront.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/wealthfront",
       "status": "passed",
       "raw": 22,
@@ -546,7 +546,7 @@
       "board": "upgrade",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.upgrade.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/upgrade/jobs?content=true",
       "status": "passed",
       "raw": 26,
@@ -566,230 +566,18 @@
       "board": "veeva",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.veeva.com/job-search-results/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
-      "endpoint": "https://api.lever.co/v0/postings/veeva",
-      "status": "passed",
-      "raw": 910,
-      "listed": 910,
-      "employersInWindow": 1,
-      "inScope": 96,
-      "needsDetails": 0,
-      "strictNewGrad": 5,
-      "strictNewGradNeedsDetails": 0,
-      "graduateListings": [
-        {
-          "externalId": "c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
-          "company": "Veeva Systems",
-          "title": "Associate Business Consultant - Life Sciences Consulting",
-          "postingUrl": "https://jobs.lever.co/veeva/c1d438b2-42e0-4f35-bcdd-42ec61ffd5d5",
-          "scope": "included",
-          "cohortDefault": true,
-          "confirmedZero": false,
-          "sourceReview": null,
-          "timing": {
-            "graduationStart": null,
-            "graduationEnd": null,
-            "earliestStart": null,
-            "latestStart": null,
-            "deadline": null,
-            "deadlineVerified": false,
-            "evidence": [
-              "The anticipated start date is July 2027.",
-              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
-            ]
-          },
-          "eligibility": {
-            "degrees": [],
-            "gpa": [],
-            "workAuthorization": [
-              {
-                "value": "us-authorization",
-                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
-                "strength": "required"
-              }
-            ],
-            "sponsorship": [
-              {
-                "value": "unavailable",
-                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
-                "strength": "required"
-              }
-            ]
-          },
-          "requiredYears": null,
-          "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
-        },
-        {
-          "externalId": "e2f879c3-cfdd-4d1b-b866-7f0987576865",
-          "company": "Veeva Systems",
-          "title": "Associate Business Consultant - Life Sciences Consulting",
-          "postingUrl": "https://jobs.lever.co/veeva/e2f879c3-cfdd-4d1b-b866-7f0987576865",
-          "scope": "included",
-          "cohortDefault": true,
-          "confirmedZero": false,
-          "sourceReview": null,
-          "timing": {
-            "graduationStart": null,
-            "graduationEnd": null,
-            "earliestStart": null,
-            "latestStart": null,
-            "deadline": null,
-            "deadlineVerified": false,
-            "evidence": [
-              "The anticipated start date is July 2027.",
-              "2027 Bachelor’s or Master’s graduate with 3.0 to 4.0 GPA in any major"
-            ]
-          },
-          "eligibility": {
-            "degrees": [],
-            "gpa": [],
-            "workAuthorization": [
-              {
-                "value": "us-authorization",
-                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
-                "strength": "required"
-              }
-            ],
-            "sponsorship": [
-              {
-                "value": "unavailable",
-                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
-                "strength": "required"
-              }
-            ]
-          },
-          "requiredYears": null,
-          "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
-        },
-        {
-          "externalId": "2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
-          "company": "Veeva Systems",
-          "title": "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
-          "postingUrl": "https://jobs.lever.co/veeva/2d2cce21-bba9-42e7-b1b8-e5cf83ebe4c2",
-          "scope": "included",
-          "cohortDefault": true,
-          "confirmedZero": true,
-          "sourceReview": null,
-          "timing": {
-            "graduationStart": null,
-            "graduationEnd": null,
-            "earliestStart": "2027-07-01",
-            "latestStart": "2027-07-31",
-            "deadline": null,
-            "deadlineVerified": false,
-            "evidence": [
-              "Marketing Analytics - Client Services Associate - July 2027 Start Date - ADP",
-              "The anticipated start date is July 2027."
-            ]
-          },
-          "eligibility": {
-            "degrees": [],
-            "gpa": [],
-            "workAuthorization": [
-              {
-                "value": "us-authorization",
-                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
-                "strength": "required"
-              }
-            ],
-            "sponsorship": [
-              {
-                "value": "unavailable",
-                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
-                "strength": "required"
-              }
-            ]
-          },
-          "requiredYears": 0,
-          "explicitGraduate": true,
-          "experienceLabel": "No prior experience required"
-        },
-        {
-          "externalId": "28c47d34-3ad6-4485-85a9-686b4239b9ea",
-          "company": "Veeva Systems",
-          "title": "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
-          "postingUrl": "https://jobs.lever.co/veeva/28c47d34-3ad6-4485-85a9-686b4239b9ea",
-          "scope": "included",
-          "cohortDefault": true,
-          "confirmedZero": true,
-          "sourceReview": null,
-          "timing": {
-            "graduationStart": null,
-            "graduationEnd": null,
-            "earliestStart": "2027-07-01",
-            "latestStart": "2027-07-31",
-            "deadline": null,
-            "deadlineVerified": false,
-            "evidence": [
-              "Marketing Analytics - Data Analyst - July 2027 Start Date - ADP",
-              "The anticipated start date is July 2027."
-            ]
-          },
-          "eligibility": {
-            "degrees": [],
-            "gpa": [],
-            "workAuthorization": [
-              {
-                "value": "us-authorization",
-                "evidence": "Work Authorization: Qualified candidates must be legally authorized to be employed in the United States.",
-                "strength": "required"
-              }
-            ],
-            "sponsorship": [
-              {
-                "value": "unavailable",
-                "evidence": "Veeva does not provide sponsorship for employment visa status (e.g., H-1B, OPT, or TN status) for this employment position.",
-                "strength": "required"
-              }
-            ]
-          },
-          "requiredYears": 0,
-          "explicitGraduate": true,
-          "experienceLabel": "No prior experience required"
-        },
-        {
-          "externalId": "e91100ea-a47e-436c-be31-c26503d0fa29",
-          "company": "Veeva Systems",
-          "title": "Strategy Associate - Veeva Link",
-          "postingUrl": "https://jobs.lever.co/veeva/e91100ea-a47e-436c-be31-c26503d0fa29",
-          "scope": "included",
-          "cohortDefault": true,
-          "confirmedZero": false,
-          "sourceReview": null,
-          "timing": {
-            "graduationStart": null,
-            "graduationEnd": null,
-            "earliestStart": null,
-            "latestStart": null,
-            "deadline": null,
-            "deadlineVerified": false,
-            "evidence": []
-          },
-          "eligibility": {
-            "degrees": [
-              {
-                "levels": [
-                  "bachelors"
-                ],
-                "fields": [],
-                "allowsRelatedFields": false,
-                "allowsEquivalentExperience": false,
-                "evidence": "Bachelor’s degree required",
-                "strength": "required"
-              }
-            ],
-            "gpa": [],
-            "workAuthorization": [],
-            "sponsorship": []
-          },
-          "requiredYears": 1,
-          "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
-        }
-      ],
-      "error": null
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": null,
+      "status": "failed",
+      "raw": null,
+      "listed": null,
+      "employersInWindow": null,
+      "inScope": null,
+      "needsDetails": null,
+      "strictNewGrad": null,
+      "strictNewGradNeedsDetails": null,
+      "graduateListings": [],
+      "error": "The operation was aborted due to timeout"
     },
     {
       "sourceId": "greenhouse-databricks",
@@ -798,11 +586,11 @@
       "board": "databricks",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.databricks.com/company/careers/open-positions",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs?content=true",
       "status": "passed",
-      "raw": 898,
-      "listed": 898,
+      "raw": 899,
+      "listed": 899,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 37,
@@ -837,7 +625,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -849,14 +637,14 @@
       "board": "roblox",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.roblox.com/jobs/8143976?gh_jid=8143976",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/roblox/jobs?content=true",
       "status": "passed",
       "raw": 266,
       "listed": 266,
       "employersInWindow": 1,
-      "inScope": 1,
-      "needsDetails": 26,
+      "inScope": 27,
+      "needsDetails": 0,
       "strictNewGrad": 0,
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
@@ -869,7 +657,7 @@
       "board": "glsllc",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://glsauto.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/glsllc",
       "status": "passed",
       "raw": 50,
@@ -908,7 +696,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "d81bfc16-2ba1-41ca-ab21-7d8cffac9e07",
@@ -938,7 +726,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "c0e144a9-2b3e-49c1-bf6e-1e5cb084428a",
@@ -975,7 +763,7 @@
                 ],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Minimum of bachelor’s degree in Finance, Accounting, Economics, Mathematics, Statistics, or a related field required",
+                "evidence": "Minimum of bachelor\u2019s degree in Finance, Accounting, Economics, Mathematics, Statistics, or a related field required",
                 "strength": "required"
               }
             ],
@@ -985,7 +773,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -997,7 +785,7 @@
       "board": "lake-partners-account",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.lakepartners.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/lake-partners-account",
       "status": "passed",
       "raw": 1,
@@ -1051,7 +839,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -1063,7 +851,7 @@
       "board": "recidiviz",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.recidiviz.org/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/recidiviz/jobs?content=true",
       "status": "passed",
       "raw": 7,
@@ -1106,7 +894,7 @@
           },
           "requiredYears": 0.5,
           "explicitGraduate": true,
-          "experienceLabel": "0.5 years required · check your experience"
+          "experienceLabel": "0.5 years required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -1118,7 +906,7 @@
       "board": "charlesriverassociates",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.crai.com/cra-careers/jobs/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/charlesriverassociates/jobs?content=true",
       "status": "passed",
       "raw": 91,
@@ -1147,7 +935,7 @@
             "deadlineVerified": false,
             "evidence": [
               "(2027 Bachelor's/Master's graduates) Accounting/Business/Finance Consulting Analyst/Associate",
-              "Preferred; not a required constraint: Bachelor’s or Master’s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field"
+              "Preferred; not a required constraint: Bachelor\u2019s or Master\u2019s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field"
             ]
           },
           "eligibility": {
@@ -1160,7 +948,7 @@
                 "fields": [],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Bachelor’s or Master’s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field",
+                "evidence": "Bachelor\u2019s or Master\u2019s degree candidates graduating in December 2026/Summer 2027 with an academic focus in Accounting, Business, Finance, or related field",
                 "strength": "preferred"
               },
               {
@@ -1191,7 +979,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "7894191",
@@ -1211,7 +999,7 @@
             "deadlineVerified": false,
             "evidence": [
               "(2027 Bachelor's/Master's graduates) Economics Consulting Analyst/Associate",
-              "Preferred; not a required constraint: Bachelor’s or Master’s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)"
+              "Preferred; not a required constraint: Bachelor\u2019s or Master\u2019s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)"
             ]
           },
           "eligibility": {
@@ -1224,7 +1012,7 @@
                 "fields": [],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Bachelor’s or Master’s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)",
+                "evidence": "Bachelor\u2019s or Master\u2019s degree candidates graduating December 2026/Summer 2027 with an academic focus on quantitative research (Economics, Business, Finance, Financial Economics, Accounting, Statistics, Mathematics, Computer Science or related field)",
                 "strength": "preferred"
               },
               {
@@ -1255,7 +1043,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "8053996",
@@ -1318,7 +1106,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -1330,7 +1118,7 @@
       "board": "thebrattlegroup",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.brattle.com/careers/current-openings/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/thebrattlegroup/jobs?content=true",
       "status": "passed",
       "raw": 58,
@@ -1350,7 +1138,7 @@
       "board": "solace",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.solace.health/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/solace?includeCompensation=true",
       "status": "passed",
       "raw": 23,
@@ -1407,7 +1195,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "ee8ee239-ad20-4c1e-868d-3357799589ea",
@@ -1437,7 +1225,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -1449,7 +1237,7 @@
       "board": "certik",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.certik.com/company/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/certik",
       "status": "passed",
       "raw": 31,
@@ -1491,7 +1279,7 @@
                 ],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Bachelor’s or Master’s degree in finance, accounting, or a related field, with 1-2 years of relevant professional experience.",
+                "evidence": "Bachelor\u2019s or Master\u2019s degree in finance, accounting, or a related field, with 1-2 years of relevant professional experience.",
                 "strength": "required"
               }
             ],
@@ -1510,7 +1298,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -1522,7 +1310,7 @@
       "board": "erg",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.erg.com/jobs",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/erg",
       "status": "passed",
       "raw": 40,
@@ -1568,7 +1356,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         },
         {
           "externalId": "26fdd838-c4ba-4538-825c-c16b36d18fe1",
@@ -1608,14 +1396,14 @@
       "board": "sofi",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.sofi.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/sofi/jobs?content=true",
       "status": "passed",
       "raw": 59,
       "listed": 59,
       "employersInWindow": 1,
-      "inScope": 0,
-      "needsDetails": 6,
+      "inScope": 3,
+      "needsDetails": 3,
       "strictNewGrad": 0,
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
@@ -1628,11 +1416,11 @@
       "board": "affirm",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.affirm.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/affirm/jobs?content=true",
       "status": "passed",
-      "raw": 225,
-      "listed": 225,
+      "raw": 223,
+      "listed": 223,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 11,
@@ -1648,7 +1436,7 @@
       "board": "coinbase",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.coinbase.com/careers/positions/7980600",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/coinbase/jobs?content=true",
       "status": "passed",
       "raw": 228,
@@ -1685,7 +1473,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -1697,7 +1485,7 @@
       "board": "cloudflare",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.cloudflare.com/careers/jobs/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/cloudflare/jobs?content=true",
       "status": "passed",
       "raw": 460,
@@ -1717,14 +1505,14 @@
       "board": "datadog",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.datadoghq.com/detail/8247250/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/datadog/jobs?content=true",
       "status": "passed",
       "raw": 427,
       "listed": 427,
       "employersInWindow": 1,
-      "inScope": 0,
-      "needsDetails": 19,
+      "inScope": 17,
+      "needsDetails": 2,
       "strictNewGrad": 0,
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
@@ -1737,7 +1525,7 @@
       "board": "mongodb",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.mongodb.com/careers/jobs/8141572",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/mongodb/jobs?content=true",
       "status": "passed",
       "raw": 367,
@@ -1757,7 +1545,7 @@
       "board": "elastic",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://jobs.elastic.co/jobs/human-resources/united-states/analytics-engineer-hr-analytics/8244449",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/elastic/jobs?content=true",
       "status": "passed",
       "raw": 401,
@@ -1777,11 +1565,11 @@
       "board": "stripe",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://stripe.com/careers/search",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/stripe/jobs?content=true",
       "status": "passed",
-      "raw": 711,
-      "listed": 711,
+      "raw": 712,
+      "listed": 712,
       "employersInWindow": 1,
       "inScope": 1,
       "needsDetails": 49,
@@ -1814,7 +1602,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -1826,7 +1614,7 @@
       "board": "billcom",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.bill.com/jobs",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/billcom/jobs?content=true",
       "status": "passed",
       "raw": 43,
@@ -1846,11 +1634,11 @@
       "board": "toast",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.toasttab.com/jobs/associate-product-manager-data-governance-remote-united-states",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/toast/jobs?content=true",
       "status": "passed",
-      "raw": 332,
-      "listed": 332,
+      "raw": 333,
+      "listed": 333,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 5,
@@ -1866,7 +1654,7 @@
       "board": "plaid",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://plaid.com/careers/openings/data/san-francisco-hq/senior-analytics-engineer/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/plaid?includeCompensation=true",
       "status": "passed",
       "raw": 130,
@@ -1886,11 +1674,11 @@
       "board": "gusto",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://gusto.com/about/careers/join-the-team",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/gusto/jobs?content=true",
       "status": "passed",
-      "raw": 98,
-      "listed": 98,
+      "raw": 97,
+      "listed": 97,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 10,
@@ -1906,11 +1694,11 @@
       "board": "openai",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://openai.com/careers/search/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/openai?includeCompensation=true",
       "status": "passed",
-      "raw": 794,
-      "listed": 794,
+      "raw": 795,
+      "listed": 795,
       "employersInWindow": 1,
       "inScope": 67,
       "needsDetails": 0,
@@ -1926,7 +1714,7 @@
       "board": "anthropic",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.anthropic.com/careers/jobs",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs?content=true",
       "status": "passed",
       "raw": 679,
@@ -1946,7 +1734,7 @@
       "board": "airbnb",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://careers.airbnb.com/positions/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/airbnb/jobs?content=true",
       "status": "passed",
       "raw": 189,
@@ -1966,11 +1754,11 @@
       "board": "samsara",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.samsara.com/company/careers/roles",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/samsara/jobs?content=true",
       "status": "passed",
-      "raw": 327,
-      "listed": 327,
+      "raw": 326,
+      "listed": 326,
       "employersInWindow": 1,
       "inScope": 2,
       "needsDetails": 23,
@@ -1986,7 +1774,7 @@
       "board": "verkada",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.verkada.com/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/verkada/jobs?content=true",
       "status": "passed",
       "raw": 331,
@@ -2023,7 +1811,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -2035,7 +1823,7 @@
       "board": "scaleai",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://scale.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/scaleai/jobs?content=true",
       "status": "passed",
       "raw": 166,
@@ -2055,11 +1843,11 @@
       "board": "axon",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.axon.com/careers/all",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/axon/jobs?content=true",
       "status": "passed",
-      "raw": 474,
-      "listed": 474,
+      "raw": 472,
+      "listed": 472,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 36,
@@ -2075,7 +1863,7 @@
       "board": "oscar",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://oscarhealth.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/oscar/jobs?content=true",
       "status": "passed",
       "raw": 226,
@@ -2095,7 +1883,7 @@
       "board": "gomotive",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://gomotive.com/company/careers/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/gomotive/jobs?content=true",
       "status": "passed",
       "raw": 163,
@@ -2139,7 +1927,7 @@
                 ],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Bachelor’s degree in Business, Operations, Economics, Data Analytics, Information Systems, or a related field is preferred but not required.",
+                "evidence": "Bachelor\u2019s degree in Business, Operations, Economics, Data Analytics, Information Systems, or a related field is preferred but not required.",
                 "strength": "preferred"
               }
             ],
@@ -2161,14 +1949,14 @@
       "board": "instacart",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.instacart.careers/current-openings",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/instacart/jobs?content=true",
       "status": "passed",
       "raw": 100,
       "listed": 100,
       "employersInWindow": 1,
-      "inScope": 0,
-      "needsDetails": 8,
+      "inScope": 8,
+      "needsDetails": 0,
       "strictNewGrad": 0,
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
@@ -2181,7 +1969,7 @@
       "board": "discord",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://discord.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/discord/jobs?content=true",
       "status": "passed",
       "raw": 46,
@@ -2218,7 +2006,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -2230,7 +2018,7 @@
       "board": "pinterest",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.pinterestcareers.com/jobs/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/pinterest/jobs?content=true",
       "status": "passed",
       "raw": 160,
@@ -2274,7 +2062,7 @@
                 ],
                 "allowsRelatedFields": true,
                 "allowsEquivalentExperience": false,
-                "evidence": "Master’s degree in statistics, mathematics, economics, applied sciences, computer science or related field.",
+                "evidence": "Master\u2019s degree in statistics, mathematics, economics, applied sciences, computer science or related field.",
                 "strength": "required"
               }
             ],
@@ -2284,7 +2072,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "8140219",
@@ -2329,7 +2117,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "8140363",
@@ -2374,7 +2162,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         },
         {
           "externalId": "8267930",
@@ -2419,7 +2207,7 @@
           },
           "requiredYears": null,
           "explicitGraduate": true,
-          "experienceLabel": "Graduate / entry-level hiring · years not stated"
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
         }
       ],
       "error": null
@@ -2431,7 +2219,7 @@
       "board": "gitlab",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://about.gitlab.com/jobs/all-jobs/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/gitlab/jobs?content=true",
       "status": "passed",
       "raw": 238,
@@ -2451,7 +2239,7 @@
       "board": "okta",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.okta.com/company/careers/job-listing/",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/okta/jobs?content=true",
       "status": "passed",
       "raw": 389,
@@ -2471,7 +2259,7 @@
       "board": "fivetran",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.fivetran.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/fivetran/jobs?content=true",
       "status": "passed",
       "raw": 171,
@@ -2491,11 +2279,11 @@
       "board": "intercom",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://fin.ai/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/intercom/jobs?content=true",
       "status": "passed",
-      "raw": 100,
-      "listed": 100,
+      "raw": 99,
+      "listed": 99,
       "employersInWindow": 1,
       "inScope": 0,
       "needsDetails": 1,
@@ -2511,7 +2299,7 @@
       "board": "braze",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.braze.com/company/careers/how-we-hire",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/braze/jobs?content=true",
       "status": "passed",
       "raw": 346,
@@ -2548,7 +2336,7 @@
           },
           "requiredYears": 1,
           "explicitGraduate": false,
-          "experienceLabel": "1 year required · check your experience"
+          "experienceLabel": "1 year required \u00b7 check your experience"
         }
       ],
       "error": null
@@ -2560,7 +2348,7 @@
       "board": "zscaler",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.zscaler.com/careers/search",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/zscaler/jobs?content=true",
       "status": "passed",
       "raw": 353,
@@ -2580,7 +2368,7 @@
       "board": "spotify",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://lifeatspotify.com/start-your-journey",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.lever.co/v0/postings/spotify",
       "status": "passed",
       "raw": 89,
@@ -2600,7 +2388,7 @@
       "board": "cohere",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://cohere.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/cohere?includeCompensation=true",
       "status": "passed",
       "raw": 116,
@@ -2620,7 +2408,7 @@
       "board": "gleanwork",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.glean.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://boards-api.greenhouse.io/v1/boards/gleanwork/jobs?content=true",
       "status": "passed",
       "raw": 132,
@@ -2640,7 +2428,7 @@
       "board": "runway-ml",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://runway.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/runway-ml?includeCompensation=true",
       "status": "passed",
       "raw": 47,
@@ -2660,11 +2448,11 @@
       "board": "anyscale",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.anyscale.com/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/anyscale?includeCompensation=true",
       "status": "passed",
-      "raw": 21,
-      "listed": 21,
+      "raw": 20,
+      "listed": 20,
       "employersInWindow": 1,
       "inScope": 2,
       "needsDetails": 0,
@@ -2680,7 +2468,7 @@
       "board": "perplexity",
       "sourceKind": "employer-board",
       "evidenceUrl": "https://www.perplexity.ai/hub/careers",
-      "checkedAt": "2026-10-26T22:57:05.895Z",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
       "endpoint": "https://api.ashbyhq.com/posting-api/job-board/perplexity?includeCompensation=true",
       "status": "passed",
       "raw": 131,
@@ -2692,6 +2480,3612 @@
       "strictNewGradNeedsDetails": 0,
       "graduateListings": [],
       "error": null
+    },
+    {
+      "sourceId": "greenhouse-aqr",
+      "company": "AQR",
+      "provider": "greenhouse",
+      "board": "aqr",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.aqr.com/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/aqr/jobs?content=true",
+      "status": "passed",
+      "raw": 55,
+      "listed": 55,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 5,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "8105044",
+          "company": "AQR",
+          "title": "Trading Operations Analyst/Associate",
+          "postingUrl": "https://careers.aqr.com/jobs?gh_jid=8105044&gh_jid=8105044",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "finance",
+                  "economics",
+                  "mathematics",
+                  "engineering",
+                  "computer science",
+                  "statistics"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in Finance, Economics, Mathematics, Engineering, Computer Science, Statistics, or a related field.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-schonfeld",
+      "company": "Schonfeld",
+      "provider": "greenhouse",
+      "board": "schonfeld",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.schonfeld.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/schonfeld/jobs?content=true",
+      "status": "passed",
+      "raw": 66,
+      "listed": 66,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "7402926",
+          "company": "Schonfeld",
+          "title": "Systematic Portfolio Strategy and Risk Analyst (NYC or Miami)",
+          "postingUrl": "https://job-boards.greenhouse.io/schonfeld/jobs/7402926",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-hinge-health",
+      "company": "Hinge Health",
+      "provider": "ashby",
+      "board": "hinge-health",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.hingehealth.com/about/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/hinge-health?includeCompensation=true",
+      "status": "passed",
+      "raw": 77,
+      "listed": 77,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-garnerhealth",
+      "company": "Garner Health",
+      "provider": "greenhouse",
+      "board": "garnerhealth",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://garnerhealth.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/garnerhealth/jobs?content=true",
+      "status": "passed",
+      "raw": 75,
+      "listed": 75,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 17,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-old-mission-capital",
+      "company": "Old Mission",
+      "provider": "ashby",
+      "board": "old-mission-capital",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.oldmissioncapital.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/old-mission-capital?includeCompensation=true",
+      "status": "passed",
+      "raw": 39,
+      "listed": 39,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "611bdbd1-6512-4c58-a65e-382b9dc32773",
+          "company": "Old Mission",
+          "title": "Fundamental Research Analyst (Asian Market Hours)",
+          "postingUrl": "https://jobs.ashbyhq.com/old-mission-capital/611bdbd1-6512-4c58-a65e-382b9dc32773",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "- A Bachelor\u2019s degree in a quantitative field.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-upstart",
+      "company": "Upstart",
+      "provider": "greenhouse",
+      "board": "upstart",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.upstart.com/jobs/principal-security-product-manager",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/upstart/jobs?content=true",
+      "status": "passed",
+      "raw": 86,
+      "listed": 86,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 13,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "7293116",
+          "company": "Upstart",
+          "title": "Applied Scientist",
+          "postingUrl": "https://careers.upstart.com/jobs?gh_jid=7293116",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "doctorate"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "PhD in a quantitative field.",
+                "strength": "preferred"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 0,
+          "explicitGraduate": false,
+          "experienceLabel": "No prior experience required"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-marqeta-inc",
+      "company": "Marqeta",
+      "provider": "ashby",
+      "board": "marqeta-inc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.marqeta.com/careers/6fd7b9c0-5cd5-4270-aa71-dcf1d9e10faa",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/marqeta-inc?includeCompensation=true",
+      "status": "passed",
+      "raw": 40,
+      "listed": 40,
+      "employersInWindow": 1,
+      "inScope": 3,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-clearstreet",
+      "company": "Clear Street",
+      "provider": "greenhouse",
+      "board": "clearstreet",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.clearstreet.io/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/clearstreet/jobs?content=true",
+      "status": "passed",
+      "raw": 44,
+      "listed": 44,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-point72",
+      "company": "Point72",
+      "provider": "greenhouse",
+      "board": "point72",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.point72.com/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/point72/jobs?content=true",
+      "status": "passed",
+      "raw": 210,
+      "listed": 210,
+      "employersInWindow": 1,
+      "inScope": 13,
+      "needsDetails": 2,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "7829230002",
+          "company": "Point72",
+          "title": "Data Engineer",
+          "postingUrl": "https://boards.greenhouse.io/point72/jobs/7829230002?gh_jid=7829230002",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "masters",
+                  "doctorate"
+                ],
+                "fields": [
+                  "computer science",
+                  "engineering",
+                  "math",
+                  "other related fields"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Master/PhD degree in math, computer science, engineering, or other related fields.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-janestreet",
+      "company": "Jane Street",
+      "provider": "greenhouse",
+      "board": "janestreet",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.janestreet.com/join-jane-street/open-roles/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/janestreet/jobs?content=true",
+      "status": "passed",
+      "raw": 220,
+      "listed": 220,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-jumptrading",
+      "company": "Jump Trading",
+      "provider": "greenhouse",
+      "board": "jumptrading",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.jumptrading.com/hr/job?gh_jid=8052343",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/jumptrading/jobs?content=true",
+      "status": "passed",
+      "raw": 94,
+      "listed": 94,
+      "employersInWindow": 1,
+      "inScope": 5,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-imc",
+      "company": "IMC",
+      "provider": "greenhouse",
+      "board": "imc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.imc.com/us/search-careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/imc/jobs?content=true",
+      "status": "passed",
+      "raw": 169,
+      "listed": 169,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 5,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-cloverhealth",
+      "company": "Clover Health",
+      "provider": "greenhouse",
+      "board": "cloverhealth",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.cloverhealth.com/about-us/current-openings",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/cloverhealth/jobs?content=true",
+      "status": "passed",
+      "raw": 58,
+      "listed": 58,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-nuro",
+      "company": "Nuro",
+      "provider": "greenhouse",
+      "board": "nuro",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.nuro.ai/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/nuro/jobs?content=true",
+      "status": "passed",
+      "raw": 97,
+      "listed": 97,
+      "employersInWindow": 1,
+      "inScope": 9,
+      "needsDetails": 0,
+      "strictNewGrad": 2,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "8122537",
+          "company": "Nuro",
+          "title": "Software Engineer, ML Inference Platform",
+          "postingUrl": "https://nuro.ai/careersitem?gh_jid=8122537",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8122483",
+          "company": "Nuro",
+          "title": "Software Engineer, ML Infrastructure Platform",
+          "postingUrl": "https://nuro.ai/careersitem?gh_jid=8122483",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-flyzipline",
+      "company": "Zipline",
+      "provider": "greenhouse",
+      "board": "flyzipline",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.zipline.com/open-roles/7818180003",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/flyzipline/jobs?content=true",
+      "status": "passed",
+      "raw": 348,
+      "listed": 348,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 7,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "7818180003",
+          "company": "Zipline",
+          "title": "Business Operations Manager, Supply Chain",
+          "postingUrl": "https://www.zipline.com/open-roles/7818180003?gh_jid=7818180003",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-westmonroe4",
+      "company": "West Monroe",
+      "provider": "greenhouse",
+      "board": "westmonroe4",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.westmonroe.com/careers/job-search",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/westmonroe4/jobs?content=true",
+      "status": "passed",
+      "raw": 112,
+      "listed": 112,
+      "employersInWindow": 1,
+      "inScope": 6,
+      "needsDetails": 2,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "5625114004",
+          "company": "West Monroe",
+          "title": "Data Engineer",
+          "postingUrl": "https://westmonroe.com/careers/job-details-experienced-professionals?gh_jid=5625114004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-westmonroe5",
+      "company": "West Monroe",
+      "provider": "greenhouse",
+      "board": "westmonroe5",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.westmonroe.com/careers/job-search-students",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/westmonroe5/jobs?content=true",
+      "status": "passed",
+      "raw": 96,
+      "listed": 96,
+      "employersInWindow": 1,
+      "inScope": 11,
+      "needsDetails": 0,
+      "strictNewGrad": 11,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "6167515004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167515004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6167513004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167513004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6167522004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167522004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6167376004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167376004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6167503004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167503004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6167508004",
+          "company": "West Monroe",
+          "title": "2027 Data & Analytics Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6167508004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0.",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future, including OPT, H-1B, or TN status.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6172680004",
+          "company": "West Monroe",
+          "title": "2027 Platforms & Business Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6172680004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future (e.g., OPT, H-1B visa, TN, etc.)",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6172682004",
+          "company": "West Monroe",
+          "title": "2027 Platforms & Business Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6172682004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future (e.g., OPT, H-1B visa, TN, etc.)",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6172683004",
+          "company": "West Monroe",
+          "title": "2027 Platforms & Business Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6172683004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future (e.g., OPT, H-1B visa, TN, etc.)",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6172684004",
+          "company": "West Monroe",
+          "title": "2027 Platforms & Business Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6172684004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future (e.g., OPT, H-1B visa, TN, etc.)",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "6172596004",
+          "company": "West Monroe",
+          "title": "2027 Platforms & Business Consultant",
+          "postingUrl": "https://westmonroe.com/careers/job-details-students?gh_jid=6172596004",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": "2026-12-01",
+            "graduationEnd": "2027-08-31",
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027."
+            ]
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "progress"
+                ],
+                "allowsRelatedFields": false,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in progress, with an expected graduation date between December 2026 and August 2027.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [
+              {
+                "value": {
+                  "minimum": 3,
+                  "scale": null
+                },
+                "evidence": "Minimum cumulative GPA of 3.0",
+                "strength": "required"
+              }
+            ],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legally authorized to work in the United States without limitation or sponsorship now or in the future (e.g., OPT, H-1B visa, TN, etc.)",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-truebill",
+      "company": "Rocket Money",
+      "provider": "greenhouse",
+      "board": "truebill",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.rocketmoney.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/truebill/jobs?content=true",
+      "status": "passed",
+      "raw": 18,
+      "listed": 18,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-parafin",
+      "company": "Parafin",
+      "provider": "ashby",
+      "board": "parafin",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.parafin.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/parafin?includeCompensation=true",
+      "status": "passed",
+      "raw": 4,
+      "listed": 4,
+      "employersInWindow": 1,
+      "inScope": 3,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "b6fbdb8d-aa25-4216-a0bb-9af06607bd96",
+          "company": "Parafin",
+          "title": "Data Analytics Engineer",
+          "postingUrl": "https://jobs.ashbyhq.com/parafin/b6fbdb8d-aa25-4216-a0bb-9af06607bd96",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-Jerry.ai",
+      "company": "Jerry",
+      "provider": "ashby",
+      "board": "Jerry.ai",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://jerry.ai/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Jerry.ai?includeCompensation=true",
+      "status": "passed",
+      "raw": 37,
+      "listed": 37,
+      "employersInWindow": 1,
+      "inScope": 7,
+      "needsDetails": 0,
+      "strictNewGrad": 2,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "283cd5ff-a8ac-4b16-9088-bad48e5fe472",
+          "company": "Jerry",
+          "title": "Associate, Business Operations & Analytics",
+          "postingUrl": "https://jobs.ashbyhq.com/Jerry.ai/283cd5ff-a8ac-4b16-9088-bad48e5fe472",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "271b73bc-2b1a-4be6-b3dc-d72d806b8e35",
+          "company": "Jerry",
+          "title": "Associate Data Scientist",
+          "postingUrl": "https://jobs.ashbyhq.com/Jerry.ai/271b73bc-2b1a-4be6-b3dc-d72d806b8e35",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-Abridge",
+      "company": "Abridge",
+      "provider": "ashby",
+      "board": "Abridge",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.abridge.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Abridge?includeCompensation=true",
+      "status": "passed",
+      "raw": 40,
+      "listed": 40,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-harrys",
+      "company": "Harry's",
+      "provider": "greenhouse",
+      "board": "harrys",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.harrys.com/en/pages/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/harrys/jobs?content=true",
+      "status": "passed",
+      "raw": 14,
+      "listed": 14,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-earnin",
+      "company": "EarnIn",
+      "provider": "greenhouse",
+      "board": "earnin",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.earnin.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/earnin/jobs?content=true",
+      "status": "passed",
+      "raw": 24,
+      "listed": 24,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-kin",
+      "company": "Kin Insurance",
+      "provider": "ashby",
+      "board": "kin",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.kin.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/kin?includeCompensation=true",
+      "status": "passed",
+      "raw": 21,
+      "listed": 21,
+      "employersInWindow": 1,
+      "inScope": 6,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "99967c4f-e3cc-42b3-90d0-0f4499140c22",
+          "company": "Kin Insurance",
+          "title": "Pricing & Risk Analyst",
+          "postingUrl": "https://jobs.ashbyhq.com/kin/99967c4f-e3cc-42b3-90d0-0f4499140c22",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": true,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 0,
+          "explicitGraduate": false,
+          "experienceLabel": "No prior experience required"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-deaa6ad2-d184-436b-b69e-17f761da1d94",
+      "company": "Spring Health",
+      "provider": "ashby",
+      "board": "deaa6ad2-d184-436b-b69e-17f761da1d94",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.springhealth.com/open-roles",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/deaa6ad2-d184-436b-b69e-17f761da1d94?includeCompensation=true",
+      "status": "passed",
+      "raw": 90,
+      "listed": 90,
+      "employersInWindow": 1,
+      "inScope": 12,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-optiverus",
+      "company": "Optiver",
+      "provider": "greenhouse",
+      "board": "optiverus",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.optiver.com/join-us/jobs/technology/chicago/network-engineer/apply",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/optiverus/jobs?content=true",
+      "status": "passed",
+      "raw": 162,
+      "listed": 162,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "8637635002",
+          "company": "Optiver",
+          "title": "Risk Analyst",
+          "postingUrl": "https://www.optiver.com/join-us/jobs/8637635002/?gh_jid=8637635002",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Legal authorization to work in the U.S. is required",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-nerdwallet",
+      "company": "NerdWallet",
+      "provider": "ashby",
+      "board": "nerdwallet",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.nerdwallet.com/careers/jobs",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/nerdwallet?includeCompensation=true",
+      "status": "passed",
+      "raw": 21,
+      "listed": 21,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-betterment",
+      "company": "Betterment",
+      "provider": "greenhouse",
+      "board": "betterment",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.betterment.com/careers/current-openings",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/betterment/jobs?content=true",
+      "status": "passed",
+      "raw": 26,
+      "listed": 26,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-tripactions",
+      "company": "Navan",
+      "provider": "greenhouse",
+      "board": "tripactions",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://navan.com/careers/openings",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/tripactions/jobs?content=true",
+      "status": "passed",
+      "raw": 222,
+      "listed": 222,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-capco",
+      "company": "Capco",
+      "provider": "greenhouse",
+      "board": "capco",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.capco.com/en/Careers/Job%20Search/Office%20Detail?gh_jid=5697864",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/capco/jobs?content=true",
+      "status": "passed",
+      "raw": 713,
+      "listed": 713,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 46,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-addepar1",
+      "company": "Addepar",
+      "provider": "greenhouse",
+      "board": "addepar1",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://addepar.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/addepar1/jobs?content=true",
+      "status": "passed",
+      "raw": 111,
+      "listed": 111,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 9,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 1,
+      "graduateListings": [
+        {
+          "externalId": "8910404002",
+          "company": "Addepar",
+          "title": "Product Manager - Early Career, AI Platform",
+          "postingUrl": "https://job-boards.greenhouse.io/addepar1/jobs/8910404002",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Applicants must be legally authorized to work in the United States for any employer without requiring current or future visa sponsorship (for example, employment-based visas such as H-1B, F-1/OPT, or similar), and must be authorized to begin work in the U.S. on their first day of employment.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": 0,
+          "explicitGraduate": false,
+          "experienceLabel": "No prior experience required"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-Steadily",
+      "company": "Steadily",
+      "provider": "ashby",
+      "board": "Steadily",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.steadily.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/Steadily?includeCompensation=true",
+      "status": "passed",
+      "raw": 34,
+      "listed": 34,
+      "employersInWindow": 1,
+      "inScope": 7,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-hippo70",
+      "company": "Hippo",
+      "provider": "greenhouse",
+      "board": "hippo70",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.hippo.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/hippo70/jobs?content=true",
+      "status": "passed",
+      "raw": 21,
+      "listed": 21,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-enova",
+      "company": "Enova",
+      "provider": "greenhouse",
+      "board": "enova",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.enova.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/enova/jobs?content=true",
+      "status": "passed",
+      "raw": 37,
+      "listed": 37,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-includedhealth",
+      "company": "Included Health",
+      "provider": "lever",
+      "board": "includedhealth",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://includedhealth.com/security/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/includedhealth",
+      "status": "passed",
+      "raw": 48,
+      "listed": 48,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-careportalinc",
+      "company": "Cedar",
+      "provider": "greenhouse",
+      "board": "careportalinc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.cedar.com/careers/open-roles",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/careportalinc/jobs?content=true",
+      "status": "passed",
+      "raw": 12,
+      "listed": 12,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-sidecarhealth",
+      "company": "Sidecar Health",
+      "provider": "greenhouse",
+      "board": "sidecarhealth",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://sidecarhealth.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/sidecarhealth/jobs?content=true",
+      "status": "passed",
+      "raw": 7,
+      "listed": 7,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 3,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-wellthy",
+      "company": "Wellthy",
+      "provider": "greenhouse",
+      "board": "wellthy",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://wellthy.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/wellthy/jobs?content=true",
+      "status": "passed",
+      "raw": 8,
+      "listed": 8,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-veho-tech-inc",
+      "company": "Veho",
+      "provider": "ashby",
+      "board": "veho-tech-inc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.shipveho.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/veho-tech-inc?includeCompensation=true",
+      "status": "passed",
+      "raw": 55,
+      "listed": 55,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-vercel",
+      "company": "Vercel",
+      "provider": "greenhouse",
+      "board": "vercel",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://vercel.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/vercel/jobs?content=true",
+      "status": "passed",
+      "raw": 93,
+      "listed": 93,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 9,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-supabase",
+      "company": "Supabase",
+      "provider": "ashby",
+      "board": "supabase",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://supabase.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/supabase?includeCompensation=true",
+      "status": "passed",
+      "raw": 64,
+      "listed": 64,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-render",
+      "company": "Render",
+      "provider": "ashby",
+      "board": "render",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://render.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/render?includeCompensation=true",
+      "status": "passed",
+      "raw": 36,
+      "listed": 36,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-grafanalabs",
+      "company": "Grafana Labs",
+      "provider": "greenhouse",
+      "board": "grafanalabs",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://grafana.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/grafanalabs/jobs?content=true",
+      "status": "passed",
+      "raw": 134,
+      "listed": 134,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-temporal",
+      "company": "Temporal",
+      "provider": "ashby",
+      "board": "temporal",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://temporal.io/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/temporal?includeCompensation=true",
+      "status": "passed",
+      "raw": 72,
+      "listed": 72,
+      "employersInWindow": 1,
+      "inScope": 8,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-tailscale",
+      "company": "Tailscale",
+      "provider": "greenhouse",
+      "board": "tailscale",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://tailscale.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/tailscale/jobs?content=true",
+      "status": "passed",
+      "raw": 59,
+      "listed": 59,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-fastly",
+      "company": "Fastly",
+      "provider": "greenhouse",
+      "board": "fastly",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.fastly.com/about/careers/current-openings",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fastly/jobs?content=true",
+      "status": "passed",
+      "raw": 52,
+      "listed": 52,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 6,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-lyft",
+      "company": "Lyft",
+      "provider": "greenhouse",
+      "board": "lyft",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.lyft.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/lyft/jobs?content=true",
+      "status": "passed",
+      "raw": 179,
+      "listed": 179,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 26,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 2,
+      "graduateListings": [
+        {
+          "externalId": "8856443002",
+          "company": "Lyft",
+          "title": "Data Scientist, Algorithms - Dynamic Pricing",
+          "postingUrl": "https://app.careerpuck.com/job-board/lyft/job/8856443002?gh_jid=8856443002",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8908005002",
+          "company": "Lyft",
+          "title": "Data Scientist, Algorithms - Pricing - Rider Engagement",
+          "postingUrl": "https://app.careerpuck.com/job-board/lyft/job/8908005002?gh_jid=8908005002",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-twitch",
+      "company": "Twitch",
+      "provider": "greenhouse",
+      "board": "twitch",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.twitch.com/en/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/twitch/jobs?content=true",
+      "status": "passed",
+      "raw": 59,
+      "listed": 59,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 12,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-waymo",
+      "company": "Waymo",
+      "provider": "greenhouse",
+      "board": "waymo",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.withwaymo.com/jobs/data-scientist-san-francisco-california-united-states-mountain-view?gh_jid=7455592",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs?content=true",
+      "status": "passed",
+      "raw": 369,
+      "listed": 369,
+      "employersInWindow": 1,
+      "inScope": 52,
+      "needsDetails": 2,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "7488508",
+          "company": "Waymo",
+          "title": "Machine Learning Engineer, Perception, LLM/VLM (PhD, New Grad)",
+          "postingUrl": "https://careers.withwaymo.com/jobs?gh_jid=7488508",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "masters"
+                ],
+                "fields": [
+                  "computer science",
+                  "electrical engineering"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Master's degree in Computer Science, Electrical Engineering, or a related field, or equivalent practical experience.",
+                "strength": "required"
+              },
+              {
+                "levels": [
+                  "doctorate"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "PhD in a relevant field.",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "lever-woven-by-toyota",
+      "company": "Woven by Toyota",
+      "provider": "lever",
+      "board": "woven-by-toyota",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://woven.toyota/en/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/woven-by-toyota",
+      "status": "passed",
+      "raw": 143,
+      "listed": 143,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-zoox",
+      "company": "Zoox",
+      "provider": "lever",
+      "board": "zoox",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://zoox.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/zoox",
+      "status": "passed",
+      "raw": 232,
+      "listed": 232,
+      "employersInWindow": 1,
+      "inScope": 26,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-ixllearning",
+      "company": "IXL Learning",
+      "provider": "greenhouse",
+      "board": "ixllearning",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.ixl.com/company/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/ixllearning/jobs?content=true",
+      "status": "passed",
+      "raw": 118,
+      "listed": 118,
+      "employersInWindow": 1,
+      "inScope": 9,
+      "needsDetails": 0,
+      "strictNewGrad": 3,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "8862211002",
+          "company": "IXL Learning",
+          "title": "Associate Product Manager, New Grad",
+          "postingUrl": "https://www.ixl.com/company/jobs?gh_jid=8862211002",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "stem"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in STEM or a related field",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        },
+        {
+          "externalId": "8450013002",
+          "company": "IXL Learning",
+          "title": "Associate Product Manager, Rosetta Stone",
+          "postingUrl": "https://www.ixl.com/company/jobs?gh_jid=8450013002",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [
+                  "stem"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s or Master\u2019s degree in STEM or related field",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8447267002",
+          "company": "IXL Learning",
+          "title": "IXL Associate Product Manager",
+          "postingUrl": "https://www.ixl.com/company/jobs?gh_jid=8447267002",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "stem"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor\u2019s degree in STEM or a related field",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-handshake",
+      "company": "Handshake",
+      "provider": "ashby",
+      "board": "handshake",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://joinhandshake.com/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/handshake?includeCompensation=true",
+      "status": "passed",
+      "raw": 82,
+      "listed": 82,
+      "employersInWindow": 1,
+      "inScope": 5,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-outreach",
+      "company": "Outreach",
+      "provider": "lever",
+      "board": "outreach",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.outreach.io/company/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/outreach",
+      "status": "passed",
+      "raw": 22,
+      "listed": 22,
+      "employersInWindow": 1,
+      "inScope": 2,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-salesloft",
+      "company": "Salesloft",
+      "provider": "greenhouse",
+      "board": "salesloft",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.salesloft.com/company/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/salesloft/jobs?content=true",
+      "status": "passed",
+      "raw": 35,
+      "listed": 35,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-smartsheet",
+      "company": "Smartsheet",
+      "provider": "greenhouse",
+      "board": "smartsheet",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.smartsheet.com/careers-list",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/smartsheet/jobs?content=true",
+      "status": "passed",
+      "raw": 87,
+      "listed": 87,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 5,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-mixpanel",
+      "company": "Mixpanel",
+      "provider": "greenhouse",
+      "board": "mixpanel",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://mixpanel.com/jobs/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/mixpanel/jobs?content=true",
+      "status": "passed",
+      "raw": 46,
+      "listed": 46,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-dominodatalab",
+      "company": "Domino Data Lab",
+      "provider": "greenhouse",
+      "board": "dominodatalab",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://domino.ai/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/dominodatalab/jobs?content=true",
+      "status": "passed",
+      "raw": 23,
+      "listed": 23,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-sentilink",
+      "company": "SentiLink",
+      "provider": "ashby",
+      "board": "sentilink",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.sentilink.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/sentilink?includeCompensation=true",
+      "status": "passed",
+      "raw": 39,
+      "listed": 39,
+      "employersInWindow": 1,
+      "inScope": 5,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-datalabusa",
+      "company": "DataLab USA",
+      "provider": "lever",
+      "board": "datalabusa",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://datalabusa.com/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/datalabusa",
+      "status": "passed",
+      "raw": 16,
+      "listed": 16,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "4bc04d86-bef3-40c8-a410-b0d0c41a683d",
+          "company": "DataLab USA",
+          "title": "Programmer Analyst - (entry-level data analyst/data scientist) Marketing Analytics",
+          "postingUrl": "https://jobs.lever.co/datalabusa/4bc04d86-bef3-40c8-a410-b0d0c41a683d",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [
+                  "computer science",
+                  "statistics",
+                  "data science",
+                  "marketing",
+                  "applied math",
+                  "marketing analytics"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "\u00b7\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0 Bachelor\u2019s degree in Computer Science, Applied Math, Statistics, Data Science, Marketing Analytics or similar field required",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "**NO sponsorship offered for this position**",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-webfx",
+      "company": "WebFX",
+      "provider": "ashby",
+      "board": "webfx",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.webfx.com/careers/jobs/8a29234f-1b15-4f4f-ac20-a38b650fc72c/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/webfx?includeCompensation=true",
+      "status": "passed",
+      "raw": 36,
+      "listed": 36,
+      "employersInWindow": 1,
+      "inScope": 3,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "lever-economicmodeling",
+      "company": "Lightcast",
+      "provider": "lever",
+      "board": "economicmodeling",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://lightcast.io/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.lever.co/v0/postings/economicmodeling",
+      "status": "passed",
+      "raw": 24,
+      "listed": 24,
+      "employersInWindow": 1,
+      "inScope": 4,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "621be872-fa3b-4b20-ac6c-0f4c37c8dc5c",
+          "company": "Lightcast",
+          "title": "Associate Product Manager (Data) - 1072 (Moscow, ID)",
+          "postingUrl": "https://jobs.lever.co/economicmodeling/621be872-fa3b-4b20-ac6c-0f4c37c8dc5c",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-authorization",
+                "evidence": "Candidates must be authorized to work in the United States without sponsorship",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Work Authorization:\u00a0To respect your time, we cannot provide employment visa sponsorship for this position now or in the future.",
+                "strength": "required"
+              },
+              {
+                "value": "unavailable",
+                "evidence": "Lightcast does not offer visa sponsorship now or in the future.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-trueanomalyinc",
+      "company": "True Anomaly",
+      "provider": "greenhouse",
+      "board": "trueanomalyinc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.trueanomaly.space/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/trueanomalyinc/jobs?content=true",
+      "status": "passed",
+      "raw": 207,
+      "listed": 207,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 11,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 2,
+      "graduateListings": [
+        {
+          "externalId": "5223279007",
+          "company": "True Anomaly",
+          "title": "Data Engineer I",
+          "postingUrl": "https://job-boards.greenhouse.io/trueanomalyinc/jobs/5223279007",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [
+                  "computer science",
+                  "data science"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor's or Master's degree in computer science, Data Science or a related technical field",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-citizen-or-permanent-resident",
+                "evidence": "Government space technology export regulations, including the International Traffic in Arms Regulations (ITAR), you must be a U.S. citizen, lawful permanent resident of the U.S., protected individual as defined by 8 U.S.C. 1324b(a)(3), or eligible to obtain the required authorizations from the U.S.",
+                "strength": "required"
+              },
+              {
+                "value": "us-citizen-or-permanent-resident",
+                "evidence": "Government space technology export regulations, including the International Traffic in Arms Regulations (ITAR) you must be a U.S. citizen, lawful permanent resident of the U.S., protected individual as defined by 8 U.S.C. 1324b(a)(3), or eligible to obtain the required authorizations from the U.S.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": [
+              {
+                "value": "unavailable",
+                "evidence": "Please note: We are unable to provide visa sponsorship.",
+                "strength": "required"
+              }
+            ]
+          },
+          "requiredYears": 0,
+          "explicitGraduate": false,
+          "experienceLabel": "No prior experience required"
+        },
+        {
+          "externalId": "5221560007",
+          "company": "True Anomaly",
+          "title": "Software Engineer I, Data Science (New Grad)",
+          "postingUrl": "https://job-boards.greenhouse.io/trueanomalyinc/jobs/5221560007",
+          "scope": "needs-details",
+          "cohortDefault": false,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors",
+                  "masters"
+                ],
+                "fields": [
+                  "data science",
+                  "statistics",
+                  "industrial engineering",
+                  "mathematics",
+                  "operations research",
+                  "applied mathematics"
+                ],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "Bachelor's or Master's degree in data science, statistics, industrial engineering, applied mathematics, operations research, or related quantitative field",
+                "strength": "required"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [
+              {
+                "value": "us-citizen-or-permanent-resident",
+                "evidence": "Government space technology export regulations, including the International Traffic in Arms Regulations (ITAR) you must be a U.S. citizen, lawful permanent resident of the U.S., protected individual as defined by 8 U.S.C. 1324b(a)(3), or eligible to obtain the required authorizations from the U.S.",
+                "strength": "required"
+              }
+            ],
+            "sponsorship": []
+          },
+          "requiredYears": null,
+          "explicitGraduate": true,
+          "experienceLabel": "Graduate / entry-level hiring \u00b7 years not stated"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-gofundme",
+      "company": "GoFundMe",
+      "provider": "greenhouse",
+      "board": "gofundme",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.gofundme.com/c/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/gofundme/jobs?content=true",
+      "status": "passed",
+      "raw": 21,
+      "listed": 21,
+      "employersInWindow": 1,
+      "inScope": 1,
+      "needsDetails": 2,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-stubhubinc",
+      "company": "StubHub",
+      "provider": "greenhouse",
+      "board": "stubhubinc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.stubhub.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/stubhubinc/jobs?content=true",
+      "status": "passed",
+      "raw": 33,
+      "listed": 33,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-similarweb",
+      "company": "Similarweb",
+      "provider": "greenhouse",
+      "board": "similarweb",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.similarweb.com/corp/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/similarweb/jobs?content=true",
+      "status": "passed",
+      "raw": 72,
+      "listed": 72,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 5,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-appsflyer",
+      "company": "AppsFlyer",
+      "provider": "greenhouse",
+      "board": "appsflyer",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.appsflyer.com/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/appsflyer/jobs?content=true",
+      "status": "passed",
+      "raw": 51,
+      "listed": 51,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-moloco",
+      "company": "Moloco",
+      "provider": "greenhouse",
+      "board": "moloco",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.moloco.com/company/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/moloco/jobs?content=true",
+      "status": "passed",
+      "raw": 43,
+      "listed": 43,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 7,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-thetradedesk",
+      "company": "The Trade Desk",
+      "provider": "greenhouse",
+      "board": "thetradedesk",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careers.thetradedesk.com/jobs",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/thetradedesk/jobs?content=true",
+      "status": "passed",
+      "raw": 110,
+      "listed": 110,
+      "employersInWindow": 1,
+      "inScope": 9,
+      "needsDetails": 0,
+      "strictNewGrad": 1,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "5204413007",
+          "company": "The Trade Desk",
+          "title": "Product Manager II",
+          "postingUrl": "https://job-boards.greenhouse.io/thetradedesk/jobs/5204413007",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-vianttechnology",
+      "company": "Viant",
+      "provider": "greenhouse",
+      "board": "vianttechnology",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.viantinc.com/company/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/vianttechnology/jobs?content=true",
+      "status": "passed",
+      "raw": 25,
+      "listed": 25,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-doordashusa",
+      "company": "DoorDash",
+      "provider": "greenhouse",
+      "board": "doordashusa",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://careersatdoordash.com/jobs/associate-dasher-tasks-strategy-operations/8197734/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/doordashusa/jobs?content=true",
+      "status": "passed",
+      "raw": 448,
+      "listed": 448,
+      "employersInWindow": 1,
+      "inScope": 50,
+      "needsDetails": 0,
+      "strictNewGrad": 6,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "8197734",
+          "company": "DoorDash",
+          "title": "Associate, Dasher Tasks, Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8197734",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8273901",
+          "company": "DoorDash",
+          "title": "Associate, DashMart - Supply Chain Profitability Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8273901",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [
+              {
+                "levels": [
+                  "bachelors"
+                ],
+                "fields": [],
+                "allowsRelatedFields": true,
+                "allowsEquivalentExperience": false,
+                "evidence": "You have completed your BS/BA Degree ideally in supply chain, business, economics, engineering or a related field.",
+                "strength": "preferred"
+              }
+            ],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8188452",
+          "company": "DoorDash",
+          "title": "Associate, Marketplace - Occasions Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8188452",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8076068",
+          "company": "DoorDash",
+          "title": "Associate, New Verticals - Flex Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8076068",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8310956",
+          "company": "DoorDash",
+          "title": "Associate, New Verticals - Fulfillment Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8310956",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8240696",
+          "company": "DoorDash",
+          "title": "Associate, New Verticals - Grocery Revenue Strategy & Operations",
+          "postingUrl": "https://job-boards.greenhouse.io/doordashusa/jobs/8240696",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-clickhouse",
+      "company": "ClickHouse",
+      "provider": "ashby",
+      "board": "clickhouse",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://clickhouse.com/company/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/clickhouse?includeCompensation=true",
+      "status": "passed",
+      "raw": 203,
+      "listed": 203,
+      "employersInWindow": 1,
+      "inScope": 9,
+      "needsDetails": 5,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-ibotta",
+      "company": "Ibotta",
+      "provider": "ashby",
+      "board": "ibotta",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://ibotta.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/ibotta?includeCompensation=true",
+      "status": "passed",
+      "raw": 50,
+      "listed": 50,
+      "employersInWindow": 1,
+      "inScope": 11,
+      "needsDetails": 0,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "ashby-applied",
+      "company": "Applied Intuition",
+      "provider": "ashby",
+      "board": "applied",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.appliedintuition.com/careers",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://api.ashbyhq.com/posting-api/job-board/applied?includeCompensation=true",
+      "status": "passed",
+      "raw": 325,
+      "listed": 325,
+      "employersInWindow": 1,
+      "inScope": 21,
+      "needsDetails": 0,
+      "strictNewGrad": 6,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [
+        {
+          "externalId": "4cb44794-7b3b-46fc-9408-104a6d0f379e",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - Robotic Hardware, Simulation and Data",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/4cb44794-7b3b-46fc-9408-104a6d0f379e",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "e725018e-2577-4ff6-8dbd-69206272d9af",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - Robot Learning",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/e725018e-2577-4ff6-8dbd-69206272d9af",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "091ed808-95c9-420b-8061-0ff2eb9342bc",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - AI/RL Infrastructure",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/091ed808-95c9-420b-8061-0ff2eb9342bc",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "36a49d01-e60f-4c01-8c8c-5a7f79347f51",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - Reinforcement Learning, Self-Driving",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/36a49d01-e60f-4c01-8c8c-5a7f79347f51",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "8da87c90-49ff-4b75-97c5-337882f63a00",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - 3D Vision and Generation, Self-Driving",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/8da87c90-49ff-4b75-97c5-337882f63a00",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": []
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": false,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        },
+        {
+          "externalId": "45fc41cd-8280-4010-ba1f-def6114b3e39",
+          "company": "Applied Intuition",
+          "title": "Research Engineer - New Grad (2027)",
+          "postingUrl": "https://jobs.ashbyhq.com/applied/45fc41cd-8280-4010-ba1f-def6114b3e39",
+          "scope": "included",
+          "cohortDefault": true,
+          "confirmedZero": false,
+          "sourceReview": null,
+          "timing": {
+            "graduationStart": null,
+            "graduationEnd": null,
+            "earliestStart": null,
+            "latestStart": null,
+            "deadline": null,
+            "deadlineVerified": false,
+            "evidence": [
+              "- MSc or PhD in machine learning and computer vision with autonomy and robotics applications or closely related field, graduating by December 2026 or Summer 2027",
+              "Conflicting or alternative graduation dates need source review; no single window inferred."
+            ]
+          },
+          "eligibility": {
+            "degrees": [],
+            "gpa": [],
+            "workAuthorization": [],
+            "sponsorship": []
+          },
+          "requiredYears": 1,
+          "explicitGraduate": true,
+          "experienceLabel": "1 year required \u00b7 check your experience"
+        }
+      ],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-freenome",
+      "company": "Freenome",
+      "provider": "greenhouse",
+      "board": "freenome",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.freenome.com/job-openings/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/freenome/jobs?content=true",
+      "status": "passed",
+      "raw": 31,
+      "listed": 31,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 3,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-natera",
+      "company": "Natera",
+      "provider": "greenhouse",
+      "board": "natera",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.natera.com/company/careers/",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/natera/jobs?content=true",
+      "status": "passed",
+      "raw": 224,
+      "listed": 224,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 7,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-fanaticscollectibles",
+      "company": "Fanatics Collectibles",
+      "provider": "greenhouse",
+      "board": "fanaticscollectibles",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.fanaticsinc.com/join-our-team",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticscollectibles/jobs?content=true",
+      "status": "passed",
+      "raw": 186,
+      "listed": 186,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 9,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-fanaticsfbg",
+      "company": "Fanatics Betting & Gaming",
+      "provider": "greenhouse",
+      "board": "fanaticsfbg",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.fanaticsinc.com/join-our-team",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticsfbg/jobs?content=true",
+      "status": "passed",
+      "raw": 71,
+      "listed": 71,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 3,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-fanaticscommerce",
+      "company": "Fanatics Commerce",
+      "provider": "greenhouse",
+      "board": "fanaticscommerce",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.fanaticsinc.com/join-our-team",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticscommerce/jobs?content=true",
+      "status": "passed",
+      "raw": 203,
+      "listed": 203,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 8,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-fanaticsinc",
+      "company": "Fanatics",
+      "provider": "greenhouse",
+      "board": "fanaticsinc",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.fanaticsinc.com/join-our-team",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/fanaticsinc/jobs?content=true",
+      "status": "passed",
+      "raw": 24,
+      "listed": 24,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 1,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
+    },
+    {
+      "sourceId": "greenhouse-relativity",
+      "company": "Relativity Space",
+      "provider": "greenhouse",
+      "board": "relativity",
+      "sourceKind": "employer-board",
+      "evidenceUrl": "https://www.relativityspace.com/jobs",
+      "checkedAt": "2026-10-26T23:41:40.324Z",
+      "endpoint": "https://boards-api.greenhouse.io/v1/boards/relativity/jobs?content=true",
+      "status": "passed",
+      "raw": 397,
+      "listed": 397,
+      "employersInWindow": 1,
+      "inScope": 0,
+      "needsDetails": 4,
+      "strictNewGrad": 0,
+      "strictNewGradNeedsDetails": 0,
+      "graduateListings": [],
+      "error": null
     }
-  ]
+  ],
+  "followUpVerification": {
+    "sourceId": "lever-veeva",
+    "checkedAt": "2026-10-26T23:45:01.911Z",
+    "status": "passed",
+    "report": "SOURCE_AUDIT.lever-veeva.md",
+    "successfulUniqueSources": 154,
+    "combinedTotals": {
+      "raw": 22222,
+      "listed": 22222,
+      "inScope": 799,
+      "needsDetails": 894,
+      "strictNewGrad": 57,
+      "strictNewGradNeedsDetails": 22
+    },
+    "note": "The initial body-stream timeout is preserved in results; this complete targeted retry passed after whole-response transport retries were implemented."
+  }
 }
