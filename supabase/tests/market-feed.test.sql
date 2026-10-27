@@ -28,7 +28,7 @@ select ok(not has_function_privilege('anon','public.finalize_market_source_run(t
 select ok(not has_function_privilege('authenticated','public.finalize_market_source_run(text,uuid,jsonb,jsonb,boolean,integer,text,timestamp with time zone)','EXECUTE'),'Authenticated has no market finalization grant');
 select ok(has_function_privilege('service_role','public.finalize_market_source_run(text,uuid,jsonb,jsonb,boolean,integer,text,timestamp with time zone)','EXECUTE'),'Server role has market finalization grant');
 select ok((select not prosecdef from pg_proc where oid='public.finalize_market_source_run(text,uuid,jsonb,jsonb,boolean,integer,text,timestamp with time zone)'::regprocedure),'Market finalization uses invoker security');
-select is((select array_to_string(proconfig,',') from pg_proc where oid='public.finalize_market_source_run(text,uuid,jsonb,jsonb,boolean,integer,text,timestamp with time zone)'::regprocedure),'search_path=""','Market finalization fixes an empty search path');
+select ok((select proconfig @> array['search_path=""'] from pg_proc where oid='public.finalize_market_source_run(text,uuid,jsonb,jsonb,boolean,integer,text,timestamp with time zone)'::regprocedure),'Market finalization retains an empty search path alongside bounded import settings');
 
 set local role anon;
 select set_config('request.jwt.claims','{"role":"anon"}',true);

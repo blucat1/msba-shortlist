@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: '23 6,18 * * *'
   workflow_dispatch:
+    inputs:
+      source:
+        description: 'Optional exact registry source ID; leave blank to refresh all feeds'
+        required: false
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -30,8 +35,15 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run ingest
+      - name: Import complete approved snapshots
+        run: |
+          if [ -n "$INGEST_SOURCE" ]; then
+            npm run ingest -- --source "$INGEST_SOURCE"
+          else
+            npm run ingest
+          fi
         env:
+          INGEST_SOURCE: ${{ inputs.source }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
       - run: npm run maintenance
