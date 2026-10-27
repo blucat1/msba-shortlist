@@ -5,6 +5,7 @@ import { DEFAULT_PREFERENCES, type AppSnapshot, type Backup, type CompanyNote, t
 import { backupSchema, opportunitySchema, preferencesSchema, taskSchema } from '../domain/transfer';
 import { getSupabaseClient, GUEST_PREFERENCES_KEY, clearGuestPreferences } from '../lib/supabase';
 import type { CatalogRow, Database, EventRow, Json, OpportunityRow, SourceRow, TaskRow } from '../lib/database.types';
+import { readCatalogPages } from './catalog-paging';
 import type { Repository } from './types';
 
 const CATALOG_LIMIT = 5000;
@@ -98,19 +99,15 @@ export function createSupabaseRepository(supabase: SupabaseClient<Database> = ge
       error: source.last_run_status === 'failed' ? 'Last source check failed; previous results retained.' : source.last_run_status === 'quarantined' ? 'Source reconciliation is quarantined for operator review.' : null,
       ...(source.region ? { region: source.region } : {}),
     }));
-    const catalog: CatalogRow[] = []; let total = 0;
     // Fetch the entire supported result set before client ranking; expose the
     // explicit 5,000-record cap instead of silently ranking one arbitrary page.
-    for (let offset = 0; offset < CATALOG_LIMIT; offset += PAGE_SIZE) {
-      const result = await supabase.from('catalog_jobs').select('*', { count: 'exact' })
+    const { rows: catalog, total, truncated } = await readCatalogPages<CatalogRow>(({ from, to, exactCount }) =>
+      supabase.from('catalog_jobs').select('*', exactCount ? { count: 'exact' } : undefined)
         .neq('summary->classification->>scope', 'excluded').order('first_seen_at', { ascending: false }).order('id')
-        .range(offset, offset + PAGE_SIZE - 1);
-      ensure(result.error); total = result.count ?? total; catalog.push(...(result.data ?? []));
-      if (!result.data || result.data.length < PAGE_SIZE) break;
-    }
+        .range(from, to), { pageSize: PAGE_SIZE, limit: CATALOG_LIMIT });
     const base: AppSnapshot = { jobs: catalog.map(row => job(row, sourceMap)), sources,
       preferences: initialPreferences, opportunities: [], events: [], tasks: [], companyNotes: [], jobPreferences: [],
-      userId: uid, catalogTruncated: total > catalog.length, catalogTotal: total };
+      userId: uid, catalogTruncated: truncated, catalogTotal: total };
     if (!uid) return base;
     const [profiles, opportunities, events, tasks, companyNotes, jobPreferences] = await Promise.all([
       supabase.from('profiles').select('preferences').eq('user_id', uid).maybeSingle(),
