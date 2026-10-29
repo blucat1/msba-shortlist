@@ -23,6 +23,41 @@ function show(context: Workspace, route = '/demo/my-search') {
 }
 
 describe('tracker feedback and next steps', () => {
+  it('starts with exact private company groups and retains role order and company notes when toggling the flat view', async () => {
+    const user = userEvent.setup(), context = await workspace(), userId = context.snapshot.userId!;
+    const first = manualOpportunity({ company: 'Example Harbor', companyKey: 'private:first', title: 'Newest role', updatedAt: '2026-10-28T12:00:00Z' }, userId);
+    const separate = manualOpportunity({ company: 'Example Harbor', companyKey: 'private:second', title: 'Separate group role', updatedAt: '2026-10-28T11:00:00Z' }, userId);
+    const earlier = manualOpportunity({ company: 'Example Harbor alternate label', companyKey: 'private:first', title: 'Earlier role', updatedAt: '2026-10-28T10:00:00Z' }, userId);
+    context.snapshot.opportunities = [first, separate, earlier];
+    context.snapshot.tasks = [];
+    context.snapshot.companyNotes = [
+      { companyKey: 'private:first', userId, note: 'First group context', updatedAt: first.updatedAt },
+      { companyKey: 'private:second', userId, note: 'Second group context', updatedAt: separate.updatedAt },
+    ];
+    const saveNote = vi.spyOn(context.repository, 'saveCompanyNote').mockResolvedValue(undefined);
+    const { container } = show(context);
+    const toggle = screen.getByRole('button', { name: 'Group by company', pressed: true });
+    const groups = container.querySelectorAll('.company-group');
+    expect(groups).toHaveLength(2);
+    expect([...groups[0].querySelectorAll('.tracker-role strong')].map(item => item.textContent)).toEqual(['Newest role', 'Earlier role']);
+    expect([...groups[1].querySelectorAll('.tracker-role strong')].map(item => item.textContent)).toEqual(['Separate group role']);
+    expect(within(groups[0] as HTMLElement).getByRole('heading', { name: 'Example Harbor' })).toBeVisible();
+    expect(groups[0].querySelector('.company-group-heading .company-mark')).toHaveAttribute('aria-hidden', 'true');
+    expect(groups[0]).toHaveTextContent('First group context');
+    expect(groups[0]).not.toHaveTextContent('Second group context');
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-pressed', 'false');
+    expect(container.querySelectorAll('.company-group')).toHaveLength(0);
+    expect([...container.querySelectorAll('.tracker-role strong')].map(item => item.textContent)).toEqual(['Newest role', 'Separate group role', 'Earlier role']);
+    await user.click(toggle);
+    const secondGroup = container.querySelectorAll('.company-group')[1] as HTMLElement;
+    await user.click(within(secondGroup).getByRole('button', { name: 'Company note for Example Harbor' }));
+    const noteDialog = screen.getByRole('dialog', { name: 'A private company note' });
+    expect(within(noteDialog).getByRole('textbox', { name: 'Private company note' })).toHaveValue('Second group context');
+    await user.click(within(noteDialog).getByRole('button', { name: 'Save note' }));
+    await waitFor(() => expect(saveNote).toHaveBeenCalledWith(expect.objectContaining({ companyKey: 'private:second', note: 'Second group context', userId })));
+  });
+
   it('distinguishes an empty search from an empty tracker and restores saved roles', async () => {
     const user = userEvent.setup(), context = await workspace();
     const { container } = show(context);

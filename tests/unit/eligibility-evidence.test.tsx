@@ -61,7 +61,7 @@ describe('visible eligibility evidence', () => {
     expect(context.openApplication).toHaveBeenCalledWith(second);
     await user.click(screen.getByRole('button', { name: 'All listings' }));
     expect(document.querySelectorAll('.listing-variants')).toHaveLength(0);
-    expect(screen.getByText('2 listings', { exact: true })).toBeVisible();
+    expect(screen.getByText('2 listings across 1 company', { exact: true })).toBeVisible();
     expect(screen.getAllByRole('article')).toHaveLength(2);
     await user.click(screen.getByRole('button', { name: 'Preferences' }));
     expect(context.showSettings).toHaveBeenCalledOnce();

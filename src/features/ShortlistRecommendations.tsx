@@ -5,8 +5,9 @@ import { useWorkspace } from '../app/store';
 import { useResumeWorkspace } from '../app/resume-store';
 import { Empty, Modal } from '../components/ui';
 import { JobCard } from '../components/JobCard';
+import { CompanyRoleGroup } from '../components/CompanyRoleGroup';
 import { createDiscoveryFilters, discoverJobs } from '../domain/discovery';
-import { groupSimilarListings } from '../domain/grouping';
+import { groupListingsByCompany, groupSimilarListings } from '../domain/grouping';
 import { compareResumeToJob } from '../domain/resume-matching';
 import { opportunityFromJob } from '../domain/records';
 import { EXPERIENCE_VIEWS } from '../domain/experience';
@@ -56,6 +57,8 @@ export function ShortlistRecommendations() {
   // This comparison is intentionally scoped to the workspace. No resume-derived
   // values are serialized, persisted or sent to the repository.
   const current = useMemo(() => evaluate(optionKey), [optionKey, evaluate]);
+  const companies = useMemo(() => groupListingsByCompany(current.groups), [current.groups]);
+  const companyRanks = useMemo(() => new Map(companies.flatMap(company => company.groups).map((group, index) => [group.key, index + 1])), [companies]);
   const preview = useMemo(() => adjusting ? evaluate(draft) : current, [adjusting, draft, evaluate, current]);
   const latestQuery = () => window.location.pathname === location.pathname ? new URLSearchParams(window.location.search) : new URLSearchParams(location.search);
   const apply = (value: string) => { setLimit(RECOMMENDATION_BATCH_SIZE); setQuery(writeRecommendationOptions(latestQuery(), new URLSearchParams(value)), { replace: true }); };
@@ -83,7 +86,7 @@ export function ShortlistRecommendations() {
   const interestRoles = options.get('role')?.split(',').filter(Boolean) ?? current.preferences.roleFamilies;
   const roleText = interestRoles.length ? interestRoles.slice(0, 2).map(role => ROLE_LABELS[role as keyof typeof ROLE_LABELS] || role).join(' · ') : 'All roles';
   const experienceView = options.get('career') || DEFAULT_RECOMMENDATION_EXPERIENCE;
-  const scope = mode === 'resume' ? 'All experience levels' : experienceView === 'early-career' ? 'New grads first · early career included' : EXPERIENCE_VIEWS.find(item => item.value === experienceView)?.label ?? 'Choose an experience view';
+  const scope = mode === 'resume' ? 'All experience levels' : experienceView === 'early-career' ? 'New grads first within each company · early career included' : EXPERIENCE_VIEWS.find(item => item.value === experienceView)?.label ?? 'Choose an experience view';
   const renderCard = (row: typeof current.rows[number], rank: number) => <JobCard key={row.job.id} result={row} profile={current.preferences} recommendationRank={rank}
     resumeMatch={current.compatibility.get(row.job.id)} saved={snapshot.opportunities.some(item => item.catalogJobId === row.job.id)} dismissed={false}
     onSave={() => save(row.job)} onDismiss={() => dismiss(row.job)} onView={() => view(row.job.id)} onApply={() => openApplication(row.job)} />;
@@ -94,9 +97,9 @@ export function ShortlistRecommendations() {
     {mode !== 'filters' && ready && <p className="recommendation-session">Reviewed resume · This tab only</p>}
     {current.error && <p role="alert" className="filter-error">{current.error}</p>}
     {current.needsResume ? <Empty title="Add your resume to get matches" action={<button type="button" className="button button-primary" onClick={() => openResume()}>Add resume</button>}>Review your extracted profile before using it for recommendations.</Empty> : current.groups.length ? <>
-      <div className="recommendation-result-count"><strong className="rec-page-count">Showing {Math.min(limit, current.groups.length)} of {current.groups.length} role groups</strong><p className="listing-count" aria-live="polite">{current.rows.length} listing{current.rows.length === 1 ? '' : 's'} in {current.groups.length} group{current.groups.length === 1 ? '' : 's'} · {snapshot.jobs.length.toLocaleString()} catalog records</p></div>
-      <div className="recommendation-list">{current.groups.slice(0, limit).map((group, index) => <div className="listing-group" key={group.key}>{renderCard(group.representative, index + 1)}{!!group.variants.length && <details className="listing-variants"><summary>{group.listingCount} listings · {group.variants.length} more locations or requisitions</summary><p>Each listing keeps its own source and application link.</p><div className="recommendation-variants">{group.variants.map(row => renderCard(row, index + 1))}</div></details>}</div>)}</div>
-      {current.groups.length > limit && <button type="button" className="button button-secondary recommendation-more" onClick={() => setLimit(value => value + RECOMMENDATION_BATCH_SIZE)}>Show more recommendations <ChevronDown size={18} aria-hidden="true" /></button>}
+      <div className="recommendation-result-count"><strong className="rec-page-count">Showing {Math.min(limit, companies.length)} of {companies.length} companies</strong><p className="listing-count" aria-live="polite">{current.rows.length} listing{current.rows.length === 1 ? '' : 's'} in {current.groups.length} group{current.groups.length === 1 ? '' : 's'} · {snapshot.jobs.length.toLocaleString()} catalog records</p></div>
+      <div className="recommendation-list">{companies.slice(0, limit).map(company => <CompanyRoleGroup key={company.key} company={company.company} roleCount={company.groups.length} listingCount={company.listingCount}>{company.groups.map(group => <div className="listing-group" key={group.key}>{renderCard(group.representative, companyRanks.get(group.key)!)}{!!group.variants.length && <details className="listing-variants"><summary>{group.listingCount} listings · {group.variants.length} more locations or requisitions</summary><p>Each listing keeps its own source and application link.</p><div className="recommendation-variants">{group.variants.map(row => renderCard(row, companyRanks.get(group.key)!))}</div></details>}</div>)}</CompanyRoleGroup>)}</div>
+      {companies.length > limit && <button type="button" className="button button-secondary recommendation-more" onClick={() => setLimit(value => value + RECOMMENDATION_BATCH_SIZE)}>Show more recommendations <ChevronDown size={18} aria-hidden="true" /></button>}
     </> : !current.error && <Empty title={mode === 'resume' ? 'No roles available to compare.' : 'No matches for these preferences.'} action={<div className="inline-actions"><button type="button" className="button button-primary" onClick={openAdjustment}>Change preferences</button><button type="button" className="button button-secondary" onClick={browseAll}>Browse all listings</button></div>}>Try a broader preference when you’re ready. Your current settings stay in place.</Empty>}
     {snapshot.catalogTruncated && <p className="warning-text">Recommendations use {snapshot.jobs.length} loaded catalog records; the catalog is limited.</p>}
     <div className="recommendation-footer"><span>Evidence-based comparisons, not hiring predictions.</span><button type="button" className="text-link" onClick={showCoverage}>Coverage & sources <ArrowUpRight size={16} aria-hidden="true" /></button></div>
