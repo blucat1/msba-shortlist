@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { createDemoSnapshot } from '../../src/domain/fixtures';
-import { groupSimilarListings } from '../../src/domain/grouping';
+import { groupListingsByCompany, groupSimilarListings } from '../../src/domain/grouping';
+import { companyKey } from '../../src/domain/records';
+import { companyBranding } from '../../src/domain/company-branding';
 import type { Job } from '../../src/domain/types';
 import { extractEligibility } from '../../src/ingestion/eligibility';
 
@@ -46,5 +48,85 @@ describe('conservative listing variant groups', () => {
   });
   it('does not collapse requirements with different source evidence even when extracted date bounds agree', () => {
     expect(groupSimilarListings(pair(job => { job.timing.evidence = ['Required, firm start date.']; }))).toHaveLength(2);
+  });
+});
+
+describe('hiring-company discovery groups', () => {
+  function row(company: string, id: string, employerId = 'recorded-employer') {
+    return { job: { ...original(), company, id, employerId, title: `Role ${id}` }, rank: id };
+  }
+
+  it('preserves first company appearance and ranked group order within each company', () => {
+    const rows = [row('Company B', 'b1'), row('Company A', 'a1'), row('Company B', 'b2'), row('Company C', 'c1'), row('Company A', 'a2')];
+    const groups = groupSimilarListings(rows), before = structuredClone(groups);
+    const companies = groupListingsByCompany(groups);
+    expect(companies.map(company => company.company)).toEqual(['Company B', 'Company A', 'Company C']);
+    expect(companies.map(company => company.groups.map(group => group.key))).toEqual([['b1', 'b2'], ['a1', 'a2'], ['c1']]);
+    expect(companies[0].groups[1]).toBe(groups[2]);
+    expect(groups).toEqual(before);
+  });
+
+  it('counts all original listing variants and retains their identities and application links', () => {
+    const equivalent = pair(job => { job.locations = [{ label: 'Boston', country: 'US', region: 'MA', city: 'Boston' }]; job.applicationUrl = 'https://example.com/second-application'; });
+    const different = { ...equivalent[0], job: { ...equivalent[0].job, id: 'different-role', title: 'Another Role' } };
+    const groups = groupSimilarListings([...equivalent, different]);
+    const companies = groupListingsByCompany(groups);
+    expect(companies).toHaveLength(1);
+    expect(companies[0].listingCount).toBe(3);
+    expect(companies[0].groups).toHaveLength(2);
+    expect(companies[0].groups[0].representative).toBe(equivalent[0]);
+    expect(companies[0].groups[0].variants[0]).toBe(equivalent[1]);
+    expect(companies[0].groups[0].variants[0].job.applicationUrl).toBe('https://example.com/second-application');
+    expect(companies[0].groups.flatMap(group => [group.representative, ...group.variants]).map(item => item.job.id)).toEqual([equivalent[0].job.id, 'another-requisition', 'different-role']);
+  });
+
+  it('uses stable name normalization for case, whitespace and Unicode compatibility', () => {
+    const groups = groupSimilarListings([row('  Acme   Data  ', 'one'), row('ＡＣＭＥ\u00a0ＤＡＴＡ', 'two', 'second-board')]);
+    const companies = groupListingsByCompany(groups);
+    expect(companies).toHaveLength(1);
+    expect(companies[0].key).toBe(companyKey('Acme Data'));
+    expect(companies[0].company).toBe('Acme   Data');
+    expect(companies[0].listingCount).toBe(2);
+  });
+
+  it('groups Jobicy roles by actual hiring company alongside direct employer listings', () => {
+    const marketA = row('Acme Data', 'market-a', 'jobicy');
+    marketA.job.publisher = { name: 'Jobicy', url: 'https://jobicy.com/jobs/one', kind: 'aggregator' };
+    marketA.job.employerGroupingKey = 'market-company:acme';
+    const marketB = row('Other Employer', 'market-b', 'jobicy');
+    marketB.job.publisher = marketA.job.publisher;
+    marketB.job.employerGroupingKey = 'market-company:other';
+    const direct = row('ACME DATA', 'direct', 'acme');
+    const companies = groupListingsByCompany(groupSimilarListings([marketA, marketB, direct]));
+    expect(companies.map(company => company.company)).toEqual(['Acme Data', 'Other Employer']);
+    expect(companies[0].groups.map(group => group.key)).toEqual(['market-a', 'direct']);
+    expect(companies.map(company => company.listingCount)).toEqual([2, 1]);
+    expect(marketA.job.employerId).toBe('jobicy');
+    expect(marketA.job.employerGroupingKey).toBe('market-company:acme');
+  });
+
+  it('keeps differently named subsidiaries and meaningful name punctuation separate', () => {
+    const groups = groupSimilarListings([row('Acme Bank', 'bank'), row('Acme Wealth', 'wealth'), row('Acme, Inc.', 'punctuated'), row('Acme Inc', 'plain')]);
+    const companies = groupListingsByCompany(groups);
+    expect(companies).toHaveLength(4);
+    expect(companies.map(company => company.company)).toEqual(['Acme Bank', 'Acme Wealth', 'Acme, Inc.', 'Acme Inc']);
+  });
+
+  it('does not use a shared logo as permission to merge different recorded company names', () => {
+    const names = ['ERG (Eastern Research Group)', 'ERG — Eastern Research Group'];
+    const firstBrand = companyBranding(names[0]), secondBrand = companyBranding(names[1]);
+    expect(firstBrand?.logoPath).toBeTruthy();
+    expect(firstBrand?.logoPath).toBe(secondBrand?.logoPath);
+    const companies = groupListingsByCompany(groupSimilarListings(names.map((name, index) => row(name, `company-${index}`, 'same-parent'))));
+    expect(companies).toHaveLength(2);
+    expect(companies.map(company => company.company)).toEqual(names);
+  });
+
+  it('does not infer a shared company from missing names and accepts an empty result', () => {
+    const companies = groupListingsByCompany(groupSimilarListings([row('', 'unknown-one'), row('   ', 'unknown-two')]));
+    expect(companies).toHaveLength(2);
+    expect(new Set(companies.map(company => company.key)).size).toBe(2);
+    expect(companies.map(company => company.listingCount)).toEqual([1, 1]);
+    expect(groupListingsByCompany([])).toEqual([]);
   });
 });

@@ -113,11 +113,15 @@ test('matching modes keep filters independent and resume-only pauses rather than
   await loadAll(page);
   await expect(page.locator('.job-card').filter({ hasText: 'Principal Data Scientist' })).toBeVisible();
   await expect(page.locator('.job-card').filter({ hasText: 'Senior Product Manager' })).toBeVisible();
-  const ranked = await page.locator('.job-card').evaluateAll(cards => cards.map(card => ({ conflict: !!card.querySelector('.resume-score.has-conflict'), score: Number(card.querySelector('.resume-score strong')?.textContent?.match(/^\d+/)?.[0] ?? -1) })));
-  for (let index = 1; index < ranked.length; index++) {
-    expect(Number(ranked[index].conflict)).toBeGreaterThanOrEqual(Number(ranked[index - 1].conflict));
-    if (ranked[index].conflict === ranked[index - 1].conflict) expect(ranked[index].score).toBeLessThanOrEqual(ranked[index - 1].score);
-  }
+  const companyRanks = await page.locator('.company-role-group').evaluateAll(groups => groups.map(group => Array.from(group.querySelectorAll('.job-card')).map(card => ({ conflict: !!card.querySelector('.resume-score.has-conflict'), score: Number(card.querySelector('.resume-score strong')?.textContent?.match(/^\d+/)?.[0] ?? -1) }))));
+  const expectRanked = (ranked: typeof companyRanks[number]) => {
+    for (let index = 1; index < ranked.length; index++) {
+      expect(Number(ranked[index].conflict)).toBeGreaterThanOrEqual(Number(ranked[index - 1].conflict));
+      if (ranked[index].conflict === ranked[index - 1].conflict) expect(ranked[index].score).toBeLessThanOrEqual(ranked[index - 1].score);
+    }
+  };
+  for (const ranked of companyRanks) { expect(ranked.length).toBeGreaterThan(0); expectRanked(ranked); }
+  expectRanked(companyRanks.map(ranked => ranked[0]));
   await method.selectOption('combined');
   await expect(page.locator('.job-card')).toHaveCount(0);
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveValue('NO_MATCH_QUERY_48219');
@@ -215,15 +219,14 @@ test('phone resume review keeps text and controls within the dialog and keyboard
   }
 });
 
-test('the broader catalog exposes more records than the strict shortlist and show-more expands real cards', async ({ page }) => {
+test('the broader catalog exposes more records and complete companies without unnecessary show-more clicks', async ({ page }) => {
   await page.goto('/demo/opportunities');
   const strict = await listingCount(page);
   await page.getByRole('button', { name: 'All listings', exact: true }).click();
   await expect.poll(() => listingCount(page)).toBeGreaterThan(strict);
-  const initial = await page.locator('.job-card').count();
-  await expect(page.getByRole('button', { name: 'Show more opportunities', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Show more opportunities', exact: true }).click();
-  await expect.poll(() => page.locator('.job-card').count()).toBeGreaterThan(initial);
+  await expect(page.locator('.job-card')).toHaveCount(await listingCount(page));
+  expect(await page.locator('.company-role-group').count()).toBeLessThanOrEqual(15);
+  await expect(page.getByRole('button', { name: 'Show more opportunities', exact: true })).toHaveCount(0);
   await expect(page.locator('.job-card').filter({ hasText: 'Principal Data Scientist' })).toBeVisible();
   await expect(page.locator('.resume-compatibility')).toHaveCount(0);
   expect(new URL(page.url()).searchParams.get('view')).toBe('all');

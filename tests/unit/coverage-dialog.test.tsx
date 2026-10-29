@@ -17,7 +17,7 @@ describe('coverage and privacy outside the workspace provider', () => {
     expect(screen.getByRole('dialog')).toHaveTextContent('Confirmed zero-year matches');
     expect(screen.getByRole('dialog')).toHaveTextContent('New-grad / 0–1-year evidence');
     expect(screen.getByRole('dialog')).toHaveTextContent('Additional early-career matches');
-    expect(screen.getByRole('dialog')).toHaveTextContent('with new grads shown first');
+    expect(screen.getByRole('dialog')).toHaveTextContent('with new grads first within each company');
     expect(screen.getByRole('dialog')).toHaveTextContent('entire market is unknown');
   });
 });

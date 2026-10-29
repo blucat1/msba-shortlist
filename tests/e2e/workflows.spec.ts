@@ -75,7 +75,13 @@ test('manual roles edit, group by exact company, create/snooze/complete tasks, a
   await dialog.getByRole('button', { name: 'Add opportunity', exact: true }).click();
   await expect(dialog).toHaveCount(0);
   await page.goto('/demo/my-search');
-  await page.getByRole('button', { name: 'Group by company', exact: true }).click();
+  const companyGrouping = page.getByRole('button', { name: 'Group by company', exact: true });
+  await expect(companyGrouping).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.company-group-heading').filter({ hasText: 'Example Harbor' })).toBeVisible();
+  await companyGrouping.click();
+  await expect(companyGrouping).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('.company-group')).toHaveCount(0);
+  await companyGrouping.click();
   await expect(page.locator('.company-group-heading').filter({ hasText: 'Example Harbor' })).toBeVisible();
   const row = page.locator('.tracker-row').filter({ hasText: 'Decision Analytics Associate' }).filter({ hasText: 'Example Harbor' });
   await row.getByRole('combobox').selectOption('Interviewing');

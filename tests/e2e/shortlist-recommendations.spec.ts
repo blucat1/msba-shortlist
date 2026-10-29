@@ -14,9 +14,10 @@ async function adjust(page: Page) {
 async function titles(page: Page) { return page.locator('.job-card h3').allTextContents(); }
 async function expectInitialRecommendations(page: Page) {
   const summary = page.locator('.rec-page-count');
-  await expect(summary).toContainText(/^Showing \d+ of \d+ role groups$/);
-  const total = Number((await summary.innerText()).match(/ of (\d+) role groups$/)?.[1]);
-  await expect(page.locator('.job-card')).toHaveCount(Math.min(25, total));
+  await expect(summary).toContainText(/^Showing \d+ of \d+ companies$/);
+  const total = Number((await summary.innerText()).match(/ of (\d+) companies$/)?.[1]);
+  await expect(page.locator('.company-role-group')).toHaveCount(Math.min(25, total));
+  await expect(page.locator('.job-card').first()).toBeVisible();
   return total;
 }
 async function update(page: Page) {
@@ -31,7 +32,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Top matches for you', exact: true, level: 1 })).toBeVisible();
 });
 
-test('Shortlist shows new grads first with early-career roles included without repeated show-more clicks', async ({ page }) => {
+test('Shortlist groups roles under each company with new grads first inside companies', async ({ page }) => {
   await expect(page.getByLabel('Search opportunities', { exact: true })).toHaveCount(0);
   await expect(page.getByLabel('Matching method', { exact: true })).toHaveCount(0);
   const total = await expectInitialRecommendations(page);
@@ -41,16 +42,51 @@ test('Shortlist shows new grads first with early-career roles included without r
   await expect(page.locator('.listing-count')).toContainText(/\d+ listings in \d+ groups · [\d,]+ catalog records/);
   await expect(page.getByRole('button', { name: 'Show more recommendations', exact: true })).toHaveCount(0);
   for (const tier of ['experienced', 'unverified']) await expect(page.locator(`.job-card .experience-evidence.${tier}`)).toHaveCount(0);
-  const tiers = await page.locator('.job-card .experience-evidence').evaluateAll(elements => elements.map(element => element.classList.contains('new-grad') ? 'new-grad' : 'early-career'));
-  const firstEarlyCareer = tiers.indexOf('early-career');
-  expect(firstEarlyCareer).toBeGreaterThan(0);
-  expect(tiers.slice(0, firstEarlyCareer).every(tier => tier === 'new-grad')).toBe(true);
-  expect(tiers.slice(firstEarlyCareer).every(tier => tier === 'early-career')).toBe(true);
-  await expect(page.getByText('New grads first · early career included', { exact: true })).toBeVisible();
+  const companies = await page.locator('.company-role-group').evaluateAll(groups => groups.map(group => ({
+    company: group.querySelector('.company-role-heading h2')!.textContent!.trim(),
+    roles: Array.from(group.querySelectorAll('.job-card')).map(card => ({
+      label: card.getAttribute('aria-label'),
+      tier: card.querySelector('.experience-evidence')!.classList.contains('new-grad') ? 'new-grad' : 'early-career',
+    })),
+    count: group.querySelector('.company-role-count')!.textContent,
+  })));
+  expect(new Set(companies.map(group => group.company)).size).toBe(companies.length);
+  expect(companies.some(group => group.roles.length > 1)).toBe(true);
+  for (const group of companies) {
+    expect(group.count).toMatch(new RegExp(`^${group.roles.length} roles?`));
+    expect(group.roles.every(role => role.label?.endsWith(` at ${group.company}`))).toBe(true);
+    const firstEarlyCareer = group.roles.findIndex(role => role.tier === 'early-career');
+    if (firstEarlyCareer >= 0) expect(group.roles.slice(firstEarlyCareer).every(role => role.tier === 'early-career')).toBe(true);
+  }
+  const firstEarlyOnly = companies.findIndex(group => group.roles.every(role => role.tier === 'early-career'));
+  expect(firstEarlyOnly).toBeGreaterThan(0);
+  expect(companies.slice(firstEarlyOnly).every(group => group.roles.every(role => role.tier === 'early-career'))).toBe(true);
+  await expect(page.getByText('New grads first within each company · early career included', { exact: true })).toBeVisible();
   const reasons = page.locator('.recommendation-reasons').first();
   await expect(reasons).toBeVisible();
   await expect(reasons.locator('li').first()).toContainText(/matches|you listed|aligns|overlap|meets/i);
   await expect(reasons).not.toContainText(/outside your|differs from|experience stretch|missing/i);
+});
+
+test('company sections start expanded and support keyboard collapse without losing their roles', async ({ page }) => {
+  await expectInitialRecommendations(page);
+  const company = page.locator('.company-role-group').first();
+  const heading = company.locator(':scope > .company-role-heading');
+  const role = company.locator('.job-card').first();
+  const titlesBefore = await company.locator('.job-card h3').allTextContents();
+  await expect(company).toHaveAttribute('open', '');
+  await expect(heading.getByRole('heading', { level: 2 })).toBeVisible();
+  await expect(role).toBeVisible();
+  await heading.focus();
+  await page.keyboard.press('Enter');
+  await expect(company).not.toHaveAttribute('open');
+  await expect(role).toBeHidden();
+  await expect(heading).toBeFocused();
+  await expect(page.locator('.company-role-group').nth(1).locator('.job-card').first()).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(company).toHaveAttribute('open', '');
+  await expect(role).toBeVisible();
+  await expect(company.locator('.job-card h3')).toHaveText(titlesBefore);
 });
 
 test('recommendation edits preview without applying; Cancel discards and Update changes actual results', async ({ page }) => {
@@ -267,7 +303,7 @@ test('an empty preference profile uses an honest fallback instead of inventing p
   await page.reload();
   await expectInitialRecommendations(page);
   await expect(page.locator('.recommendation-reasons')).toHaveCount(0);
-  await expect(page.getByText('Profile requirements aren’t confirmed yet.', { exact: true })).toHaveCount(await expectInitialRecommendations(page));
+  await expect(page.getByText('Profile requirements aren’t confirmed yet.', { exact: true })).toHaveCount(await page.locator('.job-card').count());
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();
   await page.goto('/demo/opportunities?rec-career=experienced');
   await expect(page.getByRole('heading', { name: 'Explore opportunities', exact: true, level: 1 })).toBeVisible();
